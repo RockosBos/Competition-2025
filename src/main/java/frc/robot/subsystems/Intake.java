@@ -24,13 +24,14 @@ public class Intake extends SubsystemBase {
   private SparkMax IntakeIn = new SparkMax(Constants.IntakeID, MotorType.kBrushless);
   private SparkMax IntakeRotate = new SparkMax(Constants.IntakeRotateID, MotorType.kBrushless);
   private SparkClosedLoopController BetterLoppyDoopy = IntakeRotate.getClosedLoopController();
-  private AbsoluteEncoder IAE = IntakeRotate.getAbsoluteEncoder();
+  private AbsoluteEncoder intakeAbsEncoder = IntakeRotate.getAbsoluteEncoder();
   private AbsoluteEncoderConfig IAEC = new AbsoluteEncoderConfig();
   private double voltage = 0.0;
   SparkMaxConfig config = new SparkMaxConfig();
   SparkMaxConfig SMConfig = new SparkMaxConfig();
-  private double maxCurrent = 0.0;
-  private double targetPostion = 0.0;
+  private double maxCurrent = 0.0, targetPostion = 0.0, intakeRotateTargetErr = 0.0;
+
+  boolean errFlag = false;
   /** Creates a new Intake. */
   public Intake() {
     config.inverted(false);
@@ -52,12 +53,19 @@ public class Intake extends SubsystemBase {
     IntakeIn.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
-  public void setMoterVoltage(double voltage){
+  public void setMotorVoltage(double voltage){
     this.voltage = voltage;
   }
 
-  public void setTargestPostion(double targetPostion){
+  public void setTargetPostion(double targetPostion){
     this.targetPostion = targetPostion;
+  }
+
+  public boolean inPosition(){
+    if(Constants.intakeRotatePositionThreshold > intakeRotateTargetErr){
+      return true;
+    }
+    return false;
   }
 
   @Override
@@ -65,10 +73,11 @@ public class Intake extends SubsystemBase {
     if (IntakeIn.getOutputCurrent() > 10) {
       voltage = 0.25;
     }
+    intakeRotateTargetErr = Math.abs(targetPostion - intakeAbsEncoder.getPosition());
     IntakeIn.set(voltage);
     SmartDashboard.putNumber("Intakecurrent", IntakeIn.getOutputCurrent());
-    SmartDashboard.putNumber("IAE", IAE.getPosition());
+    SmartDashboard.putNumber("intakeAbsEncoder", intakeAbsEncoder.getPosition());
     SmartDashboard.putNumber("Target Position", targetPostion);
-     BetterLoppyDoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    BetterLoppyDoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
   }
 }

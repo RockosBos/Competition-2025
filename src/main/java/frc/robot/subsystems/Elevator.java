@@ -74,11 +74,12 @@ public class Elevator extends SubsystemBase {
     ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
   }
 
-  public void setTargestPostion(double targetPostion){
+  public void setIntakeTargetPostion(double targetPostion){
     this.targetPostion = targetPostion;
   }
 
-  public void InLA(double targetPostionInLa){
+  public void setScoreTargetPosition(double targetPostionInLa){
+    //inLA
     this.targetPostionScoreInLa = targetPostionInLa;
   }
 
@@ -93,10 +94,5 @@ public class Elevator extends SubsystemBase {
 
     ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot1);
     SmartDashboard.putNumber("ScoreEleLoopy", targetPostionScoreInLa);
-
-    if (!InnyScory.get()) {
-      IntakeEleEncoder.setPosition(Constants.ElevatorHome);
-    }
   }
 }
-
