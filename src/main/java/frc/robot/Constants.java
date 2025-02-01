@@ -6,6 +6,8 @@ public class Constants {
 
     public static final int IntakeID = 16;
     public static final int IntakeRotateID = 17;
+    public static final int IntakeEleID = 18;
+    public static final int ScoreEleID = 19;
     public static final int AgitateRheelID = 13;
     public static final int ClawID = 12;
     public static final int UpDownPivotID = 11;

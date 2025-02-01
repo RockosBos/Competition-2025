@@ -25,10 +25,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Elevator extends SubsystemBase {
-  private SparkMax IntakeEle = new SparkMax(Constants.elevatorID, MotorType.kBrushless);
+  private SparkMax IntakeEle = new SparkMax(Constants.IntakeEleID, MotorType.kBrushless);
   private SparkClosedLoopController IntakeLoopy = IntakeEle.getClosedLoopController();
   private RelativeEncoder IntakeEleEncoder = IntakeEle.getEncoder();
-  private SparkMax ScoreEle = new SparkMax(Constants.InLaID, MotorType.kBrushless);
+  private SparkMax ScoreEle = new SparkMax(Constants.ScoreEleID, MotorType.kBrushless);
   private SparkClosedLoopController ScoreEleLoopy = ScoreEle.getClosedLoopController();
   private RelativeEncoder ScoreEleEncoder = ScoreEle.getEncoder();
   private SparkMaxConfig ConfigScore = new SparkMaxConfig();

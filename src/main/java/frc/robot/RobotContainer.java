@@ -16,15 +16,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.Commands.EleDown;
-import frc.robot.Commands.ArmHome;
-import frc.robot.Commands.EleMiddle;
-import frc.robot.Commands.ArmUp;
-import frc.robot.Commands.ElevatorHigh;
-import frc.robot.Commands.EleHome;
-import frc.robot.Commands.IntakeBackwards;
-import frc.robot.Commands.IntakeForward;
-import frc.robot.Commands.IntakeStop;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
@@ -86,8 +77,6 @@ public class RobotContainer {
         driverController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         drivetrain.registerTelemetry(logger::telemeterize);
-
-        intakeSubsystem.setDefaultCommand(new IntakeStop(intakeSubsystem));
 
     }
 
