@@ -5,18 +5,22 @@
 package frc.robot.Commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Score;
+import frc.robot.Constants;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class EleDown extends Command {
-
-  private Elevator e_elevator;
-  /** Creates a new IntakeHigh. */
-  public EleDown(Elevator e_elevator) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    this.e_elevator = e_elevator;
-    addRequirements(this.e_elevator);
+public class FloorLoadingPosition extends Command {
+  Intake m_Intake;
+  Elevator m_Elevator;
+  Score m_Score;
+  /** Creates a new FloorLoadingPosition. */
+  public FloorLoadingPosition(Intake m_Intake, Elevator m_Elevator, Score m_Score) {
+    this.m_Intake = m_Intake;
+    this.m_Elevator = m_Elevator;
+    this.m_Score = m_Score;
+    addRequirements(this.m_Intake, this.m_Elevator, this.m_Score);
   }
 
   // Called when the command is initially scheduled.
@@ -26,8 +30,9 @@ public class EleDown extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    e_elevator.setTargestPostion(Constants.ElevatorDown);
-    e_elevator.setTargestPostion(Constants.InLaDown);
+    m_Intake.setMotorVoltage(Constants.IntakeRollerForwardVoltage);
+    m_Intake.setTargetPostion(Constants.IntakeArmFloorPos);
+    m_Elevator.setIntakeTargetPostion(Constants.IntakeElevatorFloorIntakePos);
   }
 
   // Called once the command ends or is interrupted.
@@ -37,6 +42,9 @@ public class EleDown extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(m_Intake.inPosition()){
+
+    }
     return false;
   }
 }

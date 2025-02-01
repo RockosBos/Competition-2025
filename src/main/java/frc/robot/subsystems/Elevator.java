@@ -25,10 +25,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Elevator extends SubsystemBase {
-  private SparkMax IntakeEle = new SparkMax(Constants.elevatorID, MotorType.kBrushless);
+  private SparkMax IntakeEle = new SparkMax(Constants.IntakeEleID, MotorType.kBrushless);
   private SparkClosedLoopController IntakeLoopy = IntakeEle.getClosedLoopController();
   private RelativeEncoder IntakeEleEncoder = IntakeEle.getEncoder();
-  private SparkMax ScoreEle = new SparkMax(Constants.InLaID, MotorType.kBrushless);
+  private SparkMax ScoreEle = new SparkMax(Constants.ScoreEleID, MotorType.kBrushless);
   private SparkClosedLoopController ScoreEleLoopy = ScoreEle.getClosedLoopController();
   private RelativeEncoder ScoreEleEncoder = ScoreEle.getEncoder();
   private SparkMaxConfig ConfigScore = new SparkMaxConfig();
@@ -74,11 +74,12 @@ public class Elevator extends SubsystemBase {
     ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
   }
 
-  public void setTargestPostion(double targetPostion){
+  public void setIntakeTargetPostion(double targetPostion){
     this.targetPostion = targetPostion;
   }
 
-  public void InLA(double targetPostionInLa){
+  public void setScoreTargetPosition(double targetPostionInLa){
+    //inLA
     this.targetPostionScoreInLa = targetPostionInLa;
   }
 
@@ -93,10 +94,5 @@ public class Elevator extends SubsystemBase {
 
     ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot1);
     SmartDashboard.putNumber("ScoreEleLoopy", targetPostionScoreInLa);
-
-    if (!InnyScory.get()) {
-      IntakeEleEncoder.setPosition(Constants.ElevatorHome);
-    }
   }
 }
-
