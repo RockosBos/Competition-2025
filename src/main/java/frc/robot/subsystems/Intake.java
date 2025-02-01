@@ -25,18 +25,18 @@ public class Intake extends SubsystemBase {
   private SparkMax IntakeRotate = new SparkMax(Constants.IntakeRotateID, MotorType.kBrushless);
   private SparkClosedLoopController BetterLoppyDoopy = IntakeRotate.getClosedLoopController();
   private AbsoluteEncoder IAE = IntakeRotate.getAbsoluteEncoder();
-  private AbsoluteEncoderConfig IAESLKG = new AbsoluteEncoderConfig();
+  private AbsoluteEncoderConfig IAEC = new AbsoluteEncoderConfig();
   private double voltage = 0.0;
   SparkMaxConfig config = new SparkMaxConfig();
-  SparkMaxConfig AC = new SparkMaxConfig();
+  SparkMaxConfig SMConfig = new SparkMaxConfig();
   private double maxCurrent = 0.0;
   private double targetPostion = 0.0;
   /** Creates a new Intake. */
   public Intake() {
     config.inverted(false);
-    IAESLKG.zeroOffset(0.728);
-    AC.absoluteEncoder.apply(IAESLKG);
-    AC.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+    IAEC.zeroOffset(0.728);
+    SMConfig.absoluteEncoder.apply(IAEC);
+    SMConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
     .p(0.1)
    .i(0)
    .d(0)
@@ -47,7 +47,7 @@ public class Intake extends SubsystemBase {
    .d(0, ClosedLoopSlot.kSlot1)
    .velocityFF(1.0 / 5767, ClosedLoopSlot.kSlot1)
    .outputRange(-1, 1, ClosedLoopSlot.kSlot1);
-    IntakeRotate.configure(AC, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    IntakeRotate.configure(SMConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
     IntakeIn.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }

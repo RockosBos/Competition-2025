@@ -25,23 +25,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Elevator extends SubsystemBase {
-  private SparkMax elevator = new SparkMax(Constants.elevatorID, MotorType.kBrushless);
-  private SparkClosedLoopController LoopyDoopy = elevator.getClosedLoopController();
-  private RelativeEncoder eleEncoder = elevator.getEncoder();
-  private SparkMax InLa = new SparkMax(Constants.InLaID, MotorType.kBrushless);
-  private SparkClosedLoopController LoopyCallyGirls = InLa.getClosedLoopController();
-  private RelativeEncoder PartyInTheUSA = InLa.getEncoder();
-  private SparkMaxConfig AConfigSongWasOn = new SparkMaxConfig();
-  private double targetPostionInLa = 0.0;
+  private SparkMax IntakeEle = new SparkMax(Constants.elevatorID, MotorType.kBrushless);
+  private SparkClosedLoopController IntakeLoopy = IntakeEle.getClosedLoopController();
+  private RelativeEncoder IntakeEleEncoder = IntakeEle.getEncoder();
+  private SparkMax ScoreEle = new SparkMax(Constants.InLaID, MotorType.kBrushless);
+  private SparkClosedLoopController ScoreEleLoopy = ScoreEle.getClosedLoopController();
+  private RelativeEncoder ScoreEleEncoder = ScoreEle.getEncoder();
+  private SparkMaxConfig ConfigScore = new SparkMaxConfig();
+  private double targetPostionScoreInLa = 0.0;
   private double targetPostion = 0.0;
   private SparkMaxConfig Configaroo = new SparkMaxConfig();
-  private DigitalInput Inny = new DigitalInput(8);
+  private DigitalInput InnyScory = new DigitalInput(8);
     
   DataLog log = DataLogManager.getLog();
   DoubleLogEntry elePosLog = new DoubleLogEntry(log, "/elePos");
   /** Creates a new Elevator. */
   public Elevator() {
-    eleEncoder.setPosition(0.0);
+    IntakeEleEncoder.setPosition(0.0);
     Configaroo.encoder.positionConversionFactor(1).velocityConversionFactor(1);
     Configaroo.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
    .p(1)
@@ -55,11 +55,11 @@ public class Elevator extends SubsystemBase {
    .velocityFF(1.0 / 5767, ClosedLoopSlot.kSlot1)
    .outputRange(-1, 1, ClosedLoopSlot.kSlot1);
 
-    elevator.configure(Configaroo, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    IntakeEle.configure(Configaroo, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
-    PartyInTheUSA.setPosition(0.0);
-    AConfigSongWasOn.encoder.positionConversionFactor(1).velocityConversionFactor(1);
-    AConfigSongWasOn.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+    ScoreEleEncoder.setPosition(0.0);
+    ConfigScore.encoder.positionConversionFactor(1).velocityConversionFactor(1);
+    ConfigScore.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
    .p(1)
    .i(0)
    .d(0)
@@ -71,7 +71,7 @@ public class Elevator extends SubsystemBase {
    .velocityFF(1.0 / 5767, ClosedLoopSlot.kSlot1)
    .outputRange(-1, 1, ClosedLoopSlot.kSlot1);
 
-    InLa.configure(AConfigSongWasOn, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
   }
 
   public void setTargestPostion(double targetPostion){
@@ -79,23 +79,23 @@ public class Elevator extends SubsystemBase {
   }
 
   public void InLA(double targetPostionInLa){
-    this.targetPostionInLa = targetPostionInLa;
+    this.targetPostionScoreInLa = targetPostionInLa;
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("EleEncoder", eleEncoder.getPosition());
-    LoopyDoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
-    SmartDashboard.putNumber("DroopyLoopy", targetPostion);
-    SmartDashboard.putBoolean("Inny", Inny.get());
+    SmartDashboard.putNumber("IntakeeleEncoder", IntakeEleEncoder.getPosition());
+    IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    SmartDashboard.putNumber("IntakeLoopy", targetPostion);
+    SmartDashboard.putBoolean("InnyScory", InnyScory.get());
 
-    elePosLog.append(eleEncoder.getPosition());
+    elePosLog.append(IntakeEleEncoder.getPosition());
 
-    LoopyCallyGirls.setReference(targetPostionInLa, ControlType.kPosition, ClosedLoopSlot.kSlot1);
-    SmartDashboard.putNumber("loopyCallyGirls", targetPostionInLa);
+    ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot1);
+    SmartDashboard.putNumber("ScoreEleLoopy", targetPostionScoreInLa);
 
-    if (!Inny.get()) {
-      eleEncoder.setPosition(Constants.ElevatorHome);
+    if (!InnyScory.get()) {
+      IntakeEleEncoder.setPosition(Constants.ElevatorHome);
     }
   }
 }

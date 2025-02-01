@@ -24,4 +24,9 @@ public class Constants {
     public static final double InLaDown = 25;
     public static final double InLaMiddle = 50;
 
+    public static final int AgitateRheelID = 13;
+    public static final int ClawID = 12;
+    public static final int UpDownPivotID = 11;
+    public static final int LfetyRightyID = 10;
+
 }
