@@ -71,6 +71,7 @@ SparkMaxConfig LiftyRighyConfig = new SparkMaxConfig();
    .velocityFF(1.0 / 5767, ClosedLoopSlot.kSlot1)
    .outputRange(-1, 1, ClosedLoopSlot.kSlot1);
     UpDownPivot.configure(UpDownPiviotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    //Change for test commit, remove if you see this
   }
 
   @Override
