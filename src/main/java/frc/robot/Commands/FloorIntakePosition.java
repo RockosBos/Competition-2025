@@ -11,12 +11,12 @@ import frc.robot.subsystems.Score;
 import frc.robot.Constants;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class FloorLoadingPosition extends Command {
+public class FloorIntakePosition extends Command {
   Intake m_Intake;
   Elevator m_Elevator;
   Score m_Score;
   /** Creates a new FloorLoadingPosition. */
-  public FloorLoadingPosition(Intake m_Intake, Elevator m_Elevator, Score m_Score) {
+  public FloorIntakePosition(Intake m_Intake, Elevator m_Elevator, Score m_Score) {
     this.m_Intake = m_Intake;
     this.m_Elevator = m_Elevator;
     this.m_Score = m_Score;
@@ -30,9 +30,14 @@ public class FloorLoadingPosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Intake.setMotorVoltage(Constants.IntakeRollerForwardVoltage);
-    m_Intake.setTargetPostion(Constants.IntakeArmFloorPos);
-    m_Elevator.setIntakeTargetPostion(Constants.IntakeElevatorFloorIntakePos);
+    m_Intake.setMotorVoltage(Constants.INTAKE_ROLLER_INFEED_VOLTAGE);
+    m_Intake.setTargetPostion(Constants.INTAKE_ROTATE_FLOOR_INTAKE_POS);
+    m_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS);
+    m_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_INTAKE_POSITION);
+    m_Score.setClawTarget(Constants.SCORE_CLAW_OPEN_POS);
+    m_Score.setRotateTarget(Constants.SCORE_ROTATE_CENTER_POS);
+    m_Score.setPivotTarget(Constants.SCORE_PIVOT_IN_POS);
+    m_Score.setAgitatorRoller(Constants.SCORE_AGITATOR_INFEED_VOLTAGE);
   }
 
   // Called once the command ends or is interrupted.
@@ -42,8 +47,8 @@ public class FloorLoadingPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_Intake.inPosition()){
-
+    if(m_Intake.inPosition() && m_Elevator.inPosition() && m_Score.inPosition()){
+      return true;
     }
     return false;
   }

@@ -20,10 +20,10 @@ import frc.robot.Constants;
 
 public class Score extends SubsystemBase {
 
-private SparkMax AgitateRheel = new SparkMax(Constants.AgitateRheelID, MotorType.kBrushless);
-private SparkMax Claw = new SparkMax(Constants.ClawID, MotorType.kBrushless);
-private SparkMax UpDownPivot = new SparkMax(Constants.UpDownPivotID, MotorType.kBrushless);
-private SparkMax LiftyRighty = new SparkMax(Constants.LfetyRightyID, MotorType.kBrushless);
+private SparkMax AgitateRheel = new SparkMax(Constants.ID_SCORE_AGITATE, MotorType.kBrushless);
+private SparkMax Claw = new SparkMax(Constants.ID_SCORE_CLAW, MotorType.kBrushless);
+private SparkMax UpDownPivot = new SparkMax(Constants.ID_SCORE_PIVOT, MotorType.kBrushless);
+private SparkMax LiftyRighty = new SparkMax(Constants.ID_SCORE_ROTATE, MotorType.kBrushless);
 private AbsoluteEncoder ClawAbs = Claw.getAbsoluteEncoder();
 private AbsoluteEncoder UpDownPiviotAbs = UpDownPivot.getAbsoluteEncoder();
 private AbsoluteEncoder LiftyRightyAbs = LiftyRighty.getAbsoluteEncoder();
@@ -72,6 +72,26 @@ SparkMaxConfig LiftyRighyConfig = new SparkMaxConfig();
    .outputRange(-1, 1, ClosedLoopSlot.kSlot1);
     UpDownPivot.configure(UpDownPiviotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     //Change for test commit, remove if you see this
+  }
+
+  public void setRotateTarget(double rotateTargetPosition){
+
+  }
+
+  public void setPivotTarget(double pivotTargetPosition){
+
+  }
+
+  public void setClawTarget(double clawTargetPosition){
+
+  }
+
+  public void setAgitatorRoller(double agitatorRollerVoltage){
+
+  }
+
+  public boolean inPosition(){
+    return false;
   }
 
   @Override
