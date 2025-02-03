@@ -21,8 +21,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
-  private SparkMax IntakeIn = new SparkMax(Constants.IntakeID, MotorType.kBrushless);
-  private SparkMax IntakeRotate = new SparkMax(Constants.IntakeRotateID, MotorType.kBrushless);
+  private SparkMax IntakeIn = new SparkMax(Constants.ID_INTAKE_ROLLER, MotorType.kBrushless);
+  private SparkMax IntakeRotate = new SparkMax(Constants.ID_INTAKE_ROTATE, MotorType.kBrushless);
   private SparkClosedLoopController BetterLoppyDoopy = IntakeRotate.getClosedLoopController();
   private AbsoluteEncoder intakeAbsEncoder = IntakeRotate.getAbsoluteEncoder();
   private AbsoluteEncoderConfig IAEC = new AbsoluteEncoderConfig();
@@ -62,7 +62,7 @@ public class Intake extends SubsystemBase {
   }
 
   public boolean inPosition(){
-    if(Constants.intakeRotatePositionThreshold > intakeRotateTargetErr){
+    if(Constants.THRESHOLD_INTAKE_ROTATE_POS > intakeRotateTargetErr){
       return true;
     }
     return false;
