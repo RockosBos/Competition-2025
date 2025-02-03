@@ -4,28 +4,52 @@ public class Constants {
 
     //CAN ID's
 
-    public static final int IntakeID = 16;
-    public static final int IntakeRotateID = 17;
-    public static final int IntakeEleID = 18;
-    public static final int ScoreEleID = 19;
-    public static final int AgitateRheelID = 13;
-    public static final int ClawID = 12;
-    public static final int UpDownPivotID = 11;
-    public static final int LfetyRightyID = 10;
+    public static final int ID_INTAKE_ROLLER = 16;
+    public static final int ID_INTAKE_ROTATE = 17;
+    public static final int ID_INTAKE_ELEVATOR = 18;
+    public static final int ID_SCORE_ELEVATOR = 19;
+    public static final int ID_SCORE_AGITATE = 13;
+    public static final int ID_SCORE_CLAW = 12;
+    public static final int ID_SCORE_PIVOT = 11;
+    public static final int ID_SCORE_ROTATE = 10;
 
     //Intake Constant Values
 
-    public static final double IntakeRollerForwardVoltage = 0.5;
-    public static final double IntakeRollerReverseVoltage = -0.5;
+    public static final double INTAKE_ROLLER_INFEED_VOLTAGE = 0.5;
+    public static final double INTAKE_ROLLER_OUTFEED_VOLTAGE = -0.5;
 
-    public static final double IntakeArmFloorPos = 0.25;
+    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 0;
+    public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 0;
+    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 0;
+    public static final double INTAKE_ELEVATOR_L1_POS = 0;
 
-    public static final double IntakeElevatorFloorIntakePos = 10;
+    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0;
+    public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0;
+    public static final double INTAKE_ROTATE_HANDOFF_POS = 0;
+    public static final double INTAKE_ROTATE_L1_POS = 0;
 
-    //Elevator Constant Values
+    //Score Arm Constant Values
 
+    public static final double SCORE_ELEVATOR_INTAKE_POSITION = 0;
+    public static final double SCORE_ELEVATOR_L2_POS = 0;
+    public static final double SCORE_ELEVATOR_L3_POS = 0;
+    public static final double SCORE_ELEVATOR_L4_POS = 0;
+    public static final double SCORE_HANDOFF_POS = 0;
+
+    public static final double SCORE_ROTATE_LEFT_POS = 0;
+    public static final double SCORE_ROTATE_RIGHT_POS = 0;
+    public static final double SCORE_ROTATE_CENTER_POS = 0;
+
+    public static final double SCORE_PIVOT_IN_POS = 0;
+    public static final double SCORE_PIVOT_OUT_POS = 0;
+
+    public static final double SCORE_CLAW_CLOSED_POS = 0;
+    public static final double SCORE_CLAW_OPEN_POS = 0;
+
+    public static final double SCORE_AGITATOR_INFEED_VOLTAGE = 0;
+    public static final double SCORE_AGITATOR_OUTFEED_VOLTAGE = 0;
 
     //thresholds
-    public static final double intakeRotatePositionThreshold = 0.01;    //Absolute Encoder
+    public static final double THRESHOLD_INTAKE_ROTATE_POS = 0.01;    //Absolute Encoder
 
 }
