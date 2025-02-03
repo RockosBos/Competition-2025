@@ -36,6 +36,7 @@ private SparkClosedLoopController LiftyRightyLoopy = LiftyRighty.getClosedLoopCo
 SparkMaxConfig ClawConfig = new SparkMaxConfig();
 SparkMaxConfig UpDownPiviotConfig = new SparkMaxConfig();
 SparkMaxConfig LiftyRighyConfig = new SparkMaxConfig();
+private double targetPostionRotate = 0.0, targetPostionPiviot = 0.0, targetPsotionClaw = 0.0;
 
 
   /** Creates a new Score. */
@@ -75,7 +76,7 @@ SparkMaxConfig LiftyRighyConfig = new SparkMaxConfig();
   }
 
   public void setRotateTarget(double rotateTargetPosition){
-
+    if(Constants.Threshold_Score_Rotate > )
   }
 
   public void setPivotTarget(double pivotTargetPosition){

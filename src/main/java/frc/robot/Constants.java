@@ -51,5 +51,8 @@ public class Constants {
 
     //thresholds
     public static final double THRESHOLD_INTAKE_ROTATE_POS = 0.01;    //Absolute Encoder
+    public static final double Threshold_Score_Rotate = 0.01;
+    public static final double Threshold_Score_Pivot = 0.01;
+    public static final double Threshold_Score_Claw = 0.01;
 
 }
