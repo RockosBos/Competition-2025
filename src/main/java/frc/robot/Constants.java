@@ -41,7 +41,8 @@ public class Constants {
     public static final double SCORE_ROTATE_CENTER_POS = 0;
 
     public static final double SCORE_PIVOT_IN_POS = 0;
-    public static final double SCORE_PIVOT_OUT_POS = 0;
+    public static final double SCORE_PIVOT_OUT_LEFT_POS = 0;
+    public static final double SCORE_PIVOT_OUT_RIGHT_POS = 0;
 
     public static final double SCORE_CLAW_CLOSED_POS = 0;
     public static final double SCORE_CLAW_OPEN_POS = 0;
@@ -50,7 +51,7 @@ public class Constants {
     public static final double SCORE_AGITATOR_OUTFEED_VOLTAGE = 0;
 
     //Absolute Encoder offsets
-    
+
     public static final double OFFSET_INTAKE_ROTATE_ABS = 0.0;
     public static final double OFFSET_SCORE_ROTATE_ABS = 0.0;
     public static final double OFFSET_SCORE_PIVOT_ABS = 0.0;

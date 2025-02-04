@@ -97,7 +97,7 @@ public class Intake extends SubsystemBase {
   }
 
     /**
-     * Set Target Position for the Intake Arm, measured in Rotations
+     * Set Target Position for the Intake Arm, measured in Rotations via an Absolute Encoder
      * 
      * @param targetPosition The target position for the intake Arm in Rotations
      */

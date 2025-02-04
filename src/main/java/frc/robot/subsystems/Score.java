@@ -74,22 +74,50 @@ SparkMaxConfig LiftyRighyConfig = new SparkMaxConfig();
     //Change for test commit, remove if you see this
   }
 
+  /**
+   * Set Arm Rotate Target Position, There should be three states: Left, Right, and Center
+   * 
+   * @param rotateTargetPosition The Requested Set Position on the absolute encoder for the closed loop
+   * controller to navigate to.
+   */
   public void setRotateTarget(double rotateTargetPosition){
 
   }
 
+    /**
+   * Set Arm Pivot Target Position, There should be a high state and low state for each direction.
+   * 
+   * @param pivotTargetPosition The Requested Set Position on the absolute encoder for the closed loop
+   * controller to navigate to.
+   */
   public void setPivotTarget(double pivotTargetPosition){
 
   }
 
+  
+  /**
+   * Set Claw Target Position, There should be an Open and Closed Position.
+   * 
+   * @param clawTargetPosition The Requested Set Position on the absolute encoder for the closed loop
+   * controller to navigate to.
+   */
   public void setClawTarget(double clawTargetPosition){
 
   }
 
-  public void setAgitatorRoller(double agitatorRollerVoltage){
+    /**
+   * Set Claw Target Position, There should be an Open and Closed Position.
+   * 
+   * @param agitatorRollerVoltage The Requested voltage to set Agitator voltage to.
+   * 
+   */
+  public void setAgitatorRollerVoltage(double agitatorRollerVoltage){
 
   }
 
+  /**
+  * Returns if the Intake Arm is in position based on a threshold set in the constants file
+  */
   public boolean inPosition(){
     return false;
   }
