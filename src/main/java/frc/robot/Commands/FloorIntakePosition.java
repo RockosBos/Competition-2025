@@ -37,7 +37,7 @@ public class FloorIntakePosition extends Command {
     m_Score.setClawTarget(Constants.SCORE_CLAW_OPEN_POS);
     m_Score.setRotateTarget(Constants.SCORE_ROTATE_CENTER_POS);
     m_Score.setPivotTarget(Constants.SCORE_PIVOT_IN_POS);
-    m_Score.setAgitatorRoller(Constants.SCORE_AGITATOR_INFEED_VOLTAGE);
+    m_Score.setAgitatorRollerVoltage(Constants.SCORE_AGITATOR_INFEED_VOLTAGE);
   }
 
   // Called once the command ends or is interrupted.

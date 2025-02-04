@@ -36,7 +36,7 @@ private SparkClosedLoopController LiftyRightyLoopy = LiftyRighty.getClosedLoopCo
 SparkMaxConfig ClawConfig = new SparkMaxConfig();
 SparkMaxConfig UpDownPiviotConfig = new SparkMaxConfig();
 SparkMaxConfig LiftyRighyConfig = new SparkMaxConfig();
-private double targetPostionRotate = 0.0, targetPostionPiviot = 0.0, targetPsotionClaw = 0.0;
+private double targetPostionRotate = 0.0, targetPostionPivot = 0.0, targetPostionClaw = 0.0;
 
 
   /** Creates a new Score. */
@@ -49,12 +49,8 @@ private double targetPostionRotate = 0.0, targetPostionPiviot = 0.0, targetPsoti
    .i(0)
    .d(0)
    .velocityFF(0)
-   .outputRange(-1, 1)
-   .p(0.0001, ClosedLoopSlot.kSlot1)
-   .i(0, ClosedLoopSlot.kSlot1)
-   .d(0, ClosedLoopSlot.kSlot1)
-   .velocityFF(1.0 / 5767, ClosedLoopSlot.kSlot1)
-   .outputRange(-1, 1, ClosedLoopSlot.kSlot1);
+   .outputRange(-1, 1);
+   
     Claw.configure(ClawConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     
     UpDownPiviotConfig.inverted(false);
@@ -65,33 +61,81 @@ private double targetPostionRotate = 0.0, targetPostionPiviot = 0.0, targetPsoti
    .i(0)
    .d(0)
    .velocityFF(0)
-   .outputRange(-1, 1)
-   .p(0.0001, ClosedLoopSlot.kSlot1)
-   .i(0, ClosedLoopSlot.kSlot1)
-   .d(0, ClosedLoopSlot.kSlot1)
-   .velocityFF(1.0 / 5767, ClosedLoopSlot.kSlot1)
-   .outputRange(-1, 1, ClosedLoopSlot.kSlot1);
+   .outputRange(-1, 1);
+
     UpDownPivot.configure(UpDownPiviotConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     //Change for test commit, remove if you see this
   }
 
-  public void setRotateTarget(double rotateTargetPosition){
-    if(Constants.Threshold_Score_Rotate > )
+  /**
+   * Set Arm Rotate Target Position, There should be three states: Left, Right, and Center
+   * 
+   * @param rotateTargetPosition The Requested Set Position on the absolute encoder for the closed loop
+   * controller to navigate to.
+   */
+  public boolean atRotateTarget(){
+    if(Constants.THRESHOLD_SCORE_ROTATE_POS > targetPostionRotate){
+       return true;
+      }
+      return false;
+    }
+
+    /**
+   * Set Arm Pivot Target Position, There should be a high state and low state for each direction.
+   * 
+   * @param pivotTargetPosition The Requested Set Position on the absolute encoder for the closed loop
+   * controller to navigate to.
+   */
+  public boolean atPivotTarget(){
+    if (Constants.THRESHOLD_SCORE_PIVOT_POS > targetPostionPivot) {
+      return true;
+    }
+      return false;
   }
 
-  public void setPivotTarget(double pivotTargetPosition){
+  
+  /**
+   * Set Claw Target Position, There should be an Open and Closed Position.
+   * 
+   * @param clawTargetPosition The Requested Set Position on the absolute encoder for the closed loop
+   * controller to navigate to.
+   */
+
+   public boolean atClawTarget(){
+    if (Constants.THRESHOLD_SCORE_CLAW_POS > targetPostionClaw) {
+      return true;
+    }
+      return false;
+  }
+
+  public void setRotateTargetPostion(double targetPostionRotate){
+    this.targetPostionRotate = targetPostionRotate;
+  }
+
+  public void setPivotTargetPostion(double targetPostionPivot){
+    this.targetPostionPivot = targetPostionPivot;
+  }
+
+  public void setClawTargetPostion(double targetPostionClaw){
+    this.targetPostionClaw = targetPostionClaw;
+  }
+    /**
+   * Set Claw Target Position, There should be an Open and Closed Position.
+   * 
+   * @param agitatorRollerVoltage The Requested voltage to set Agitator voltage to.
+   * 
+   */
+  public void setAgitatorRollerVoltage(double agitatorRollerVoltage){
 
   }
 
-  public void setClawTarget(double clawTargetPosition){
-
-  }
-
-  public void setAgitatorRoller(double agitatorRollerVoltage){
-
-  }
-
+  /**
+  * Returns if the Intake Arm is in position based on a threshold set in the constants file
+  */
   public boolean inPosition(){
+    if (this.atRotateTarget() && this.atPivotTarget() && this.atClawTarget()) {
+      return true;
+    }
     return false;
   }
 
