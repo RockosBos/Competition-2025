@@ -28,6 +28,9 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Score;
 
 public class RobotContainer {
+
+    //Setup for telemetry and Swerve Drive
+
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
@@ -40,24 +43,31 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
+    //Define Controllers
+
     private final CommandXboxController driverController = new CommandXboxController(0);
     private final CommandXboxController operatorController = new CommandXboxController(1);
 
+    //Subsystems
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    private Intake intakeSubsystem = new Intake();
-    private Elevator elevatorSubsytem = new Elevator();
-    private Score scoreSubsystem = new Score();
+    private final Intake intakeSubsystem = new Intake();
+    private final Elevator elevatorSubsytem = new Elevator();
+    private final Score scoreSubsystem = new Score();
 
+    //Chooser for Autonomous Modes
     private final SendableChooser<Command> autoChooser;
 
 
     public RobotContainer() {
+        //Data Log Initialization
         DataLogManager.start();
         DriverStation.startDataLog(DataLogManager.getLog());
 
+        //Named Commands for Pathplanner
         NamedCommands.registerCommand("FloorIntakePosition", new FloorIntakePosition(intakeSubsystem, elevatorSubsytem, scoreSubsystem));
 
+        //Auto Mode Setup
         autoChooser = AutoBuilder.buildAutoChooser("Tests");
         SmartDashboard.putData("Auto Mode", autoChooser);
         
@@ -65,6 +75,9 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
+
+        //Driver Controller
+
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
@@ -87,6 +100,11 @@ public class RobotContainer {
         driverController.start().and(driverController.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         driverController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+
+        //Operator Controller
+
+
+        //Telemetry
 
         drivetrain.registerTelemetry(logger::telemeterize);
 

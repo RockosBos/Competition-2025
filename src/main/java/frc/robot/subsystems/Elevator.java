@@ -38,7 +38,7 @@ public class Elevator extends SubsystemBase {
   private DigitalInput InnyScory = new DigitalInput(8);
     
   DataLog log = DataLogManager.getLog();
-  DoubleLogEntry elePosLog = new DoubleLogEntry(log, "/elePos");
+  DoubleLogEntry elePosLog = new DoubleLogEntry(log, "/U/Elevator/EleIntakePos");
   /** Creates a new Elevator. */
   public Elevator() {
     IntakeEleEncoder.setPosition(0.0);
@@ -48,12 +48,7 @@ public class Elevator extends SubsystemBase {
    .i(0)
    .d(0)
    .velocityFF(0)
-   .outputRange(-1, 1)
-   .p(0.0001, ClosedLoopSlot.kSlot1)
-   .i(0, ClosedLoopSlot.kSlot1)
-   .d(0, ClosedLoopSlot.kSlot1)
-   .velocityFF(1.0 / 5767, ClosedLoopSlot.kSlot1)
-   .outputRange(-1, 1, ClosedLoopSlot.kSlot1);
+   .outputRange(-0.1, 0.1);
 
     IntakeEle.configure(Configaroo, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
@@ -64,22 +59,26 @@ public class Elevator extends SubsystemBase {
    .i(0)
    .d(0)
    .velocityFF(0)
-   .outputRange(-1, 1)
-   .p(0.0001, ClosedLoopSlot.kSlot1)
-   .i(0, ClosedLoopSlot.kSlot1)
-   .d(0, ClosedLoopSlot.kSlot1)
-   .velocityFF(1.0 / 5767, ClosedLoopSlot.kSlot1)
-   .outputRange(-1, 1, ClosedLoopSlot.kSlot1);
+   .outputRange(-0.1, 0.1);
 
     ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
   }
 
+    /**
+     * Set Target Position for the Intake Elevator, measured in Rotations of relative encoder
+     * 
+     * @param targetPosition The target position for the intake elevator in Rotations
+     */
   public void setIntakeTargetPostion(double targetPostion){
     this.targetPostion = targetPostion;
   }
 
+    /**
+     * Set Target Position for the Scoring Elevator, measured in Rotations of relative encoder
+     * 
+     * @param targetPosition The target position for the intake elevator in Rotations
+     */
   public void setScoreTargetPosition(double targetPostionInLa){
-    //inLA
     this.targetPostionScoreInLa = targetPostionInLa;
   }
 
@@ -89,14 +88,10 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("IntakeeleEncoder", IntakeEleEncoder.getPosition());
     IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
-    SmartDashboard.putNumber("IntakeLoopy", targetPostion);
-    SmartDashboard.putBoolean("InnyScory", InnyScory.get());
-
-    elePosLog.append(IntakeEleEncoder.getPosition());
-
     ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot1);
-    SmartDashboard.putNumber("ScoreEleLoopy", targetPostionScoreInLa);
+
+    //logging
+    elePosLog.append(IntakeEleEncoder.getPosition());
   }
 }
