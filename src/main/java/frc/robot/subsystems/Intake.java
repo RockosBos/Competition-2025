@@ -14,53 +14,107 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.util.datalog.BooleanLogEntry;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
+  //Motor Definitions
   private SparkMax IntakeIn = new SparkMax(Constants.ID_INTAKE_ROLLER, MotorType.kBrushless);
   private SparkMax IntakeRotate = new SparkMax(Constants.ID_INTAKE_ROTATE, MotorType.kBrushless);
+
+  //PID Controller and Encoder Definitions
   private SparkClosedLoopController BetterLoppyDoopy = IntakeRotate.getClosedLoopController();
   private AbsoluteEncoder intakeAbsEncoder = IntakeRotate.getAbsoluteEncoder();
-  private AbsoluteEncoderConfig IAEC = new AbsoluteEncoderConfig();
-  private double voltage = 0.0;
-  SparkMaxConfig config = new SparkMaxConfig();
-  SparkMaxConfig SMConfig = new SparkMaxConfig();
-  private double maxCurrent = 0.0, targetPostion = 0.0, intakeRotateTargetErr = 0.0;
 
-  boolean errFlag = false;
+  //Configuration Definitions
+  private SparkMaxConfig intakeInConfig = new SparkMaxConfig();
+  private SparkMaxConfig intakeRotateConfig = new SparkMaxConfig();
+  private AbsoluteEncoderConfig IAEC = new AbsoluteEncoderConfig();
+
+  //Other Variables
+  private double voltage = 0.0, targetPosition = 0.0, intakeRotateTargetErr = 0.0;
+  private boolean errFlag = false;
+
+  //Logging variables
+  private DoubleLogEntry intakeInAmpLog, intakeInVoltageLog;
+  private DoubleLogEntry intakeRotateAmpLog, intakeRotateVoltageLog, intakeRotateTargetPositionLog, intakeRotateAbsCurrentPositionLog, intakeRotateErrLog;
+  private BooleanLogEntry intakeRotateInPosLog;
+
   /** Creates a new Intake. */
   public Intake() {
-    config.inverted(false);
+
+    //Set Up Configurations
+    intakeInConfig.inverted(false);
+    intakeInConfig.idleMode(IdleMode.kCoast);
+    intakeInConfig.smartCurrentLimit(20);
+    
+    intakeRotateConfig.inverted(false);
+    intakeRotateConfig.idleMode(IdleMode.kBrake);
+    intakeRotateConfig.smartCurrentLimit(20);
+
     IAEC.zeroOffset(0.728);
-    SMConfig.absoluteEncoder.apply(IAEC);
-    SMConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
+    intakeRotateConfig.absoluteEncoder.apply(IAEC);
+    intakeRotateConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
     .p(0.1)
    .i(0)
    .d(0)
    .velocityFF(0)
-   .outputRange(-1, 1)
-   .p(0.0001, ClosedLoopSlot.kSlot1)
-   .i(0, ClosedLoopSlot.kSlot1)
-   .d(0, ClosedLoopSlot.kSlot1)
-   .velocityFF(1.0 / 5767, ClosedLoopSlot.kSlot1)
-   .outputRange(-1, 1, ClosedLoopSlot.kSlot1);
-    IntakeRotate.configure(SMConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    
-    IntakeIn.configure(config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+   .outputRange(-0.1, 0.1);
+
+   //Apply Configurations
+    IntakeRotate.configure(intakeRotateConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    IntakeIn.configure(intakeInConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    //logging
+    DataLog log = DataLogManager.getLog();
+
+    intakeInAmpLog = new DoubleLogEntry(log, "/U/Intake/intakeInAmps");
+    intakeInVoltageLog = new DoubleLogEntry(log, "/U/Intake/intakeInVoltage");
+
+    intakeRotateAmpLog = new DoubleLogEntry(log, "/U/Intake/intakeRotateAmps");
+    intakeRotateVoltageLog = new DoubleLogEntry(log, "/U/Intake/intakeRotateVoltage");
+    intakeRotateTargetPositionLog = new DoubleLogEntry(log, "/U/Intake/intakeRotateTargetPosition");
+    intakeRotateAbsCurrentPositionLog = new DoubleLogEntry(log, "/U/Intake/intakeRotateAbsCurrentPosition");
+    intakeRotateErrLog = new DoubleLogEntry(log, "/U/Intake/intakeRotateErrLog");
+
   }
 
+    /**
+     * Set voltage that will be used for the Intake Roller Motor
+     * 
+     * @param voltage The voltage to provide for the motor
+     */
   public void setMotorVoltage(double voltage){
     this.voltage = voltage;
   }
 
-  public void setTargetPostion(double targetPostion){
-    this.targetPostion = targetPostion;
+    /**
+     * Set Target Position for the Intake Arm, measured in Rotations
+     * 
+     * @param targetPosition The target position for the intake Arm in Rotations
+     */
+  public void setTargetPostion(double targetPosition){
+    this.targetPosition = targetPosition;
   }
 
+    /**
+     * Returns if the error flag is currently set
+     */
+  public boolean inErrState(){
+    return errFlag;
+  }
+
+    /**
+     * Returns if the Intake Arm is in position based on a threshold set in the constants file
+     */
   public boolean inPosition(){
     if(Constants.THRESHOLD_INTAKE_ROTATE_POS > intakeRotateTargetErr){
       return true;
@@ -70,14 +124,27 @@ public class Intake extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (IntakeIn.getOutputCurrent() > 10) {
-      voltage = 0.25;
-    }
-    intakeRotateTargetErr = Math.abs(targetPostion - intakeAbsEncoder.getPosition());
-    IntakeIn.set(voltage);
-    SmartDashboard.putNumber("Intakecurrent", IntakeIn.getOutputCurrent());
-    SmartDashboard.putNumber("intakeAbsEncoder", intakeAbsEncoder.getPosition());
-    SmartDashboard.putNumber("Target Position", targetPostion);
-    BetterLoppyDoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+
+    //Calculate the distance between current location and target location in rotations
+    intakeRotateTargetErr = Math.abs(targetPosition - intakeAbsEncoder.getPosition());
+
+    //Set Intake Roller Voltage
+    IntakeIn.setVoltage(voltage);
+
+    //Set Closed Loop Controller for Intake Rotate Arm
+    BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+
+    //Logging
+
+    intakeInAmpLog.append(IntakeIn.getOutputCurrent());
+    intakeInVoltageLog.append(IntakeIn.getAppliedOutput());
+
+    intakeRotateAmpLog.append(IntakeRotate.getOutputCurrent());
+    intakeRotateVoltageLog.append(IntakeRotate.getAppliedOutput());
+    intakeRotateTargetPositionLog.append(targetPosition);
+    intakeRotateAbsCurrentPositionLog.append(intakeAbsEncoder.getPosition());
+    intakeRotateErrLog.append(intakeRotateTargetErr);
+    intakeRotateInPosLog.append(this.inPosition());
+
   }
 }

@@ -49,7 +49,20 @@ public class Constants {
     public static final double SCORE_AGITATOR_INFEED_VOLTAGE = 0;
     public static final double SCORE_AGITATOR_OUTFEED_VOLTAGE = 0;
 
+    //Absolute Encoder offsets
+    
+    public static final double OFFSET_INTAKE_ROTATE_ABS = 0.0;
+    public static final double OFFSET_SCORE_ROTATE_ABS = 0.0;
+    public static final double OFFSET_SCORE_PIVOT_ABS = 0.0;
+    public static final double OFFSET_SCORE_CLAW_ABS = 0.0;
+
     //thresholds
-    public static final double THRESHOLD_INTAKE_ROTATE_POS = 0.01;    //Absolute Encoder
+    public static final double THRESHOLD_INTAKE_ROTATE_POS = 0.01;
+    public static final double THRESHOLD_ELEVATOR_INTAKE_POS = 0.01;
+    public static final double THRESHOLD_ELEVATOR_SCORE_POS = 0.01;
+    public static final double THRESHOLD_SCORE_ROTATE_POS = 0.01;
+    public static final double THRESHOLD_SCORE_PIVOT_POS = 0.01;
+    public static final double THRESHOLD_SCORE_CLAW_POS = 0.01;
+
 
 }
