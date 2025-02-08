@@ -22,7 +22,7 @@ public class HandOffIntakePos extends Command {
   @Override
   public void initialize() {
     e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_HANDOFF_POS);
-    e_Elevator.setScoreTargetPosition(Constants.SCORE_HANDOFF_POS);
+    //_Elevator.setScoreTargetPosition(Constants.SCORE_HANDOFF_POS);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

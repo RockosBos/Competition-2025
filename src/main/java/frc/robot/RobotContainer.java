@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.FloorIntakePosition;
+import frc.robot.Commands.LoadingIntakePosition;
+import frc.robot.Commands.ScoreL1Position;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
@@ -102,6 +104,10 @@ public class RobotContainer {
         driverController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         //Operator Controller
+
+        operaterController.b().whileTrue(new LoadingIntakePosition(elevatorSubsytem));
+        operaterController.a().whileTrue(new FloorIntakePosition(elevatorSubsytem));
+        operaterController.y().whileTrue(new ScoreL1Position(elevatorSubsytem));
 
 
         //Telemetry

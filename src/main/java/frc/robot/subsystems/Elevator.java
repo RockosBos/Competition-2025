@@ -46,23 +46,24 @@ public class Elevator extends SubsystemBase {
     Configaroo.encoder.positionConversionFactor(1).velocityConversionFactor(1);
     Configaroo.idleMode(IdleMode.kCoast);
     Configaroo.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-   .p(5)
+   .p(1)
    .i(0)
    .d(0)
-   .velocityFF(0.1)
-   .outputRange(-0.1, 0.1);
+   .velocityFF(0.0)
+   .outputRange(-0.6, 0.6);
 
     IntakeEle.configure(Configaroo, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
     ScoreEleEncoder.setPosition(0.0);
     ConfigScore.encoder.positionConversionFactor(1).velocityConversionFactor(1);
-    ConfigScore.idleMode(IdleMode.kCoast);
+    ConfigScore.idleMode(IdleMode.kBrake);
+    ConfigScore.closedLoopRampRate(0.1);
     ConfigScore.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-   .p(1)
+   .p(0.05)
    .i(0)
    .d(0)
    .velocityFF(0)
-   .outputRange(-0.1, 0.1);
+   .outputRange(-0.75, 0.75);
 
     ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
   }
@@ -92,7 +93,7 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
-    //ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot1);
+    ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 
     //logging
     elePosLog.append(IntakeEleEncoder.getPosition());

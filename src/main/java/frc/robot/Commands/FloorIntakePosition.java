@@ -16,11 +16,11 @@ public class FloorIntakePosition extends Command {
   Elevator m_Elevator;
   Score m_Score;
   /** Creates a new FloorLoadingPosition. */
-  public FloorIntakePosition(Intake m_Intake, Elevator m_Elevator, Score m_Score) {
-    this.m_Intake = m_Intake;
+  public FloorIntakePosition(Elevator m_Elevator) {
+    //this.m_Intake = m_Intake;
     this.m_Elevator = m_Elevator;
-    this.m_Score = m_Score;
-    addRequirements(this.m_Intake, this.m_Elevator, this.m_Score);
+    //this.m_Score = m_Score;
+    addRequirements(this.m_Elevator);
   }
 
   // Called when the command is initially scheduled.
@@ -47,9 +47,9 @@ public class FloorIntakePosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(m_Intake.inPosition() && m_Elevator.inPosition() && m_Score.inPosition()){
-      return true;
-    }
+    // if(m_Intake.inPosition() && m_Elevator.inPosition() && m_Score.inPosition()){
+    //   return true;
+    // }
     return false;
   }
 }

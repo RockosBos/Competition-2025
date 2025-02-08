@@ -21,7 +21,7 @@ public class Constants {
     public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 10.0;
     public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 23.0;
     public static final double INTAKE_ELEVATOR_HANDOFF_POS = 25.0;
-    public static final double INTAKE_ELEVATOR_L1_POS = 30;
+    public static final double INTAKE_ELEVATOR_L1_POS = 35;
 
     public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0;
     public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0;
@@ -30,8 +30,8 @@ public class Constants {
 
     //Score Arm Constant Values
 
-    public static final double SCORE_ELEVATOR_INTAKE_POSITION = 0;
-    public static final double SCORE_ELEVATOR_L2_POS = 0;
+    public static final double SCORE_ELEVATOR_INTAKE_POSITION = 5;
+    public static final double SCORE_ELEVATOR_L2_POS = 155;
     public static final double SCORE_ELEVATOR_L3_POS = 0;
     public static final double SCORE_ELEVATOR_L4_POS = 0;
     public static final double SCORE_HANDOFF_POS = 0;
