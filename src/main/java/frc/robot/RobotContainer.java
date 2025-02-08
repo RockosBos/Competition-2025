@@ -46,14 +46,14 @@ public class RobotContainer {
     //Define Controllers
 
     private final CommandXboxController driverController = new CommandXboxController(0);
-    private final CommandXboxController operatorController = new CommandXboxController(1);
+    private final CommandXboxController operaterController = new CommandXboxController(1);
 
     //Subsystems
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    private final Intake intakeSubsystem = new Intake();
+    //private final Intake intakeSubsystem = new Intake();
     private final Elevator elevatorSubsytem = new Elevator();
-    private final Score scoreSubsystem = new Score();
+    //private final Score scoreSubsystem = new Score();
 
     //Chooser for Autonomous Modes
     private final SendableChooser<Command> autoChooser;
@@ -65,7 +65,7 @@ public class RobotContainer {
         DriverStation.startDataLog(DataLogManager.getLog());
 
         //Named Commands for Pathplanner
-        NamedCommands.registerCommand("FloorIntakePosition", new FloorIntakePosition(intakeSubsystem, elevatorSubsytem, scoreSubsystem));
+        //NamedCommands.registerCommand("FloorIntakePosition", new FloorIntakePosition(intakeSubsystem, elevatorSubsytem, scoreSubsystem));
 
         //Auto Mode Setup
         autoChooser = AutoBuilder.buildAutoChooser("Tests");

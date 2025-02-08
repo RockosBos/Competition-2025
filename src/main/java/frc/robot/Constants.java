@@ -18,10 +18,10 @@ public class Constants {
     public static final double INTAKE_ROLLER_INFEED_VOLTAGE = 0.5;
     public static final double INTAKE_ROLLER_OUTFEED_VOLTAGE = -0.5;
 
-    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 0;
-    public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 0;
-    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 0;
-    public static final double INTAKE_ELEVATOR_L1_POS = 0;
+    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 10.0;
+    public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 23.0;
+    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 25.0;
+    public static final double INTAKE_ELEVATOR_L1_POS = 30;
 
     public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0;
     public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0;

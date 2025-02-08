@@ -46,10 +46,10 @@ public class Elevator extends SubsystemBase {
     Configaroo.encoder.positionConversionFactor(1).velocityConversionFactor(1);
     Configaroo.idleMode(IdleMode.kCoast);
     Configaroo.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-   .p(1)
+   .p(5)
    .i(0)
    .d(0)
-   .velocityFF(0)
+   .velocityFF(0.1)
    .outputRange(-0.1, 0.1);
 
     IntakeEle.configure(Configaroo, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
@@ -91,12 +91,12 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    //IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     //ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot1);
 
     //logging
     elePosLog.append(IntakeEleEncoder.getPosition());
-    SmartDashboard.putNumber("HandOffInPos", IntakeEleEncoder.getPosition());
-    SmartDashboard.putNumber("HandOffScorePos", ScoreEleEncoder.getPosition());
+    SmartDashboard.putNumber("Intake Elevator Encoder", IntakeEleEncoder.getPosition());
+    SmartDashboard.putNumber("Score Elevator Encoder", ScoreEleEncoder.getPosition());
   }
 }
