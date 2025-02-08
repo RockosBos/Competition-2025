@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.util.datalog.DataLog;
@@ -43,6 +44,7 @@ public class Elevator extends SubsystemBase {
   public Elevator() {
     IntakeEleEncoder.setPosition(0.0);
     Configaroo.encoder.positionConversionFactor(1).velocityConversionFactor(1);
+    Configaroo.idleMode(IdleMode.kCoast);
     Configaroo.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
    .p(1)
    .i(0)
@@ -54,6 +56,7 @@ public class Elevator extends SubsystemBase {
 
     ScoreEleEncoder.setPosition(0.0);
     ConfigScore.encoder.positionConversionFactor(1).velocityConversionFactor(1);
+    ConfigScore.idleMode(IdleMode.kCoast);
     ConfigScore.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
    .p(1)
    .i(0)
@@ -88,10 +91,12 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
-    ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot1);
+    //IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    //ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot1);
 
     //logging
     elePosLog.append(IntakeEleEncoder.getPosition());
+    SmartDashboard.putNumber("HandOffInPos", IntakeEleEncoder.getPosition());
+    SmartDashboard.putNumber("HandOffScorePos", ScoreEleEncoder.getPosition());
   }
 }
