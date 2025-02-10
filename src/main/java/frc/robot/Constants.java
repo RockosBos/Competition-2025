@@ -81,7 +81,7 @@ public class Constants {
     public static final boolean INVERT_SCORE_CLAW = false;
     public static final boolean INVERT_SCORE_AGITATOR = false;
 
-    public static final double RAMPRATE_INTAKE_ELEVATOR = 0.1;
+    public static final double RAMPRATE_INTAKE_ELEVATOR = 0.02;
     public static final double RAMPRATE_SCORE_ELEVATOR = 0.1;
     public static final double RAMPRATE_INTAKE_ROTATE = 0.1;
     public static final double RAMPRATE_INTAKE_ROLLER = 0.1;

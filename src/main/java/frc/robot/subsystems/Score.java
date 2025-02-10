@@ -15,12 +15,15 @@ import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Score extends SubsystemBase {
 
-private SparkMax AgitateWheel = new SparkMax(Constants.ID_SCORE_AGITATE, MotorType.kBrushless);
+private SparkMax agitator = new SparkMax(Constants.ID_SCORE_AGITATE, MotorType.kBrushless);
 
 private SparkMax Claw = new SparkMax(Constants.ID_SCORE_CLAW, MotorType.kBrushless);
 private AbsoluteEncoder ClawAbs = Claw.getAbsoluteEncoder();
@@ -40,9 +43,13 @@ private AbsoluteEncoderConfig rotateAbsConfig = new AbsoluteEncoderConfig();
 private SparkClosedLoopController rotateLoopy = rotate.getClosedLoopController();
 private SparkMaxConfig rotateConfig = new SparkMaxConfig();
 
-private double targetPostionRotate = 0.0, targetPostionPivot = 0.0, targetPostionClaw = 0.0;
-private double agitatorRollerVoltage = 0.0;
+private double rotateTargetPostion = 0.0, pivotTargetPostion = 0.0, clawTargetPostion = 0.0;
+private double agitatorVoltage = 0.0;
 
+DataLog log = DataLogManager.getLog();
+private DoubleLogEntry clawTargetPositionLog, clawCurrentPositionLog;
+private DoubleLogEntry pivotTargetPositionLog, pivotCurrentPositionLog;
+private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
 
   /** Creates a new Score. */
   public Score() {
@@ -92,27 +99,38 @@ private double agitatorRollerVoltage = 0.0;
       
       rotate.configure(rotateConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+      //logging
+
+      clawTargetPositionLog = new DoubleLogEntry(log, "/U/Score/clawTargetPosition");
+      clawCurrentPositionLog = new DoubleLogEntry(log, "/U/Score/clawCurrentPosition");
+
+      pivotTargetPositionLog = new DoubleLogEntry(log, "/U/Score/pivotTargetPosition");
+      pivotCurrentPositionLog = new DoubleLogEntry(log, "/U/Score/pivotCurrentPosition");
+
+      rotateTargetPositionLog = new DoubleLogEntry(log, "/U/Score/rotateTargetPosition");
+      rotateCurrentPositionLog = new DoubleLogEntry(log, "/U/Score/rotateCurrentPosition");
+
   }
 
   public void setRotateTargetPostion(double targetPostionRotate){
-    this.targetPostionRotate = targetPostionRotate;
+    this.rotateTargetPostion = targetPostionRotate;
   }
 
   public void setPivotTargetPostion(double targetPostionPivot){
-    this.targetPostionPivot = targetPostionPivot;
+    this.pivotTargetPostion = targetPostionPivot;
   }
 
   public void setClawTargetPostion(double targetPostionClaw){
-    this.targetPostionClaw = targetPostionClaw;
+    this.clawTargetPostion = targetPostionClaw;
   }
     /**
    * Set Claw Target Position, There should be an Open and Closed Position.
    * 
-   * @param agitatorRollerVoltage The Requested voltage to set Agitator voltage to.
+   * @param agitatorVoltage The Requested voltage to set Agitator voltage to.
    * 
    */
-  public void setAgitatorRollerVoltage(double agitatorRollerVoltage){
-    this.agitatorRollerVoltage = agitatorRollerVoltage;
+  public void setAgitatorRollerVoltage(double agitatorVoltage){
+    this.agitatorVoltage = agitatorVoltage;
   }
 
     /**
@@ -122,7 +140,7 @@ private double agitatorRollerVoltage = 0.0;
    * controller to navigate to.
    */
   public boolean atRotateTarget(){
-    if(Constants.THRESHOLD_SCORE_ROTATE_POS > targetPostionRotate){
+    if(Constants.THRESHOLD_SCORE_ROTATE_POS > rotateTargetPostion){
        return true;
       }
       return false;
@@ -135,7 +153,7 @@ private double agitatorRollerVoltage = 0.0;
    * controller to navigate to.
    */
   public boolean atPivotTarget(){
-    if (Constants.THRESHOLD_SCORE_PIVOT_POS > targetPostionPivot) {
+    if (Constants.THRESHOLD_SCORE_PIVOT_POS > pivotTargetPostion) {
       return true;
     }
       return false;
@@ -150,7 +168,7 @@ private double agitatorRollerVoltage = 0.0;
    */
 
    public boolean atClawTarget(){
-    if (Constants.THRESHOLD_SCORE_CLAW_POS > targetPostionClaw) {
+    if (Constants.THRESHOLD_SCORE_CLAW_POS > clawTargetPostion) {
       return true;
     }
       return false;
@@ -168,6 +186,16 @@ private double agitatorRollerVoltage = 0.0;
 
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    
+    
+    // Logging
+    clawCurrentPositionLog.append(ClawAbs.getPosition());
+    clawTargetPositionLog.append(clawTargetPostion);
+
+    pivotCurrentPositionLog.append(pivotAbs.getPosition());
+    pivotTargetPositionLog.append(pivotTargetPostion);
+
+    rotateCurrentPositionLog.append(rotateAbs.getPosition());
+    rotateTargetPositionLog.append(rotateTargetPostion);
   }
 }
