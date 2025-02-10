@@ -109,7 +109,6 @@ public class RobotContainer {
         operaterController.a().whileTrue(new FloorIntakePosition(elevatorSubsytem));
         operaterController.y().whileTrue(new ScoreL1Position(elevatorSubsytem));
 
-
         //Telemetry
 
         drivetrain.registerTelemetry(logger::telemeterize);

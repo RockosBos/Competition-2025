@@ -58,28 +58,30 @@ public class Elevator extends SubsystemBase {
   /** Creates a new Elevator. */
   public Elevator() {
     IntakeEleEncoder.setPosition(0.0);
-    Configaroo.encoder.positionConversionFactor(1).velocityConversionFactor(1);
-    Configaroo.idleMode(IdleMode.kCoast);
+    Configaroo.idleMode(Constants.IDLEMODE_INTAKE_ELEVATOR);
+    Configaroo.closedLoopRampRate(Constants.RAMPRATE_INTAKE_ELEVATOR);
+    Configaroo.smartCurrentLimit(Constants.CURRENTLIMIT_INTAKE_ELEVATOR);
+    Configaroo.inverted(Constants.INVERT_INTAKE_ELEVATOR);
     Configaroo.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-   .p(1)
+   .p(Constants.P_INTAKE_ELEVATOR)
    .i(0)
    .d(0)
    .velocityFF(0.0)
-   .outputRange(-0.6, 0.6);
+   .outputRange(Constants.MIN_OUTPUT_INTAKE_ELEVATOR, Constants.MAX_OUTPUT_INTAKE_ELEVATOR);
 
     IntakeEle.configure(Configaroo, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
     ScoreEleEncoder.setPosition(0.0);
-    ConfigScore.encoder.positionConversionFactor(1).velocityConversionFactor(1);
-    ConfigScore.idleMode(IdleMode.kBrake);
-    ConfigScore.closedLoopRampRate(0.1);
-    ConfigScore.smartCurrentLimit(15);
+    ConfigScore.idleMode(Constants.IDLEMODE_SCORE_ELEVATOR);
+    ConfigScore.closedLoopRampRate(Constants.RAMPRATE_SCORE_ELEVATOR);
+    ConfigScore.smartCurrentLimit(Constants.CURRENTLIMIT_SCORE_ELEVATOR);
+    ConfigScore.inverted(Constants.INVERT_SCORE_ELEVATOR);
     ConfigScore.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-   .p(0.05)
+   .p(Constants.P_SCORE_ELEVATOR)
    .i(0)
    .d(0)
    .velocityFF(0)
-   .outputRange(-0.75, 0.75);
+   .outputRange(Constants.MIN_OUTPUT_SCORE_ELEVATOR, Constants.MAX_OUTPUT_SCORE_ELEVATOR);
 
     ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
