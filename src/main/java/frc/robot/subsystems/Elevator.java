@@ -14,8 +14,14 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.ClosedLoopConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.networktables.DoubleArrayPublisher;
+import edu.wpi.first.networktables.DoublePublisher;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StringPublisher;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
@@ -38,30 +44,51 @@ public class Elevator extends SubsystemBase {
   private DigitalInput InnyScory = new DigitalInput(8);
     
   DataLog log = DataLogManager.getLog();
-  DoubleLogEntry elePosLog = new DoubleLogEntry(log, "/U/Elevator/EleIntakePos");
+  private DoubleLogEntry intakeElevatorAmpLog, intakeElevatorVoltageLog, intakeElevatorTargetPositionLog, intakeElevatorCurrentPositionLog;
+  private DoubleLogEntry scoreElevatorAmpLog, scoreElevatorVoltageLog, scoreElevatorTargetPositionLog, scoreElevatorCurrentPositionLog;
+
+  private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
+
+  private final NetworkTable table = inst.getTable("Elevator");
+  private final DoublePublisher intakeElevatorPosPub = table.getDoubleTopic("elevator").publish(),
+                                intakeElevatorSetpointPub = table.getDoubleTopic("elevator").publish(), 
+                                scoreElevatorPosPub = table.getDoubleTopic("elevator").publish(),
+                                scoreElevatorSetpointPub = table.getDoubleTopic("elevator").publish();
+
   /** Creates a new Elevator. */
   public Elevator() {
     IntakeEleEncoder.setPosition(0.0);
     Configaroo.encoder.positionConversionFactor(1).velocityConversionFactor(1);
+    Configaroo.idleMode(IdleMode.kCoast);
     Configaroo.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
    .p(1)
    .i(0)
    .d(0)
-   .velocityFF(0)
-   .outputRange(-0.1, 0.1);
+   .velocityFF(0.0)
+   .outputRange(-0.6, 0.6);
 
     IntakeEle.configure(Configaroo, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
     ScoreEleEncoder.setPosition(0.0);
     ConfigScore.encoder.positionConversionFactor(1).velocityConversionFactor(1);
+    ConfigScore.idleMode(IdleMode.kBrake);
+    ConfigScore.closedLoopRampRate(0.1);
+    ConfigScore.smartCurrentLimit(15);
     ConfigScore.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-   .p(1)
+   .p(0.05)
    .i(0)
    .d(0)
    .velocityFF(0)
-   .outputRange(-0.1, 0.1);
+   .outputRange(-0.75, 0.75);
 
     ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+
+    intakeElevatorTargetPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorTargetPosition");
+    intakeElevatorCurrentPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorCurrentPosition");
+
+    scoreElevatorTargetPositionLog = new DoubleLogEntry(log, "/U/Elevator/scoreElevatorTargetPosition");
+    scoreElevatorCurrentPositionLog = new DoubleLogEntry(log, "/U/Elevator/scoreElevatorCurrentPosition");
+    
   }
 
     /**
@@ -89,9 +116,19 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
-    ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot1);
+    ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 
     //logging
-    elePosLog.append(IntakeEleEncoder.getPosition());
+    intakeElevatorTargetPositionLog.append(IntakeEleEncoder.getPosition());;
+    intakeElevatorCurrentPositionLog.append(targetPostion);
+
+    intakeElevatorPosPub.set(IntakeEleEncoder.getPosition());
+    intakeElevatorSetpointPub.set(targetPostion);
+
+    scoreElevatorTargetPositionLog.append(ScoreEleEncoder.getPosition());;
+    scoreElevatorCurrentPositionLog.append(targetPostionScoreInLa);
+
+    scoreElevatorPosPub.set(ScoreEleEncoder.getPosition());
+    scoreElevatorSetpointPub.set(targetPostionScoreInLa);
   }
 }

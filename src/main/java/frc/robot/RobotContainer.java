@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.FloorIntakePosition;
+import frc.robot.Commands.LoadingIntakePosition;
+import frc.robot.Commands.ScoreL1Position;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
@@ -46,14 +48,14 @@ public class RobotContainer {
     //Define Controllers
 
     private final CommandXboxController driverController = new CommandXboxController(0);
-    private final CommandXboxController operatorController = new CommandXboxController(1);
+    private final CommandXboxController operaterController = new CommandXboxController(1);
 
     //Subsystems
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    private final Intake intakeSubsystem = new Intake();
+    //private final Intake intakeSubsystem = new Intake();
     private final Elevator elevatorSubsytem = new Elevator();
-    private final Score scoreSubsystem = new Score();
+    //private final Score scoreSubsystem = new Score();
 
     //Chooser for Autonomous Modes
     private final SendableChooser<Command> autoChooser;
@@ -65,7 +67,7 @@ public class RobotContainer {
         DriverStation.startDataLog(DataLogManager.getLog());
 
         //Named Commands for Pathplanner
-        NamedCommands.registerCommand("FloorIntakePosition", new FloorIntakePosition(intakeSubsystem, elevatorSubsytem, scoreSubsystem));
+        //NamedCommands.registerCommand("FloorIntakePosition", new FloorIntakePosition(intakeSubsystem, elevatorSubsytem, scoreSubsystem));
 
         //Auto Mode Setup
         autoChooser = AutoBuilder.buildAutoChooser("Tests");
@@ -102,6 +104,10 @@ public class RobotContainer {
         driverController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         //Operator Controller
+
+        operaterController.b().whileTrue(new LoadingIntakePosition(elevatorSubsytem));
+        operaterController.a().whileTrue(new FloorIntakePosition(elevatorSubsytem));
+        operaterController.y().whileTrue(new ScoreL1Position(elevatorSubsytem));
 
 
         //Telemetry

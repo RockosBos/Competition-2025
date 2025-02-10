@@ -37,6 +37,7 @@ SparkMaxConfig ClawConfig = new SparkMaxConfig();
 SparkMaxConfig UpDownPiviotConfig = new SparkMaxConfig();
 SparkMaxConfig LiftyRighyConfig = new SparkMaxConfig();
 private double targetPostionRotate = 0.0, targetPostionPivot = 0.0, targetPostionClaw = 0.0;
+private double agitatorRollerVoltage = 0.0;
 
 
   /** Creates a new Score. */
@@ -126,7 +127,7 @@ private double targetPostionRotate = 0.0, targetPostionPivot = 0.0, targetPostio
    * 
    */
   public void setAgitatorRollerVoltage(double agitatorRollerVoltage){
-
+    this.agitatorRollerVoltage = agitatorRollerVoltage;
   }
 
   /**
