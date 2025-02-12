@@ -14,6 +14,8 @@ public class Constants {
     public static final int ID_SCORE_CLAW = 12;
     public static final int ID_SCORE_PIVOT = 11;
     public static final int ID_SCORE_ROTATE = 10;
+    public static final int ID_CLIMB_RIGHT = 9;
+    public static final int ID_CLIMB_LEFT = 8;
 
     //Intake Constant Values
 
