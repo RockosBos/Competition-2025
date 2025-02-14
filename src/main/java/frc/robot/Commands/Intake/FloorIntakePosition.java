@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Commands;
+package frc.robot.Commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elevator;
@@ -30,14 +30,7 @@ public class FloorIntakePosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //m_Intake.setMotorVoltage(Constants.INTAKE_ROLLER_INFEED_VOLTAGE);
-    //m_Intake.setTargetPostion(Constants.INTAKE_ROTATE_FLOOR_INTAKE_POS);
     m_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS);
-    m_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_INTAKE_POSITION);
-    //m_Score.setClawTargetPostion(Constants.SCORE_CLAW_OPEN_POS);
-    //m_Score.setRotateTargetPostion(Constants.SCORE_ROTATE_CENTER_POS);
-    //m_Score.setPivotTargetPostion(Constants.SCORE_PIVOT_IN_POS);
-    //m_Score.setAgitatorRollerVoltage(Constants.SCORE_AGITATOR_INFEED_VOLTAGE);
   }
 
   // Called once the command ends or is interrupted.
