@@ -26,6 +26,7 @@ public class ScoreL2Position extends Command {
   @Override
   public void execute() {
     e_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_L2_POS);
+    e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_HANDOFF_POS);
   }
 
   // Called once the command ends or is interrupted.

@@ -31,6 +31,7 @@ public class FloorIntakePosition extends Command {
   @Override
   public void execute() {
     m_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS);
+    m_Elevator.setScoreTargetPosition(0.0);
   }
 
   // Called once the command ends or is interrupted.
