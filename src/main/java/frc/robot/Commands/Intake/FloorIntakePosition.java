@@ -16,11 +16,11 @@ public class FloorIntakePosition extends Command {
   Elevator m_Elevator;
   Score m_Score;
   /** Creates a new FloorLoadingPosition. */
-  public FloorIntakePosition(Elevator m_Elevator) {
+  public FloorIntakePosition(Intake intakeSubsystem) {
     //this.m_Intake = m_Intake;
-    this.m_Elevator = m_Elevator;
+    this.m_Intake = m_Intake;
     //this.m_Score = m_Score;
-    addRequirements(this.m_Elevator);
+    addRequirements(this.m_Intake);
   }
 
   // Called when the command is initially scheduled.
@@ -30,8 +30,7 @@ public class FloorIntakePosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS);
-    m_Elevator.setScoreTargetPosition(0.0);
+    m_Intake.setTargetPostion(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS);
   }
 
   // Called once the command ends or is interrupted.

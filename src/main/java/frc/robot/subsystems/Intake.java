@@ -15,6 +15,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import au.grapplerobotics.LaserCan;
+
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.util.datalog.BooleanLogEntry;
@@ -39,6 +42,9 @@ public class Intake extends SubsystemBase {
   private SparkMaxConfig intakeRotateConfig = new SparkMaxConfig();
   private AbsoluteEncoderConfig IAEC = new AbsoluteEncoderConfig();
 
+  private LaserCan leftyLazy = new LaserCan(Constants.LASERCAN_INTAKE_LEFT);
+  private LaserCan rightyLazy = new LaserCan(Constants.LASERCAN_INTAKE_RIGHT); 
+
   //Other Variables
   private double voltage = 0.0, targetPosition = 0.0, intakeRotateTargetErr = 0.0;
   private boolean errFlag = false;
@@ -60,7 +66,7 @@ public class Intake extends SubsystemBase {
     intakeRotateConfig.idleMode(IdleMode.kBrake);
     intakeRotateConfig.smartCurrentLimit(20);
 
-    IAEC.zeroOffset(0.728);
+    IAEC.zeroOffset(Constants.OFFSET_INTAKE_ROTATE_ABS);
     intakeRotateConfig.absoluteEncoder.apply(IAEC);
     intakeRotateConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
     .p(0.1)
@@ -129,10 +135,10 @@ public class Intake extends SubsystemBase {
     intakeRotateTargetErr = Math.abs(targetPosition - intakeAbsEncoder.getPosition());
 
     //Set Intake Roller Voltage
-    IntakeIn.setVoltage(voltage);
+    //IntakeIn.setVoltage(voltage);
 
     //Set Closed Loop Controller for Intake Rotate Arm
-    BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    //BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 
     //Logging
 
@@ -144,7 +150,9 @@ public class Intake extends SubsystemBase {
     intakeRotateTargetPositionLog.append(targetPosition);
     intakeRotateAbsCurrentPositionLog.append(intakeAbsEncoder.getPosition());
     intakeRotateErrLog.append(intakeRotateTargetErr);
-    intakeRotateInPosLog.append(this.inPosition());
+    //intakeRotateInPosLog.append(this.inPosition());
+
+    SmartDashboard.putNumber("IntakeRotateAbs", intakeAbsEncoder.getPosition());
 
   }
 }

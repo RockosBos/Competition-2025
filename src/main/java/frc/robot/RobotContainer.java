@@ -53,9 +53,9 @@ public class RobotContainer {
     //Subsystems
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    //private final Intake intakeSubsystem = new Intake();
+    private final Intake intakeSubsystem = new Intake();
     private final Elevator elevatorSubsytem = new Elevator();
-    //private final Score scoreSubsystem = new Score();
+    private final Score scoreSubsystem = new Score();
 
     //Chooser for Autonomous Modes
     private final SendableChooser<Command> autoChooser;
@@ -105,9 +105,9 @@ public class RobotContainer {
 
         //Operator Controller
 
-        operaterController.b().whileTrue(new LoadingIntakePosition(elevatorSubsytem));
-        operaterController.a().whileTrue(new FloorIntakePosition(elevatorSubsytem));
-        operaterController.y().whileTrue(new ScoreL1Position(elevatorSubsytem));
+         operaterController.b().whileTrue(new LoadingIntakePosition(intakeSubsystem));
+         operaterController.a().whileTrue(new FloorIntakePosition(intakeSubsystem));
+         operaterController.y().whileTrue(new ScoreL1Position(elevatorSubsytem));
 
         //Telemetry
 

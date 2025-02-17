@@ -7,14 +7,15 @@ package frc.robot.Commands.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class LoadingIntakePosition extends Command {
-  Elevator m_Elevator;
+  Intake i_Intake;
   /** Creates a new LoadingIntakePosition. */
-  public LoadingIntakePosition(Elevator m_Elevator) {
-    this.m_Elevator = m_Elevator;
-    addRequirements(m_Elevator);
+  public LoadingIntakePosition(Intake intakeSubsystem) {
+    this.i_Intake = i_Intake;
+    addRequirements(i_Intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -25,8 +26,7 @@ public class LoadingIntakePosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_LOADING_INTAKE_POS);
-    m_Elevator.setScoreTargetPosition(0.0);
+    i_Intake.setTargetPostion(Constants.INTAKE_ELEVATOR_LOADING_INTAKE_POS);
   }
 
   // Called once the command ends or is interrupted.

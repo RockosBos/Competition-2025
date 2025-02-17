@@ -12,25 +12,29 @@ public class Constants {
     public static final int ID_SCORE_ELEVATOR = 19;
     public static final int ID_SCORE_AGITATE = 13;
     public static final int ID_SCORE_CLAW = 12;
-    public static final int ID_SCORE_PIVOT = 11;
-    public static final int ID_SCORE_ROTATE = 10;
+    public static final int ID_SCORE_ROTATE = 11;
+    public static final int ID_SCORE_PIVOT = 10;
     public static final int ID_CLIMB_RIGHT = 9;
     public static final int ID_CLIMB_LEFT = 8;
+    
+    
+    public static final int LASERCAN_INTAKE_LEFT = 51;
+    public static final int LASERCAN_INTAKE_RIGHT = 52;
 
     //Intake Constant Values
 
     public static final double INTAKE_ROLLER_INFEED_VOLTAGE = 0.5;
     public static final double INTAKE_ROLLER_OUTFEED_VOLTAGE = -0.5;
-    //public static final double INTAKE_ROLLER_OFF_VOLTAGE = 0.0;
+    
 
     public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 10.0;
     public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 23.0;
     public static final double INTAKE_ELEVATOR_HANDOFF_POS = 25.0;
     public static final double INTAKE_ELEVATOR_L1_POS = 35;
 
-    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0;
-    public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0;
-    public static final double INTAKE_ROTATE_HANDOFF_POS = 0;
+    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.599;
+    public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.332;
+    public static final double INTAKE_ROTATE_HANDOFF_POS = 0.248;
     public static final double INTAKE_ROTATE_L1_POS = 0;
 
     //Score Arm Constant Values
@@ -59,10 +63,10 @@ public class Constants {
 
     //Absolute Encoder offsets
 
-    public static final double OFFSET_INTAKE_ROTATE_ABS = 0.0;
-    public static final double OFFSET_SCORE_ROTATE_ABS = 0.0;
-    public static final double OFFSET_SCORE_PIVOT_ABS = 0.0;
-    public static final double OFFSET_SCORE_CLAW_ABS = 0.0;
+    public static final double OFFSET_INTAKE_ROTATE_ABS = 0.430 - 0.25;
+    public static final double OFFSET_SCORE_ROTATE_ABS = 0.228 - 0.20;
+    public static final double OFFSET_SCORE_PIVOT_ABS = 0.522 - 0.5;
+    public static final double OFFSET_SCORE_CLAW_ABS = 0.505 - 0.25;
 
     //Motor Configuration Constants
 
@@ -83,6 +87,11 @@ public class Constants {
     public static final boolean INVERT_SCORE_PIVOT = false;
     public static final boolean INVERT_SCORE_CLAW = false;
     public static final boolean INVERT_SCORE_AGITATOR = false;
+
+    public static final boolean INVERT_SCORE_PIVOT_ABS = true;
+    public static final boolean INVERT_SCORE_ROTATE_ABS = false;
+    public static final boolean INVERT_SCORE_CLAW_ABS = false;
+    public static final boolean INVERT_INTAKE_ROTATE_ABS = false;
 
     public static final double RAMPRATE_INTAKE_ELEVATOR = 0.02;
     public static final double RAMPRATE_SCORE_ELEVATOR = 0.1;

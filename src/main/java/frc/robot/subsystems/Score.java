@@ -18,6 +18,7 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -70,6 +71,7 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
       Claw.configure(ClawConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
       
       pivotAbsConfig.zeroOffset(Constants.OFFSET_SCORE_PIVOT_ABS);
+      pivotAbsConfig.inverted(Constants.INVERT_SCORE_PIVOT_ABS);
       pivotConfig.absoluteEncoder.apply(pivotAbsConfig);
       pivotConfig.inverted(Constants.INVERT_SCORE_PIVOT);
       pivotConfig.idleMode(Constants.IDLEMODE_SCORE_PIVOT);
@@ -197,5 +199,12 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
 
     rotateCurrentPositionLog.append(rotateAbs.getPosition());
     rotateTargetPositionLog.append(rotateTargetPostion);
+
+    SmartDashboard.putNumber("ClawAbs", ClawAbs.getPosition());
+    SmartDashboard.putNumber("RotateAbs", rotateAbs.getPosition());
+    SmartDashboard.putNumber("PivotAbs", pivotAbs.getPosition());
+    SmartDashboard.putNumber("ClawRencoder", Claw.getEncoder().getPosition());
+    SmartDashboard.putNumber("RotateRencoder", rotate.getEncoder().getPosition());
+    SmartDashboard.putNumber("PivotRencoder", pivot.getEncoder().getPosition());
   }
 }
