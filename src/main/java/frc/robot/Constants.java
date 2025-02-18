@@ -139,12 +139,12 @@ public class Constants {
     public static final double MIN_OUTPUT_SCORE_CLAW = -0.4;
 
     //thresholds
-    public static final double THRESHOLD_INTAKE_ROTATE_POS = 0.01;
-    public static final double THRESHOLD_ELEVATOR_INTAKE_POS = 0.01;
-    public static final double THRESHOLD_ELEVATOR_SCORE_POS = 0.01;
-    public static final double THRESHOLD_SCORE_ROTATE_POS = 0.01;
-    public static final double THRESHOLD_SCORE_PIVOT_POS = 0.01;
-    public static final double THRESHOLD_SCORE_CLAW_POS = 0.01;
+    public static final double THRESHOLD_INTAKE_ROTATE_POS = 0.1;
+    public static final double THRESHOLD_ELEVATOR_INTAKE_POS = 0.1;
+    public static final double THRESHOLD_ELEVATOR_SCORE_POS = 0.1;
+    public static final double THRESHOLD_SCORE_ROTATE_POS = 0.1;
+    public static final double THRESHOLD_SCORE_PIVOT_POS = 0.1;
+    public static final double THRESHOLD_SCORE_CLAW_POS = 0.1;
 
 
 }
