@@ -2,14 +2,19 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Commands;
+package frc.robot.Commands.Elevator;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.subsystems.Elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ScoreSetLeft extends Command {
-  /** Creates a new ScoreSetLeft. */
-  public ScoreSetLeft() {
+public class EleL1Position extends Command {
+  Elevator m_Elevator;
+  /** Creates a new ScoreL1Position. */
+  public EleL1Position(Elevator m_Elevator) {
+    this.m_Elevator = m_Elevator;
+    addRequirements(m_Elevator);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -19,7 +24,10 @@ public class ScoreSetLeft extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    m_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_L1_POS);
+    m_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_INTAKE_POSITION);
+  }
 
   // Called once the command ends or is interrupted.
   @Override

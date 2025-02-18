@@ -20,9 +20,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.Commands.FloorIntakePosition;
-import frc.robot.Commands.LoadingIntakePosition;
-import frc.robot.Commands.ScoreL1Position;
+import frc.robot.Commands.Elevator.EleHandoffPos;
+import frc.robot.Commands.Elevator.EleIntakePos;
+import frc.robot.Commands.Elevator.EleL1Position;
+import frc.robot.Commands.Intake.FloorIntakePosition;
+import frc.robot.Commands.Intake.HandOffIntakePos;
+import frc.robot.Commands.Intake.LoadingIntakePosition;
+import frc.robot.Commands.Score.ClawClosed;
+import frc.robot.Commands.Score.ClawOpened;
+import frc.robot.Commands.Score.ScoreL1Position;
+import frc.robot.Commands.Score.ScoreSetCenter;
+import frc.robot.Commands.Score.ScoreSetLeft;
+import frc.robot.Commands.Score.ScoreSetRight;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
@@ -53,9 +62,9 @@ public class RobotContainer {
     //Subsystems
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    //private final Intake intakeSubsystem = new Intake();
+    private final Intake intakeSubsystem = new Intake();
     private final Elevator elevatorSubsytem = new Elevator();
-    //private final Score scoreSubsystem = new Score();
+    private final Score scoreSubsystem = new Score();
 
     //Chooser for Autonomous Modes
     private final SendableChooser<Command> autoChooser;
@@ -105,10 +114,15 @@ public class RobotContainer {
 
         //Operator Controller
 
-        operaterController.b().whileTrue(new LoadingIntakePosition(elevatorSubsytem));
-        operaterController.a().whileTrue(new FloorIntakePosition(elevatorSubsytem));
-        operaterController.y().whileTrue(new ScoreL1Position(elevatorSubsytem));
-
+        //  operaterController.b().whileTrue(new ScoreSetLeft(scoreSubsystem));
+        //  operaterController.a().whileTrue(new ScoreSetCenter(scoreSubsystem));
+        //  operaterController.y().whileTrue(new ScoreSetRight(scoreSubsystem));
+         operaterController.a().whileTrue(new EleIntakePos(elevatorSubsytem));
+         operaterController.b().whileTrue(new EleL1Position(elevatorSubsytem));
+         operaterController.a().whileTrue(new ScoreSetCenter(scoreSubsystem));
+         operaterController.y().whileTrue(new ScoreSetLeft(scoreSubsystem));
+         operaterController.rightBumper().whileTrue(new ClawOpened(scoreSubsystem));
+         operaterController.leftBumper().whileTrue(new ClawClosed(scoreSubsystem));
 
         //Telemetry
 
