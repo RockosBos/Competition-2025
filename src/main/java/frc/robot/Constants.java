@@ -23,8 +23,8 @@ public class Constants {
 
     //Intake Constant Values
 
-    public static final double INTAKE_ROLLER_INFEED_VOLTAGE = 0.5;
-    public static final double INTAKE_ROLLER_OUTFEED_VOLTAGE = -0.5;
+    public static final double INTAKE_ROLLER_INFEED_VOLTAGE = 12.0;
+    public static final double INTAKE_ROLLER_OUTFEED_VOLTAGE = -12.0;
     
 
     public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 10.0;
@@ -32,9 +32,9 @@ public class Constants {
     public static final double INTAKE_ELEVATOR_HANDOFF_POS = 25.0;
     public static final double INTAKE_ELEVATOR_L1_POS = 35;
 
-    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.599;
+    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.626;
     public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.332;
-    public static final double INTAKE_ROTATE_HANDOFF_POS = 0.248;
+    public static final double INTAKE_ROTATE_HANDOFF_POS = 0.3;
     public static final double INTAKE_ROTATE_L1_POS = 0;
 
     //Score Arm Constant Values
@@ -42,21 +42,22 @@ public class Constants {
     //Lowest Position at 0
     //Highest Position at 160
     public static final double SCORE_ELEVATOR_INTAKE_POSITION = 5;
-    public static final double SCORE_ELEVATOR_L2_POS = 155;
+    public static final double SCORE_ELEVATOR_L2_POS = 0;
     public static final double SCORE_ELEVATOR_L3_POS = 0;
-    public static final double SCORE_ELEVATOR_L4_POS = 0;
+    public static final double SCORE_ELEVATOR_L4_POS = 155;
     public static final double SCORE_HANDOFF_POS = 0;
 
-    public static final double SCORE_ROTATE_LEFT_POS = 0;
-    public static final double SCORE_ROTATE_RIGHT_POS = 0;
-    public static final double SCORE_ROTATE_CENTER_POS = 0;
+    public static final double SCORE_ROTATE_LEFT_POS = 0.24;
+    public static final double SCORE_ROTATE_RIGHT_POS = 0.76;
+    public static final double SCORE_ROTATE_CENTER_POS = 0.496;
 
-    public static final double SCORE_PIVOT_IN_POS = 0;
-    public static final double SCORE_PIVOT_OUT_LEFT_POS = 0;
-    public static final double SCORE_PIVOT_OUT_RIGHT_POS = 0;
+    public static final double SCORE_PIVOT_IN_POS = 0.79;
+    public static final double SCORE_PIVOT_OUT_LEFT_POS = 0.62;
+    public static final double SCORE_PIVOT_OUT_RIGHT_POS = 0.95;
 
-    public static final double SCORE_CLAW_CLOSED_POS = 0;
-    public static final double SCORE_CLAW_OPEN_POS = 0;
+    public static final double SCORE_CLAW_CLOSED_POS = 0.91;
+    public static final double SCORE_CLAW_OPEN_POS = 0.772;
+    public static final double SCORE_CLAW_RELEASE_POS = 0.8755;
 
     public static final double SCORE_AGITATOR_INFEED_VOLTAGE = 0;
     public static final double SCORE_AGITATOR_OUTFEED_VOLTAGE = 0;
@@ -83,9 +84,9 @@ public class Constants {
     public static final boolean INVERT_SCORE_ELEVATOR = false;
     public static final boolean INVERT_INTAKE_ROTATE = false;
     public static final boolean INVERT_INTAKE_ROLLER = false;
-    public static final boolean INVERT_SCORE_ROTATE = false;
+    public static final boolean INVERT_SCORE_ROTATE = true;
     public static final boolean INVERT_SCORE_PIVOT = false;
-    public static final boolean INVERT_SCORE_CLAW = false;
+    public static final boolean INVERT_SCORE_CLAW = true;
     public static final boolean INVERT_SCORE_AGITATOR = false;
 
     public static final boolean INVERT_SCORE_PIVOT_ABS = true;
@@ -93,7 +94,7 @@ public class Constants {
     public static final boolean INVERT_SCORE_CLAW_ABS = false;
     public static final boolean INVERT_INTAKE_ROTATE_ABS = false;
 
-    public static final double RAMPRATE_INTAKE_ELEVATOR = 0.02;
+    public static final double RAMPRATE_INTAKE_ELEVATOR = 0.1;
     public static final double RAMPRATE_SCORE_ELEVATOR = 0.1;
     public static final double RAMPRATE_INTAKE_ROTATE = 0.1;
     public static final double RAMPRATE_INTAKE_ROLLER = 0.1;
@@ -113,29 +114,29 @@ public class Constants {
 
     //Closed Loop controller Config
 
-    public static final double P_INTAKE_ELEVATOR = 1.0;
+    public static final double P_INTAKE_ELEVATOR = 0.1;
     public static final double MAX_OUTPUT_INTAKE_ELEVATOR = 0.60;
     public static final double MIN_OUTPUT_INTAKE_ELEVATOR = -0.60;
 
     public static final double P_SCORE_ELEVATOR = 0.05;
-    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.75;
-    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.75;
+    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.25;
+    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.25;
 
-    public static final double P_INTAKE_ROTATE = 0.0;
-    public static final double MAX_OUTPUT_INTAKE_ROTATE = 0.0;
-    public static final double MIN_OUTPUT_INTAKE_ROTATE = -0.0;
+    public static final double P_INTAKE_ROTATE = 3.0;
+    public static final double MAX_OUTPUT_INTAKE_ROTATE = 0.5;
+    public static final double MIN_OUTPUT_INTAKE_ROTATE = -0.4;
 
-    public static final double P_SCORE_ROTATE = 0.0;
-    public static final double MAX_OUTPUT_SCORE_ROTATE = 0.0;
-    public static final double MIN_OUTPUT_SCORE_ROTATE = -0.0;
+    public static final double P_SCORE_ROTATE = 2.0;
+    public static final double MAX_OUTPUT_SCORE_ROTATE = 0.2;
+    public static final double MIN_OUTPUT_SCORE_ROTATE = -0.2;
 
-    public static final double P_SCORE_PIVOT = 0.0;
-    public static final double MAX_OUTPUT_SCORE_PIVOT = 0.0;
-    public static final double MIN_OUTPUT_SCORE_PIVOT = -0.0;
+    public static final double P_SCORE_PIVOT = 2.0;
+    public static final double MAX_OUTPUT_SCORE_PIVOT = 0.1;
+    public static final double MIN_OUTPUT_SCORE_PIVOT = -0.1;
 
-    public static final double P_SCORE_CLAW = 0.0;
-    public static final double MAX_OUTPUT_SCORE_CLAW = 0.0;
-    public static final double MIN_OUTPUT_SCORE_CLAW = -0.0;
+    public static final double P_SCORE_CLAW = 3.0;
+    public static final double MAX_OUTPUT_SCORE_CLAW = 0.4;
+    public static final double MIN_OUTPUT_SCORE_CLAW = -0.4;
 
     //thresholds
     public static final double THRESHOLD_INTAKE_ROTATE_POS = 0.01;

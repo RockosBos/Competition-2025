@@ -14,7 +14,7 @@ public class LoadingIntakePosition extends Command {
   Intake i_Intake;
   /** Creates a new LoadingIntakePosition. */
   public LoadingIntakePosition(Intake intakeSubsystem) {
-    this.i_Intake = i_Intake;
+    this.i_Intake = intakeSubsystem;
     addRequirements(i_Intake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -26,7 +26,8 @@ public class LoadingIntakePosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    i_Intake.setTargetPostion(Constants.INTAKE_ELEVATOR_LOADING_INTAKE_POS);
+    i_Intake.setTargetPostion(Constants.INTAKE_ROTATE_LOADING_INTAKE_POS);
+    i_Intake.setMotorVoltage(Constants.INTAKE_ROLLER_INFEED_VOLTAGE);
   }
 
   // Called once the command ends or is interrupted.

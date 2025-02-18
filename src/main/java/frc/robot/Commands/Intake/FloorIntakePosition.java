@@ -18,7 +18,7 @@ public class FloorIntakePosition extends Command {
   /** Creates a new FloorLoadingPosition. */
   public FloorIntakePosition(Intake intakeSubsystem) {
     //this.m_Intake = m_Intake;
-    this.m_Intake = m_Intake;
+    this.m_Intake = intakeSubsystem;
     //this.m_Score = m_Score;
     addRequirements(this.m_Intake);
   }
@@ -30,7 +30,8 @@ public class FloorIntakePosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Intake.setTargetPostion(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS);
+    m_Intake.setTargetPostion(Constants.INTAKE_ROTATE_FLOOR_INTAKE_POS);
+    m_Intake.setMotorVoltage(Constants.INTAKE_ROLLER_INFEED_VOLTAGE);
   }
 
   // Called once the command ends or is interrupted.

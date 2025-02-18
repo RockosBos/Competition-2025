@@ -46,7 +46,7 @@ public class Intake extends SubsystemBase {
   private LaserCan rightyLazy = new LaserCan(Constants.LASERCAN_INTAKE_RIGHT); 
 
   //Other Variables
-  private double voltage = 0.0, targetPosition = 0.0, intakeRotateTargetErr = 0.0;
+  private double voltage = 0.0, targetPosition = Constants.INTAKE_ROTATE_HANDOFF_POS, intakeRotateTargetErr = 0.0;
   private boolean errFlag = false;
 
   //Logging variables
@@ -69,11 +69,11 @@ public class Intake extends SubsystemBase {
     IAEC.zeroOffset(Constants.OFFSET_INTAKE_ROTATE_ABS);
     intakeRotateConfig.absoluteEncoder.apply(IAEC);
     intakeRotateConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-    .p(0.1)
+    .p(Constants.P_INTAKE_ROTATE)
    .i(0)
    .d(0)
    .velocityFF(0)
-   .outputRange(-0.1, 0.1);
+   .outputRange(Constants.MIN_OUTPUT_INTAKE_ROTATE, Constants.MAX_OUTPUT_INTAKE_ROTATE);
 
    //Apply Configurations
     IntakeRotate.configure(intakeRotateConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -135,10 +135,10 @@ public class Intake extends SubsystemBase {
     intakeRotateTargetErr = Math.abs(targetPosition - intakeAbsEncoder.getPosition());
 
     //Set Intake Roller Voltage
-    //IntakeIn.setVoltage(voltage);
+    IntakeIn.setVoltage(voltage);
 
     //Set Closed Loop Controller for Intake Rotate Arm
-    //BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 
     //Logging
 

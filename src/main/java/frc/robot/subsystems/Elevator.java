@@ -38,8 +38,8 @@ public class Elevator extends SubsystemBase {
   private SparkClosedLoopController ScoreEleLoopy = ScoreEle.getClosedLoopController();
   private RelativeEncoder ScoreEleEncoder = ScoreEle.getEncoder();
   private SparkMaxConfig ConfigScore = new SparkMaxConfig();
-  private double targetPostionScoreInLa = 0.0;
-  private double targetPostion = 0.0;
+  private double targetPostionScoreInLa = Constants.SCORE_ELEVATOR_INTAKE_POSITION;
+  private double targetPostion = Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS;
   private SparkMaxConfig Configaroo = new SparkMaxConfig();
   private DigitalInput InnyScory = new DigitalInput(8);
     
@@ -117,8 +117,11 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    IntakeLoopy.setReference(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+
+    SmartDashboard.putNumber("EleTarget", targetPostion);
+    SmartDashboard.putNumber("IntakeEleEnc", IntakeEle.getEncoder().getPosition());
 
     //logging
     intakeElevatorTargetPositionLog.append(IntakeEleEncoder.getPosition());;

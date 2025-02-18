@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
@@ -44,7 +45,7 @@ private AbsoluteEncoderConfig rotateAbsConfig = new AbsoluteEncoderConfig();
 private SparkClosedLoopController rotateLoopy = rotate.getClosedLoopController();
 private SparkMaxConfig rotateConfig = new SparkMaxConfig();
 
-private double rotateTargetPostion = 0.0, pivotTargetPostion = 0.0, clawTargetPostion = 0.0;
+private double rotateTargetPostion = Constants.SCORE_ROTATE_CENTER_POS, pivotTargetPostion = Constants.SCORE_PIVOT_IN_POS, clawTargetPostion = Constants.SCORE_CLAW_OPEN_POS;
 private double agitatorVoltage = 0.0;
 
 DataLog log = DataLogManager.getLog();
@@ -189,6 +190,9 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
   @Override
   public void periodic() {
     
+    rotateLoopy.setReference(rotateTargetPostion, ControlType.kPosition);
+    pivotLoopy.setReference(pivotTargetPostion, ControlType.kPosition);
+    ClawLoopy.setReference(clawTargetPostion, ControlType.kPosition);
     
     // Logging
     clawCurrentPositionLog.append(ClawAbs.getPosition());
@@ -200,11 +204,12 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
     rotateCurrentPositionLog.append(rotateAbs.getPosition());
     rotateTargetPositionLog.append(rotateTargetPostion);
 
-    SmartDashboard.putNumber("ClawAbs", ClawAbs.getPosition());
-    SmartDashboard.putNumber("RotateAbs", rotateAbs.getPosition());
-    SmartDashboard.putNumber("PivotAbs", pivotAbs.getPosition());
-    SmartDashboard.putNumber("ClawRencoder", Claw.getEncoder().getPosition());
-    SmartDashboard.putNumber("RotateRencoder", rotate.getEncoder().getPosition());
-    SmartDashboard.putNumber("PivotRencoder", pivot.getEncoder().getPosition());
+    // SmartDashboard.putNumber("ClawAbs", ClawAbs.getPosition());
+    // SmartDashboard.putNumber("RotateAbs", rotateAbs.getPosition());
+    // SmartDashboard.putNumber("PivotAbs", pivotAbs.getPosition());
+    // SmartDashboard.putNumber("ClawRencoder", Claw.getEncoder().getPosition());
+    // SmartDashboard.putNumber("RotateRencoder", rotate.getEncoder().getPosition());
+    // SmartDashboard.putNumber("PivotRencoder", pivot.getEncoder().getPosition());
+    // SmartDashboard.putNumber("RotateTargetPosition", rotateTargetPostion);
   }
 }
