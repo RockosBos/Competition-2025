@@ -117,8 +117,8 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    IntakeLoopy.setReference(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS, ControlType.kPosition, ClosedLoopSlot.kSlot0);
-    ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    ScoreEleLoopy.setReference(Constants.SCORE_ELEVATOR_L3_POS, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 
     SmartDashboard.putNumber("EleTarget", targetPostion);
     SmartDashboard.putNumber("IntakeEleEnc", IntakeEle.getEncoder().getPosition());

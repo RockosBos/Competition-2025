@@ -28,7 +28,7 @@ public class Constants {
     
 
     public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 10.0;
-    public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 23.0;
+    public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 60.0;
     public static final double INTAKE_ELEVATOR_HANDOFF_POS = 25.0;
     public static final double INTAKE_ELEVATOR_L1_POS = 35;
 
@@ -43,7 +43,7 @@ public class Constants {
     //Highest Position at 160
     public static final double SCORE_ELEVATOR_INTAKE_POSITION = 5;
     public static final double SCORE_ELEVATOR_L2_POS = 0;
-    public static final double SCORE_ELEVATOR_L3_POS = 0;
+    public static final double SCORE_ELEVATOR_L3_POS = 50;
     public static final double SCORE_ELEVATOR_L4_POS = 155;
     public static final double SCORE_HANDOFF_POS = 0;
 
@@ -114,9 +114,9 @@ public class Constants {
 
     //Closed Loop controller Config
 
-    public static final double P_INTAKE_ELEVATOR = 0.1;
-    public static final double MAX_OUTPUT_INTAKE_ELEVATOR = 0.60;
-    public static final double MIN_OUTPUT_INTAKE_ELEVATOR = -0.60;
+    public static final double P_INTAKE_ELEVATOR = 0.2;
+    public static final double MAX_OUTPUT_INTAKE_ELEVATOR = 0.802;
+    public static final double MIN_OUTPUT_INTAKE_ELEVATOR = -0.802;
 
     public static final double P_SCORE_ELEVATOR = 0.05;
     public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.25;

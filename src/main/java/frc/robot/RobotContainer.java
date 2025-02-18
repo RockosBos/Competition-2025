@@ -117,12 +117,12 @@ public class RobotContainer {
         //  operaterController.b().whileTrue(new ScoreSetLeft(scoreSubsystem));
         //  operaterController.a().whileTrue(new ScoreSetCenter(scoreSubsystem));
         //  operaterController.y().whileTrue(new ScoreSetRight(scoreSubsystem));
-         operaterController.a().whileTrue(new EleIntakePos(elevatorSubsytem));
-         operaterController.b().whileTrue(new EleL1Position(elevatorSubsytem));
-         operaterController.a().whileTrue(new ScoreSetCenter(scoreSubsystem));
-         operaterController.y().whileTrue(new ScoreSetLeft(scoreSubsystem));
-         operaterController.rightBumper().whileTrue(new ClawOpened(scoreSubsystem));
-         operaterController.leftBumper().whileTrue(new ClawClosed(scoreSubsystem));
+        operaterController.a().whileTrue(new EleIntakePos(elevatorSubsytem));
+        operaterController.b().whileTrue(new EleL1Position(elevatorSubsytem));
+        //  operaterController.a().whileTrue(new ScoreSetCenter(scoreSubsystem));
+        //  operaterController.y().whileTrue(new ScoreSetLeft(scoreSubsystem));
+        //  operaterController.rightBumper().whileTrue(new ClawOpened(scoreSubsystem));
+        //  operaterController.leftBumper().whileTrue(new ClawClosed(scoreSubsystem));
 
         //Telemetry
 

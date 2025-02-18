@@ -25,8 +25,8 @@ public class EleL1Position extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_L1_POS);
-    m_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_INTAKE_POSITION);
+    m_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_LOADING_INTAKE_POS);
+    m_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_L3_POS);
   }
 
   // Called once the command ends or is interrupted.
