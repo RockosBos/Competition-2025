@@ -26,7 +26,7 @@ public class EleIntakePos extends Command {
   @Override
   public void execute() {
     e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS);
-    e_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_L4_POS);
+    e_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_INTAKE_POSITION);
   }
 
   // Called once the command ends or is interrupted.
