@@ -26,7 +26,7 @@ public class EleL3Position extends Command {
   @Override
   public void execute() {
     e_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_L3_POS);
-    e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_HANDOFF_POS);
+    e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS);
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +36,6 @@ public class EleL3Position extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return e_Elevator.inPosition();
   }
 }

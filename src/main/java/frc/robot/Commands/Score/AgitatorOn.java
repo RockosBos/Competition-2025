@@ -9,13 +9,13 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Score;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ScoreSetRight extends Command {
+public class AgitatorOn extends Command {
   Score s_Score;
-    /** Creates a new ScoreSetLeft. */
-  public ScoreSetRight(Score s_Score) {
-    this.s_Score = s_Score;
-    addRequirements(this.s_Score);
+  /** Creates a new ClawClosed. */
+  public AgitatorOn(Score s_Score) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.s_Score = s_Score;
+    addRequirements(s_Score);
   }
 
   // Called when the command is initially scheduled.
@@ -25,17 +25,18 @@ public class ScoreSetRight extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_Score.setRotateTargetPostion(Constants.SCORE_ROTATE_RIGHT_POS);
-    s_Score.setPivotTargetPostion(Constants.SCORE_PIVOT_OUT_RIGHT_POS);
+    s_Score.setAgitatorRollerVoltage(Constants.SCORE_AGITATOR_INFEED_VOLTAGE);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("Command AgitateOn Complete");
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

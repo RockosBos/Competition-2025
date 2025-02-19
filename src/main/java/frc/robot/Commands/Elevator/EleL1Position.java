@@ -10,11 +10,11 @@ import frc.robot.subsystems.Elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class EleL1Position extends Command {
-  Elevator m_Elevator;
+  Elevator e_Elevator;
   /** Creates a new ScoreL1Position. */
-  public EleL1Position(Elevator m_Elevator) {
-    this.m_Elevator = m_Elevator;
-    addRequirements(m_Elevator);
+  public EleL1Position(Elevator e_Elevator) {
+    this.e_Elevator = e_Elevator;
+    addRequirements(e_Elevator);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -25,8 +25,8 @@ public class EleL1Position extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_L1_POS);
-    m_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_INTAKE_POSITION);
+    e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_L1_POS);
+    e_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_INTAKE_POSITION);
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +36,6 @@ public class EleL1Position extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return e_Elevator.inPosition();
   }
 }

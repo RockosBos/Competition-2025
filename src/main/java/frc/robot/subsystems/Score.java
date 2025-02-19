@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.enums.ScoreState;
 
 public class Score extends SubsystemBase {
 
@@ -48,10 +49,12 @@ private SparkMaxConfig rotateConfig = new SparkMaxConfig();
 private double rotateTargetPostion = Constants.SCORE_ROTATE_CENTER_POS, pivotTargetPostion = Constants.SCORE_PIVOT_IN_POS, clawTargetPostion = Constants.SCORE_CLAW_OPEN_POS;
 private double agitatorVoltage = 0.0;
 
+private ScoreState scoreState = ScoreState.CENTER;
+
 DataLog log = DataLogManager.getLog();
-private DoubleLogEntry clawTargetPositionLog, clawCurrentPositionLog;
-private DoubleLogEntry pivotTargetPositionLog, pivotCurrentPositionLog;
-private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
+private DoubleLogEntry clawTargetPositionLog, clawCurrentPositionLog, clawAmpsLog;
+private DoubleLogEntry pivotTargetPositionLog, pivotCurrentPositionLog, pivotAmpsLog;
+private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotateAmpsLog;
 
   /** Creates a new Score. */
   public Score() {
@@ -106,12 +109,15 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
 
       clawTargetPositionLog = new DoubleLogEntry(log, "/U/Score/clawTargetPosition");
       clawCurrentPositionLog = new DoubleLogEntry(log, "/U/Score/clawCurrentPosition");
+      clawAmpsLog = new DoubleLogEntry(log, "/U/Score/ClawAmps");
 
       pivotTargetPositionLog = new DoubleLogEntry(log, "/U/Score/pivotTargetPosition");
       pivotCurrentPositionLog = new DoubleLogEntry(log, "/U/Score/pivotCurrentPosition");
+      pivotAmpsLog = new DoubleLogEntry(log, "/U/Score/pivotAmps");
 
       rotateTargetPositionLog = new DoubleLogEntry(log, "/U/Score/rotateTargetPosition");
       rotateCurrentPositionLog = new DoubleLogEntry(log, "/U/Score/rotateCurrentPosition");
+      rotateAmpsLog = new DoubleLogEntry(log, "/U/Score/RotateAmps");
 
   }
 
@@ -134,6 +140,14 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
    */
   public void setAgitatorRollerVoltage(double agitatorVoltage){
     this.agitatorVoltage = agitatorVoltage;
+  }
+
+  public void setScoreState(ScoreState state){
+    this.scoreState = state;
+  }
+
+  public ScoreState getScoreState(){
+    return this.scoreState;
   }
 
     /**
@@ -193,16 +207,21 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
     rotateLoopy.setReference(rotateTargetPostion, ControlType.kPosition);
     pivotLoopy.setReference(pivotTargetPostion, ControlType.kPosition);
     ClawLoopy.setReference(clawTargetPostion, ControlType.kPosition);
+
+    agitator.setVoltage(agitatorVoltage);
     
     // Logging
     clawCurrentPositionLog.append(ClawAbs.getPosition());
     clawTargetPositionLog.append(clawTargetPostion);
+    clawAmpsLog.append(Claw.getOutputCurrent());
 
     pivotCurrentPositionLog.append(pivotAbs.getPosition());
     pivotTargetPositionLog.append(pivotTargetPostion);
+    pivotAmpsLog.append(pivot.getOutputCurrent());
 
     rotateCurrentPositionLog.append(rotateAbs.getPosition());
     rotateTargetPositionLog.append(rotateTargetPostion);
+    rotateAmpsLog.append(rotate.getOutputCurrent());
 
     // SmartDashboard.putNumber("ClawAbs", ClawAbs.getPosition());
     // SmartDashboard.putNumber("RotateAbs", rotateAbs.getPosition());

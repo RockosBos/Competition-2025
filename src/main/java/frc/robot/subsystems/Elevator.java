@@ -41,7 +41,7 @@ public class Elevator extends SubsystemBase {
   private double targetPostionScoreInLa = Constants.SCORE_ELEVATOR_INTAKE_POSITION;
   private double targetPostion = Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS;
   private SparkMaxConfig Configaroo = new SparkMaxConfig();
-  private DigitalInput InnyScory = new DigitalInput(8);
+  //private DigitalInput InnyScory = new DigitalInput(8);
     
   DataLog log = DataLogManager.getLog();
   private DoubleLogEntry intakeElevatorAmpLog, intakeElevatorVoltageLog, intakeElevatorTargetPositionLog, intakeElevatorCurrentPositionLog;
@@ -51,9 +51,11 @@ public class Elevator extends SubsystemBase {
 
   private final NetworkTable table = inst.getTable("Elevator");
   private final DoublePublisher intakeElevatorPosPub = table.getDoubleTopic("elevator").publish(),
-                                intakeElevatorSetpointPub = table.getDoubleTopic("elevator").publish(), 
+                                intakeElevatorSetpointPub = table.getDoubleTopic("elevator").publish(),
+                                intakeElevatorAmpsPub = table.getDoubleTopic("elevator").publish(), 
                                 scoreElevatorPosPub = table.getDoubleTopic("elevator").publish(),
-                                scoreElevatorSetpointPub = table.getDoubleTopic("elevator").publish();
+                                scoreElevatorSetpointPub = table.getDoubleTopic("elevator").publish(),
+                                scoreElevatorAmpsPub = table.getDoubleTopic("elevator").publish();
 
   /** Creates a new Elevator. */
   public Elevator() {
@@ -87,9 +89,11 @@ public class Elevator extends SubsystemBase {
 
     intakeElevatorTargetPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorTargetPosition");
     intakeElevatorCurrentPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorCurrentPosition");
+    intakeElevatorAmpLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorAmps");
 
     scoreElevatorTargetPositionLog = new DoubleLogEntry(log, "/U/Elevator/scoreElevatorTargetPosition");
     scoreElevatorCurrentPositionLog = new DoubleLogEntry(log, "/U/Elevator/scoreElevatorCurrentPosition");
+    scoreElevatorAmpLog = new DoubleLogEntry(log, "/U/Elevator/scoreElevatorAmps");
     
   }
 
@@ -112,12 +116,26 @@ public class Elevator extends SubsystemBase {
   }
 
   public boolean inPosition(){
+    return (intakeEleInPosition() && scoreEleInPosition());
+  }
+
+  public boolean intakeEleInPosition(){
+    if(Math.abs(IntakeEleEncoder.getPosition() - targetPostion) < Constants.THRESHOLD_ELEVATOR_INTAKE_POS){
+      return true;
+    }
+    return false;
+  }
+
+  public boolean scoreEleInPosition(){
+    if(Math.abs(ScoreEleEncoder.getPosition() - targetPostionScoreInLa) < Constants.THRESHOLD_ELEVATOR_SCORE_POS){
+      return true;
+    }
     return false;
   }
 
   @Override
   public void periodic() {
-    IntakeLoopy.setReference(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 
     SmartDashboard.putNumber("EleTarget", targetPostion);
@@ -126,12 +144,14 @@ public class Elevator extends SubsystemBase {
     //logging
     intakeElevatorTargetPositionLog.append(IntakeEleEncoder.getPosition());;
     intakeElevatorCurrentPositionLog.append(targetPostion);
+    intakeElevatorAmpLog.append(IntakeEle.getOutputCurrent());
 
     intakeElevatorPosPub.set(IntakeEleEncoder.getPosition());
     intakeElevatorSetpointPub.set(targetPostion);
 
     scoreElevatorTargetPositionLog.append(ScoreEleEncoder.getPosition());;
     scoreElevatorCurrentPositionLog.append(targetPostionScoreInLa);
+    scoreElevatorAmpLog.append(ScoreEle.getOutputCurrent());
 
     scoreElevatorPosPub.set(ScoreEleEncoder.getPosition());
     scoreElevatorSetpointPub.set(targetPostionScoreInLa);

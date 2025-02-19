@@ -52,6 +52,7 @@ public class Intake extends SubsystemBase {
   //Logging variables
   private DoubleLogEntry intakeInAmpLog, intakeInVoltageLog;
   private DoubleLogEntry intakeRotateAmpLog, intakeRotateVoltageLog, intakeRotateTargetPositionLog, intakeRotateAbsCurrentPositionLog, intakeRotateErrLog;
+  private DoubleLogEntry leftLaserDistLog, rightLaserDistLog;
   private BooleanLogEntry intakeRotateInPosLog;
 
   /** Creates a new Intake. */
@@ -91,6 +92,9 @@ public class Intake extends SubsystemBase {
     intakeRotateAbsCurrentPositionLog = new DoubleLogEntry(log, "/U/Intake/intakeRotateAbsCurrentPosition");
     intakeRotateErrLog = new DoubleLogEntry(log, "/U/Intake/intakeRotateErrLog");
 
+    leftLaserDistLog = new DoubleLogEntry(log, "U/Intake/leftLaserDist");
+    rightLaserDistLog = new DoubleLogEntry(log, "U/Intake/rightLaserDist");
+
   }
 
     /**
@@ -128,6 +132,27 @@ public class Intake extends SubsystemBase {
     return false;
   }
 
+      /**
+     * Returns true if the Left LaserCan Sensor detects a game piece
+     */
+  public boolean leftLaserObstructed(){
+    if(leftyLazy.getMeasurement().distance_mm < Constants.THRESHOLD_LASERCAN_INTAKE_LEFT){
+      return true;
+    }
+    return false;
+  }
+
+  public boolean rightLaserObstructed(){
+    if(rightyLazy.getMeasurement().distance_mm < Constants.THRESHOLD_LASERCAN_INTAKE_RIGHT){
+      return true;
+    }
+    return false;
+  }
+
+  public boolean hasCoral(){
+    return (leftLaserObstructed() && rightLaserObstructed());
+  }
+
   @Override
   public void periodic() {
 
@@ -153,6 +178,9 @@ public class Intake extends SubsystemBase {
     //intakeRotateInPosLog.append(this.inPosition());
 
     SmartDashboard.putNumber("IntakeRotateAbs", intakeAbsEncoder.getPosition());
+    SmartDashboard.putNumber("Left Laser Distance", leftyLazy.getMeasurement().distance_mm);
+    SmartDashboard.putNumber("Right Laser Distance", rightyLazy.getMeasurement().distance_mm);
+    SmartDashboard.putBoolean("hasCoral", hasCoral());
 
   }
 }

@@ -6,16 +6,17 @@ package frc.robot.Commands.Score;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Elevator;
+import frc.robot.enums.ScoreState;
+import frc.robot.subsystems.Score;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ScoreL4Position extends Command {
-  Elevator e_Elevator;
-  /** Creates a new ScoreL2Position. */
-  public ScoreL4Position(Elevator e_Elevator) {
+public class ScoreLeftState extends Command {
+  Score s_Score;
+    /** Creates a new ScoreSetLeft. */
+  public ScoreLeftState(Score s_Score) {
+    this.s_Score = s_Score;
+    addRequirements(this.s_Score);
     // Use addRequirements() here to declare subsystem dependencies.
-    this.e_Elevator = e_Elevator;
-    addRequirements(e_Elevator);
   }
 
   // Called when the command is initially scheduled.
@@ -25,17 +26,18 @@ public class ScoreL4Position extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    e_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_L4_POS);
-    e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_HANDOFF_POS);
+    s_Score.setScoreState(ScoreState.LEFT);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("Command ScoreLeftState Complete");
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }
