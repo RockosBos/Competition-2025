@@ -18,19 +18,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.Commands.CommandGroups.Sequential.Handoff;
+import frc.robot.Commands.CommandGroups.Sequential.IntakeFloor;
+import frc.robot.Commands.CommandGroups.Sequential.IntakeLoading;
 import frc.robot.Commands.CommandGroups.Sequential.L1;
 import frc.robot.Commands.CommandGroups.Sequential.L2;
 import frc.robot.Commands.CommandGroups.Sequential.L3;
 import frc.robot.Commands.CommandGroups.Sequential.L4;
-import frc.robot.Commands.Elevator.EleHandoffPos;
-import frc.robot.Commands.Elevator.EleIntakePos;
-import frc.robot.Commands.Elevator.EleL1Position;
-import frc.robot.Commands.Elevator.EleL3Position;
+import frc.robot.Commands.CommandGroups.Sequential.ScoreCoral;
+import frc.robot.Commands.Elevator.IntakeEleHandoffPos;
+import frc.robot.Commands.Elevator.IntakeEleFloorPos;
+import frc.robot.Commands.Elevator.ScoreEleL1Position;
+import frc.robot.Commands.Elevator.ScoreEleL2Position;
+import frc.robot.Commands.Elevator.ScoreEleL3Position;
+import frc.robot.Commands.Elevator.ScoreEleL4Position;
+import frc.robot.Commands.Elevator.IntakeEleLoadingPos;
 import frc.robot.Commands.Intake.FloorIntakePosition;
 import frc.robot.Commands.Intake.HandOffIntakePos;
+import frc.robot.Commands.Intake.IntakeRollerOff;
+import frc.robot.Commands.Intake.L1IntakePos;
 import frc.robot.Commands.Intake.LoadingIntakePosition;
 import frc.robot.Commands.Intake.OutfeedRoller;
 import frc.robot.Commands.Score.AgitatorOn;
@@ -76,9 +86,9 @@ public class RobotContainer {
     private final Score scoreSubsystem = new Score();
 
     //Triggers
-    private final Trigger driverLeftTrigger = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3);
+    private final Trigger driverLeftTrigger = new Trigger(() -> operaterController.getLeftTriggerAxis() > 0.3);
     private final Trigger driverRightTrigger = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3);
-    private final Trigger operatorLeftTrigger = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3);
+    private final Trigger operatorLeftTrigger = new Trigger(() -> operaterController.getLeftTriggerAxis() > 0.3);
     private final Trigger operatorRightTrigger = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3);
 
     private final Trigger hasCoral = new Trigger(() -> intakeSubsystem.hasCoral());
@@ -131,16 +141,14 @@ public class RobotContainer {
 
         //Operator Controller
 
-        operaterController.x().onTrue(new HandOffIntakePos(intakeSubsystem));
-        operaterController.a().onTrue(new HandoffScorePosition(scoreSubsystem));
-        operaterController.b().onTrue(new EleHandoffPos(elevatorSubsytem));
-        operaterController.y().onTrue(new ClawClosed(scoreSubsystem));
-        operaterController.rightBumper().onTrue(new EleL3Position(elevatorSubsytem));
-        operaterController.rightBumper().onTrue(new AgitatorOn(scoreSubsystem));
-        operaterController.rightBumper().onTrue(new OutfeedRoller(intakeSubsystem));
+        operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
+        operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
+        // operaterController.x().onTrue(new ScoreSetScore(scoreSubsystem));
+        // operaterController.a().onTrue(new ScoreSetCenter(scoreSubsystem));
 
-        // operatorLeftTrigger.onTrue(new FloorIntakePosition(intakeSubsystem));
-        // operaterController.leftBumper().onTrue(new LoadingIntakePosition(intakeSubsystem));
+        operatorLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        operaterController.leftBumper().onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        operaterController.a().onTrue(new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         // operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
         // operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
         // operaterController.a().onTrue(new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
@@ -148,7 +156,7 @@ public class RobotContainer {
         // operaterController.x().onTrue(new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         // operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
-        //hasCoral.onTrue(new HandoffScorePosition(scoreSubsystem));
+        hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         //Telemetry
 

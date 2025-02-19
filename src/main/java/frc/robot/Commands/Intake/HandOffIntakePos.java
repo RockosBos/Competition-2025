@@ -30,7 +30,7 @@ public class HandOffIntakePos extends Command {
   @Override
   public void execute() {
     i_Intake.setTargetPostion(Constants.INTAKE_ROTATE_HANDOFF_POS);
-    i_Intake.setMotorVoltage(0.0);
+    
   }
 
   // Called once the command ends or is interrupted.

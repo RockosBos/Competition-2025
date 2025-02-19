@@ -6,8 +6,10 @@ package frc.robot.Commands.CommandGroups.Sequential;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Commands.Elevator.EleHandoffPos;
+import frc.robot.Commands.Elevator.IntakeEleHandoffPos;
+import frc.robot.Commands.Elevator.ScoreEleHandoffPos;
 import frc.robot.Commands.Intake.HandOffIntakePos;
+import frc.robot.Commands.Intake.IntakeRollerOff;
 import frc.robot.Commands.Score.ClawOpened;
 import frc.robot.Commands.Score.HandoffScorePosition;
 import frc.robot.subsystems.Elevator;
@@ -33,7 +35,9 @@ public class Handoff extends SequentialCommandGroup {
     addCommands(
       new ClawOpened(s_Score),
       new ParallelCommandGroup(new HandOffIntakePos(i_Intake), new HandoffScorePosition(s_Score)),
-      new EleHandoffPos(e_Elevator)
+      new IntakeRollerOff(i_Intake),
+      new IntakeEleHandoffPos(e_Elevator),
+      new ScoreEleHandoffPos(e_Elevator)
     );
   }
 }

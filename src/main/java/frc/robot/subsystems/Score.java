@@ -157,7 +157,7 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotate
    * controller to navigate to.
    */
   public boolean atRotateTarget(){
-    if(Constants.THRESHOLD_SCORE_ROTATE_POS > rotateTargetPostion){
+    if(Constants.THRESHOLD_SCORE_ROTATE_POS > Math.abs(rotateAbs.getPosition() - rotateTargetPostion)){
        return true;
       }
       return false;
@@ -170,7 +170,7 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotate
    * controller to navigate to.
    */
   public boolean atPivotTarget(){
-    if (Constants.THRESHOLD_SCORE_PIVOT_POS > pivotTargetPostion) {
+    if (Constants.THRESHOLD_SCORE_PIVOT_POS > Math.abs(pivotAbs.getPosition() - pivotTargetPostion)) {
       return true;
     }
       return false;
@@ -185,7 +185,7 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotate
    */
 
    public boolean atClawTarget(){
-    if (Constants.THRESHOLD_SCORE_CLAW_POS > clawTargetPostion) {
+    if (Constants.THRESHOLD_SCORE_CLAW_POS > Math.abs(ClawAbs.getPosition() - clawTargetPostion)) {
       return true;
     }
       return false;
@@ -223,12 +223,14 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotate
     rotateTargetPositionLog.append(rotateTargetPostion);
     rotateAmpsLog.append(rotate.getOutputCurrent());
 
-    // SmartDashboard.putNumber("ClawAbs", ClawAbs.getPosition());
-    // SmartDashboard.putNumber("RotateAbs", rotateAbs.getPosition());
-    // SmartDashboard.putNumber("PivotAbs", pivotAbs.getPosition());
-    // SmartDashboard.putNumber("ClawRencoder", Claw.getEncoder().getPosition());
-    // SmartDashboard.putNumber("RotateRencoder", rotate.getEncoder().getPosition());
-    // SmartDashboard.putNumber("PivotRencoder", pivot.getEncoder().getPosition());
-    // SmartDashboard.putNumber("RotateTargetPosition", rotateTargetPostion);
+    //SmartDashboard.putNumber("ClawAbs", ClawAbs.getPosition());
+    SmartDashboard.putNumber("RotateAbs", rotateAbs.getPosition());
+    SmartDashboard.putNumber("PivotAbs", pivotAbs.getPosition());
+    //SmartDashboard.putNumber("ClawRencoder", Claw.getEncoder().getPosition());
+    SmartDashboard.putNumber("RotateRencoder", rotate.getEncoder().getPosition());
+    SmartDashboard.putNumber("PivotRencoder", pivot.getEncoder().getPosition());
+    SmartDashboard.putNumber("RotateTargetPosition", rotateTargetPostion);
+    SmartDashboard.putNumber("PivotTargetPosition", pivotTargetPostion);
+    SmartDashboard.putString("Score State", this.scoreState.toString());
   }
 }

@@ -6,8 +6,9 @@ package frc.robot.Commands.CommandGroups.Sequential;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Commands.Elevator.EleIntakePos;
-import frc.robot.Commands.Elevator.EleLoadingPos;
+import frc.robot.Commands.Elevator.IntakeEleFloorPos;
+import frc.robot.Commands.Elevator.IntakeEleLoadingPos;
+import frc.robot.Commands.Elevator.ScoreEleIdlePosition;
 import frc.robot.Commands.Intake.FloorIntakePosition;
 import frc.robot.Commands.Intake.LoadingIntakePosition;
 import frc.robot.Commands.Score.ScoreSetCenter;
@@ -31,7 +32,8 @@ public class IntakeLoading extends SequentialCommandGroup {
     this.s_Score = s_Score;
 
     addCommands(
-      new EleLoadingPos(e_Elevator),
+      new ScoreEleIdlePosition(e_Elevator),
+      new IntakeEleLoadingPos(e_Elevator),
       new LoadingIntakePosition(i_Intake)
     );
   }

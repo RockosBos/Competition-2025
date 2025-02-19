@@ -9,13 +9,13 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class EleL1Position extends Command {
+public class ScoreEleIdlePosition extends Command {
   Elevator e_Elevator;
-  /** Creates a new ScoreL1Position. */
-  public EleL1Position(Elevator e_Elevator) {
+  /** Creates a new ScoreL2Position. */
+  public ScoreEleIdlePosition(Elevator e_Elevator) {
+    // Use addRequirements() here to declare subsystem dependencies.
     this.e_Elevator = e_Elevator;
     addRequirements(e_Elevator);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -25,17 +25,18 @@ public class EleL1Position extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_L1_POS);
-    e_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_INTAKE_POSITION);
+    e_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_GO_AWAY_POSITION);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("Score Elevator Idle Command Completed");
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return e_Elevator.inPosition();
+    return e_Elevator.scoreEleInPosition();
   }
 }
