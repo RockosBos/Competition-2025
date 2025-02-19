@@ -32,7 +32,6 @@ import frc.robot.Commands.CommandGroups.Sequential.L4;
 import frc.robot.Commands.CommandGroups.Sequential.ScoreCoral;
 import frc.robot.Commands.Elevator.IntakeEleHandoffPos;
 import frc.robot.Commands.Elevator.IntakeEleFloorPos;
-import frc.robot.Commands.Elevator.ScoreEleL1Position;
 import frc.robot.Commands.Elevator.ScoreEleL2Position;
 import frc.robot.Commands.Elevator.ScoreEleL3Position;
 import frc.robot.Commands.Elevator.ScoreEleL4Position;

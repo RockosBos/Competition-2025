@@ -38,7 +38,8 @@ public class L4 extends SequentialCommandGroup {
       new Handoff(e_Elevator, i_Intake, s_Score),
       new ClawClosed(s_Score),
       new ParallelCommandGroup(new ScoreEleL4Position(e_Elevator), new AgitatorOn(s_Score)),
-      new ParallelCommandGroup(new ScoreSetScore(s_Score), new AgitatorOff(s_Score))
+      new ParallelCommandGroup(new ScoreSetScore(s_Score)),
+      new AgitatorOff(s_Score)
     );
   }
 }
