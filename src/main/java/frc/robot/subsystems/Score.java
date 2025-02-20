@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.util.datalog.DataLog;
@@ -27,6 +28,7 @@ import frc.robot.enums.ScoreState;
 public class Score extends SubsystemBase {
 
 private SparkMax agitator = new SparkMax(Constants.ID_SCORE_AGITATE, MotorType.kBrushless);
+private SparkMaxConfig agitatorConfig = new SparkMaxConfig();
 
 private SparkMax Claw = new SparkMax(Constants.ID_SCORE_CLAW, MotorType.kBrushless);
 private AbsoluteEncoder ClawAbs = Claw.getAbsoluteEncoder();
@@ -104,6 +106,11 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotate
       .outputRange(Constants.MIN_OUTPUT_SCORE_ROTATE, Constants.MAX_OUTPUT_SCORE_ROTATE);
       
       rotate.configure(rotateConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+      agitatorConfig.inverted(Constants.INVERT_SCORE_AGITATOR);
+      agitatorConfig.smartCurrentLimit(Constants.CURRENTLIMIT_SCORE_AGITATOR);
+      agitatorConfig.idleMode(Constants.IDLEMODE_SCORE_AGITATOR);
+      agitator.configure(agitatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
       //logging
 

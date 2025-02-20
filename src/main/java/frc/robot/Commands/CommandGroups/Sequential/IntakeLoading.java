@@ -32,7 +32,7 @@ public class IntakeLoading extends SequentialCommandGroup {
     this.s_Score = s_Score;
 
     addCommands(
-      new ScoreEleIdlePosition(e_Elevator),
+      new ParallelCommandGroup(new ScoreEleIdlePosition(e_Elevator), new ScoreSetCenter(s_Score)),
       new IntakeEleLoadingPos(e_Elevator),
       new LoadingIntakePosition(i_Intake)
     );

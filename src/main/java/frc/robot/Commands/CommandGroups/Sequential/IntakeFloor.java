@@ -30,9 +30,9 @@ public class IntakeFloor extends SequentialCommandGroup {
     this.s_Score = s_Score;
 
     addCommands(
-      new IntakeEleFloorPos(e_Elevator),
-      new ScoreEleIdlePosition(e_Elevator),
-      new FloorIntakePosition(i_Intake)
+      new ParallelCommandGroup(new IntakeEleFloorPos(e_Elevator), new ScoreSetCenter(s_Score)),
+      new ParallelCommandGroup(new ScoreEleIdlePosition(e_Elevator), new FloorIntakePosition(i_Intake))
+      
     );
   }
 }

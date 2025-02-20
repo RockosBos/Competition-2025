@@ -6,8 +6,12 @@ package frc.robot.Commands.CommandGroups.Sequential;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Commands.Elevator.ScoreEleIdlePosition;
+import frc.robot.Commands.Intake.IntakeRollerOff;
+import frc.robot.Commands.Score.AgitatorOff;
 import frc.robot.Commands.Score.ClawOpened;
 import frc.robot.Commands.Score.ClawRelease;
+import frc.robot.Commands.Score.ScoreSetCenter;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Score;
@@ -29,7 +33,9 @@ public class ScoreCoral extends SequentialCommandGroup {
 
     addCommands(
       new ClawRelease(s_Score),
-      new ClawOpened(s_Score)
+      new ClawOpened(s_Score),
+      new AgitatorOff(s_Score),
+      new ParallelCommandGroup(new ScoreEleIdlePosition(e_Elevator), new ScoreSetCenter(s_Score), new IntakeRollerOff(i_Intake))
     );
   }
 }

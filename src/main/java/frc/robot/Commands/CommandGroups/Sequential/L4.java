@@ -6,9 +6,13 @@ package frc.robot.Commands.CommandGroups.Sequential;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Commands.Elevator.ScoreEleIdlePosition;
 import frc.robot.Commands.Elevator.ScoreEleL2Position;
 import frc.robot.Commands.Elevator.ScoreEleL4Position;
+import frc.robot.Commands.Intake.IntakeIdle;
+import frc.robot.Commands.Intake.IntakeRollerOff;
 import frc.robot.Commands.Intake.L1IntakePos;
+import frc.robot.Commands.Intake.OutfeedRollerHandoff;
 import frc.robot.Commands.Score.AgitatorOff;
 import frc.robot.Commands.Score.AgitatorOn;
 import frc.robot.Commands.Score.ClawClosed;
@@ -35,11 +39,10 @@ public class L4 extends SequentialCommandGroup {
     this.s_Score = s_Score;
 
     addCommands(
-      new Handoff(e_Elevator, i_Intake, s_Score),
       new ClawClosed(s_Score),
-      new ParallelCommandGroup(new ScoreEleL4Position(e_Elevator), new AgitatorOn(s_Score)),
-      new ParallelCommandGroup(new ScoreSetScore(s_Score)),
-      new AgitatorOff(s_Score)
+      new IntakeIdle(i_Intake),
+      new ParallelCommandGroup(new ScoreEleL4Position(e_Elevator), new AgitatorOn(s_Score), new OutfeedRollerHandoff(i_Intake)),
+      new ParallelCommandGroup(new ScoreSetScore(s_Score))
     );
   }
 }

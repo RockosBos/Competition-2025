@@ -25,6 +25,7 @@ public class Constants {
 
     public static final double INTAKE_ROLLER_INFEED_VOLTAGE = 12.0;
     public static final double INTAKE_ROLLER_OUTFEED_VOLTAGE = -12.0;
+    public static final double INTAKE_ROLLER_HANDOFF_VOLTAGE = -0.8;
     
 
     public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 10.0;
@@ -34,7 +35,7 @@ public class Constants {
 
     public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.626;
     public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.315;
-    public static final double INTAKE_ROTATE_HANDOFF_POS = 0.30;
+    public static final double INTAKE_ROTATE_HANDOFF_POS = 0.305;
     public static final double INTAKE_ROTATE_L1_POS = 0.4;
 
     //Score Arm Constant Values
@@ -60,8 +61,8 @@ public class Constants {
     public static final double SCORE_CLAW_OPEN_POS = 0.6;
     public static final double SCORE_CLAW_RELEASE_POS = 0.8755;
 
-    public static final double SCORE_AGITATOR_INFEED_VOLTAGE = 0.8;
-    public static final double SCORE_AGITATOR_OUTFEED_VOLTAGE = -0.8;
+    public static final double SCORE_AGITATOR_INFEED_VOLTAGE = 8.0;
+    public static final double SCORE_AGITATOR_OUTFEED_VOLTAGE = -8.0;
 
     //Absolute Encoder offsets
 
@@ -88,7 +89,7 @@ public class Constants {
     public static final boolean INVERT_SCORE_ROTATE = true;
     public static final boolean INVERT_SCORE_PIVOT = false;
     public static final boolean INVERT_SCORE_CLAW = true;
-    public static final boolean INVERT_SCORE_AGITATOR = false;
+    public static final boolean INVERT_SCORE_AGITATOR = true;
 
     public static final boolean INVERT_SCORE_PIVOT_ABS = true;
     public static final boolean INVERT_SCORE_ROTATE_ABS = false;
@@ -96,7 +97,7 @@ public class Constants {
     public static final boolean INVERT_INTAKE_ROTATE_ABS = false;
 
     public static final double RAMPRATE_INTAKE_ELEVATOR = 0.1;
-    public static final double RAMPRATE_SCORE_ELEVATOR = 0.1;
+    public static final double RAMPRATE_SCORE_ELEVATOR = 0.2;
     public static final double RAMPRATE_INTAKE_ROTATE = 0.1;
     public static final double RAMPRATE_INTAKE_ROLLER = 0.1;
     public static final double RAMPRATE_SCORE_ROTATE = 0.1;
@@ -120,14 +121,14 @@ public class Constants {
     public static final double MIN_OUTPUT_INTAKE_ELEVATOR = -0.60;
 
     public static final double P_SCORE_ELEVATOR = 0.05;
-    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.4;
-    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.4;
+    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.6;
+    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.6;
 
     public static final double P_INTAKE_ROTATE = 3.0;
     public static final double MAX_OUTPUT_INTAKE_ROTATE = 0.5;
     public static final double MIN_OUTPUT_INTAKE_ROTATE = -0.4;
 
-    public static final double P_SCORE_ROTATE = 2.0;
+    public static final double P_SCORE_ROTATE = 5.0;
     public static final double MAX_OUTPUT_SCORE_ROTATE = 0.2;
     public static final double MIN_OUTPUT_SCORE_ROTATE = -0.2;
 
@@ -140,7 +141,7 @@ public class Constants {
     public static final double MIN_OUTPUT_SCORE_CLAW = -0.25;
 
     //Position Thresholds
-    public static final double THRESHOLD_INTAKE_ROTATE_POS = 0.01;
+    public static final double THRESHOLD_INTAKE_ROTATE_POS = 0.05;
     public static final double THRESHOLD_ELEVATOR_INTAKE_POS = 1.0;
     public static final double THRESHOLD_ELEVATOR_SCORE_POS = 1.0;
     public static final double THRESHOLD_SCORE_ROTATE_POS = 0.05;
