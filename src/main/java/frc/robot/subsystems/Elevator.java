@@ -122,6 +122,7 @@ public class Elevator extends SubsystemBase {
 
     SmartDashboard.putNumber("EleTarget", targetPostion);
     SmartDashboard.putNumber("IntakeEleEnc", IntakeEle.getEncoder().getPosition());
+    SmartDashboard.putNumber("ScoreEle", ScoreEleEncoder.getPosition());
 
     //logging
     intakeElevatorTargetPositionLog.append(IntakeEleEncoder.getPosition());;

@@ -14,8 +14,8 @@ public class Constants {
     public static final int ID_SCORE_CLAW = 12;
     public static final int ID_SCORE_ROTATE = 11;
     public static final int ID_SCORE_PIVOT = 10;
-    public static final int ID_CLIMB_RIGHT = 9;
-    public static final int ID_CLIMB_LEFT = 8;
+    public static final int ID_CLIMB_ROTATE = 9;
+    public static final int ID_CLIMB_WINCH = 8;
     
     
     public static final int LASERCAN_INTAKE_LEFT = 51;
@@ -62,6 +62,12 @@ public class Constants {
     public static final double SCORE_AGITATOR_INFEED_VOLTAGE = 0;
     public static final double SCORE_AGITATOR_OUTFEED_VOLTAGE = 0;
 
+    //Climb Constants Values
+
+    public static final double CLIMB_IN_POS = 0.0;
+    public static final double CLIMB_OUT_POS = 0.0;
+    public static final double CLIMB_CLIMBING_POS = 0.0;
+
     //Absolute Encoder offsets
 
     public static final double OFFSET_INTAKE_ROTATE_ABS = 0.430 - 0.25;
@@ -71,13 +77,13 @@ public class Constants {
 
     //Motor Configuration Constants
 
-    public static final IdleMode IDLEMODE_INTAKE_ELEVATOR = IdleMode.kBrake;
-    public static final IdleMode IDLEMODE_SCORE_ELEVATOR = IdleMode.kBrake;
-    public static final IdleMode IDLEMODE_INTAKE_ROTATE = IdleMode.kBrake;
+    public static final IdleMode IDLEMODE_INTAKE_ELEVATOR = IdleMode.kCoast;
+    public static final IdleMode IDLEMODE_SCORE_ELEVATOR = IdleMode.kCoast;
+    public static final IdleMode IDLEMODE_INTAKE_ROTATE = IdleMode.kCoast;
     public static final IdleMode IDLEMODE_INTAKE_ROLLER = IdleMode.kCoast;
-    public static final IdleMode IDLEMODE_SCORE_ROTATE = IdleMode.kBrake;
-    public static final IdleMode IDLEMODE_SCORE_PIVOT = IdleMode.kBrake;
-    public static final IdleMode IDLEMODE_SCORE_CLAW = IdleMode.kBrake;
+    public static final IdleMode IDLEMODE_SCORE_ROTATE = IdleMode.kCoast;
+    public static final IdleMode IDLEMODE_SCORE_PIVOT = IdleMode.kCoast;
+    public static final IdleMode IDLEMODE_SCORE_CLAW = IdleMode.kCoast;
     public static final IdleMode IDLEMODE_SCORE_AGITATOR = IdleMode.kCoast;
 
     public static final boolean INVERT_INTAKE_ELEVATOR = false;
