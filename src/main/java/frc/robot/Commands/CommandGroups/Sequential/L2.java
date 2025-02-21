@@ -38,7 +38,7 @@ public class L2 extends SequentialCommandGroup {
 
     addCommands(
       new ClawClosed(s_Score),
-      new IntakeIdle(i_Intake),
+      new ParallelCommandGroup(new IntakeIdle(i_Intake), new IntakeEleFloorPos(e_Elevator)),
       new ParallelCommandGroup(new ScoreEleL2Position(e_Elevator), new OutfeedRollerHandoff(i_Intake)),
       new AgitatorOff(s_Score),
       new ParallelCommandGroup(new ScoreSetScore(s_Score))

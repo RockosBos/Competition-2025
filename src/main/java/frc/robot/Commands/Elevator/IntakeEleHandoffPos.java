@@ -25,6 +25,7 @@ public class IntakeEleHandoffPos extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    e_Elevator.setIntakeEleSpeedLimits(Constants.MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR, Constants.MAX_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR);
     e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_HANDOFF_POS);
   }
 
@@ -32,6 +33,7 @@ public class IntakeEleHandoffPos extends Command {
   @Override
   public void end(boolean interrupted) {
     System.out.println("Intake Elevator Handoff Command Completed");
+    e_Elevator.setIntakeEleSpeedLimits(Constants.MIN_OUTPUT_INTAKE_ELEVATOR, Constants.MAX_OUTPUT_INTAKE_ELEVATOR);
   }
 
   // Returns true when the command should end.

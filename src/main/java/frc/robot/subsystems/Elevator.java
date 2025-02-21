@@ -133,6 +133,18 @@ public class Elevator extends SubsystemBase {
     return false;
   }
 
+  public void setScoreEleSpeedLimits(double minSpeed, double maxSpeed){
+    ConfigScore.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).outputRange(minSpeed, maxSpeed);
+    ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+
+  }
+
+  public void setIntakeEleSpeedLimits(double minSpeed, double maxSpeed){
+    Configaroo.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).outputRange(minSpeed, maxSpeed);
+    IntakeEle.configure(Configaroo, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+
+  }
+
   @Override
   public void periodic() {
     IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);

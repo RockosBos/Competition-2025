@@ -89,10 +89,10 @@ public class RobotContainer {
     //Triggers
     private final Trigger driverLeftTrigger = new Trigger(() -> operaterController.getLeftTriggerAxis() > 0.3);
     private final Trigger driverRightTrigger = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3);
-    private final Trigger operatorLeftTrigger = new Trigger(() -> operaterController.getLeftTriggerAxis() > 0.3);
-    private final Trigger operatorRightTrigger = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3);
+    private final Trigger operaterLeftTrigger = new Trigger(() -> operaterController.getLeftTriggerAxis() > 0.3);
+    private final Trigger operaterRightTrigger = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3);
 
-    private final Trigger hasCoral = new Trigger(() -> intakeSubsystem.hasCoral());
+    private final Trigger hasCoral = new Trigger(() -> intakeSubsystem.hasCoral() && !DriverStation.isAutonomous());
 
     //Chooser for Autonomous Modes
     private final SendableChooser<Command> autoChooser;
@@ -147,13 +147,13 @@ public class RobotContainer {
         // operaterController.x().onTrue(new ScoreSetScore(scoreSubsystem));
         // operaterController.a().onTrue(new ScoreSetCenter(scoreSubsystem));
 
-        operatorLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        operaterLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterController.leftBumper().onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterController.a().onTrue(new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterController.b().onTrue(new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterController.x().onTrue(new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operatorRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         operaterController.povDown().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         // operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));

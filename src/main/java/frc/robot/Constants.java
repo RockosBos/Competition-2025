@@ -43,7 +43,7 @@ public class Constants {
     //Lowest Position at 0
     //Highest Position at 160
     public static final double SCORE_ELEVATOR_INTAKE_POSITION = 6.4;
-    public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 60.0;
+    public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 40.0;
     public static final double SCORE_ELEVATOR_L2_POS = 1.0;
     public static final double SCORE_ELEVATOR_L3_POS = 70.0;
     public static final double SCORE_ELEVATOR_L4_POS = 157.0;
@@ -119,10 +119,14 @@ public class Constants {
     public static final double P_INTAKE_ELEVATOR = 0.1;
     public static final double MAX_OUTPUT_INTAKE_ELEVATOR = 0.60;
     public static final double MIN_OUTPUT_INTAKE_ELEVATOR = -0.60;
+    public static final double MAX_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = 0.3;
+    public static final double MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = -0.3;
 
-    public static final double P_SCORE_ELEVATOR = 0.05;
-    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.6;
-    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.6;
+    public static final double P_SCORE_ELEVATOR = 0.1;
+    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.75;
+    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.75;
+    public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;
+    public static final double MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = -0.3;
 
     public static final double P_INTAKE_ROTATE = 3.0;
     public static final double MAX_OUTPUT_INTAKE_ROTATE = 0.5;
@@ -142,8 +146,8 @@ public class Constants {
 
     //Position Thresholds
     public static final double THRESHOLD_INTAKE_ROTATE_POS = 0.05;
-    public static final double THRESHOLD_ELEVATOR_INTAKE_POS = 1.0;
-    public static final double THRESHOLD_ELEVATOR_SCORE_POS = 1.0;
+    public static final double THRESHOLD_ELEVATOR_INTAKE_POS = 2.0;
+    public static final double THRESHOLD_ELEVATOR_SCORE_POS = 2.0;
     public static final double THRESHOLD_SCORE_ROTATE_POS = 0.05;
     public static final double THRESHOLD_SCORE_PIVOT_POS = 0.05;
     public static final double THRESHOLD_SCORE_CLAW_POS = 0.05;
