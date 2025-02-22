@@ -4,38 +4,48 @@
 
 package frc.robot.Commands.Score;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Score;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ScoreL4Position extends Command {
-  Elevator e_Elevator;
-  /** Creates a new ScoreL2Position. */
-  public ScoreL4Position(Elevator e_Elevator) {
+public class ClawRelease extends Command {
+  Score s_Score;
+  Timer timer = new Timer();
+  /** Creates a new ClawClosed. */
+  public ClawRelease(Score s_Score) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.e_Elevator = e_Elevator;
-    addRequirements(e_Elevator);
+    this.s_Score = s_Score;
+    addRequirements(s_Score);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer.reset();
+    timer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    e_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_L4_POS);
-    e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_HANDOFF_POS);
+    s_Score.setClawTargetPostion(Constants.SCORE_CLAW_RELEASE_POS);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("Command ClawRelease Complete in " + timer.get() + " Seconds");
+    timer.stop();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    if(timer.get() > 0.75){
+      return true;
+    }
     return false;
   }
 }

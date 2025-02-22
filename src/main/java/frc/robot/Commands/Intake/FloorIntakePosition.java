@@ -13,8 +13,6 @@ import frc.robot.Constants;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class FloorIntakePosition extends Command {
   Intake m_Intake;
-  Elevator m_Elevator;
-  Score m_Score;
   /** Creates a new FloorLoadingPosition. */
   public FloorIntakePosition(Intake intakeSubsystem) {
     //this.m_Intake = m_Intake;
@@ -36,14 +34,14 @@ public class FloorIntakePosition extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("Command FloorIntakePosition Complete");
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    // if(m_Intake.inPosition() && m_Elevator.inPosition() && m_Score.inPosition()){
-    //   return true;
-    // }
-    return false;
+
+    return m_Intake.inPosition();
   }
 }

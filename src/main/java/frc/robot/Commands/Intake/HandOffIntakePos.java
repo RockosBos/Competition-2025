@@ -30,16 +30,18 @@ public class HandOffIntakePos extends Command {
   @Override
   public void execute() {
     i_Intake.setTargetPostion(Constants.INTAKE_ROTATE_HANDOFF_POS);
-    i_Intake.setMotorVoltage(0.0);
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("Command HandoffIntakePosition Complete");
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return i_Intake.inPosition();
   }
 }

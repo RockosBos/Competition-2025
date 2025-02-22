@@ -14,6 +14,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.util.datalog.DataLog;
@@ -22,10 +23,12 @@ import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.enums.ScoreState;
 
 public class Score extends SubsystemBase {
 
 private SparkMax agitator = new SparkMax(Constants.ID_SCORE_AGITATE, MotorType.kBrushless);
+private SparkMaxConfig agitatorConfig = new SparkMaxConfig();
 
 private SparkMax Claw = new SparkMax(Constants.ID_SCORE_CLAW, MotorType.kBrushless);
 private AbsoluteEncoder ClawAbs = Claw.getAbsoluteEncoder();
@@ -48,10 +51,12 @@ private SparkMaxConfig rotateConfig = new SparkMaxConfig();
 private double rotateTargetPostion = Constants.SCORE_ROTATE_CENTER_POS, pivotTargetPostion = Constants.SCORE_PIVOT_IN_POS, clawTargetPostion = Constants.SCORE_CLAW_OPEN_POS;
 private double agitatorVoltage = 0.0;
 
+private ScoreState scoreState = ScoreState.CENTER;
+
 DataLog log = DataLogManager.getLog();
-private DoubleLogEntry clawTargetPositionLog, clawCurrentPositionLog;
-private DoubleLogEntry pivotTargetPositionLog, pivotCurrentPositionLog;
-private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
+private DoubleLogEntry clawTargetPositionLog, clawCurrentPositionLog, clawAmpsLog;
+private DoubleLogEntry pivotTargetPositionLog, pivotCurrentPositionLog, pivotAmpsLog;
+private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotateAmpsLog;
 
   /** Creates a new Score. */
   public Score() {
@@ -102,16 +107,24 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
       
       rotate.configure(rotateConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+      agitatorConfig.inverted(Constants.INVERT_SCORE_AGITATOR);
+      agitatorConfig.smartCurrentLimit(Constants.CURRENTLIMIT_SCORE_AGITATOR);
+      agitatorConfig.idleMode(Constants.IDLEMODE_SCORE_AGITATOR);
+      agitator.configure(agitatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
       //logging
 
       clawTargetPositionLog = new DoubleLogEntry(log, "/U/Score/clawTargetPosition");
       clawCurrentPositionLog = new DoubleLogEntry(log, "/U/Score/clawCurrentPosition");
+      clawAmpsLog = new DoubleLogEntry(log, "/U/Score/ClawAmps");
 
       pivotTargetPositionLog = new DoubleLogEntry(log, "/U/Score/pivotTargetPosition");
       pivotCurrentPositionLog = new DoubleLogEntry(log, "/U/Score/pivotCurrentPosition");
+      pivotAmpsLog = new DoubleLogEntry(log, "/U/Score/pivotAmps");
 
       rotateTargetPositionLog = new DoubleLogEntry(log, "/U/Score/rotateTargetPosition");
       rotateCurrentPositionLog = new DoubleLogEntry(log, "/U/Score/rotateCurrentPosition");
+      rotateAmpsLog = new DoubleLogEntry(log, "/U/Score/RotateAmps");
 
   }
 
@@ -136,6 +149,14 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
     this.agitatorVoltage = agitatorVoltage;
   }
 
+  public void setScoreState(ScoreState state){
+    this.scoreState = state;
+  }
+
+  public ScoreState getScoreState(){
+    return this.scoreState;
+  }
+
     /**
    * Set Arm Rotate Target Position, There should be three states: Left, Right, and Center
    * 
@@ -143,7 +164,7 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
    * controller to navigate to.
    */
   public boolean atRotateTarget(){
-    if(Constants.THRESHOLD_SCORE_ROTATE_POS > rotateTargetPostion){
+    if(Constants.THRESHOLD_SCORE_ROTATE_POS > Math.abs(rotateAbs.getPosition() - rotateTargetPostion)){
        return true;
       }
       return false;
@@ -156,7 +177,7 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
    * controller to navigate to.
    */
   public boolean atPivotTarget(){
-    if (Constants.THRESHOLD_SCORE_PIVOT_POS > pivotTargetPostion) {
+    if (Constants.THRESHOLD_SCORE_PIVOT_POS > Math.abs(pivotAbs.getPosition() - pivotTargetPostion)) {
       return true;
     }
       return false;
@@ -171,7 +192,7 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
    */
 
    public boolean atClawTarget(){
-    if (Constants.THRESHOLD_SCORE_CLAW_POS > clawTargetPostion) {
+    if (Constants.THRESHOLD_SCORE_CLAW_POS > Math.abs(ClawAbs.getPosition() - clawTargetPostion)) {
       return true;
     }
       return false;
@@ -193,23 +214,30 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog;
     rotateLoopy.setReference(rotateTargetPostion, ControlType.kPosition);
     pivotLoopy.setReference(pivotTargetPostion, ControlType.kPosition);
     ClawLoopy.setReference(clawTargetPostion, ControlType.kPosition);
+
+    agitator.setVoltage(agitatorVoltage);
     
     // Logging
     clawCurrentPositionLog.append(ClawAbs.getPosition());
     clawTargetPositionLog.append(clawTargetPostion);
+    clawAmpsLog.append(Claw.getOutputCurrent());
 
     pivotCurrentPositionLog.append(pivotAbs.getPosition());
     pivotTargetPositionLog.append(pivotTargetPostion);
+    pivotAmpsLog.append(pivot.getOutputCurrent());
 
     rotateCurrentPositionLog.append(rotateAbs.getPosition());
     rotateTargetPositionLog.append(rotateTargetPostion);
+    rotateAmpsLog.append(rotate.getOutputCurrent());
 
-    // SmartDashboard.putNumber("ClawAbs", ClawAbs.getPosition());
-    // SmartDashboard.putNumber("RotateAbs", rotateAbs.getPosition());
-    // SmartDashboard.putNumber("PivotAbs", pivotAbs.getPosition());
-    // SmartDashboard.putNumber("ClawRencoder", Claw.getEncoder().getPosition());
-    // SmartDashboard.putNumber("RotateRencoder", rotate.getEncoder().getPosition());
-    // SmartDashboard.putNumber("PivotRencoder", pivot.getEncoder().getPosition());
-    // SmartDashboard.putNumber("RotateTargetPosition", rotateTargetPostion);
+    //SmartDashboard.putNumber("ClawAbs", ClawAbs.getPosition());
+    SmartDashboard.putNumber("RotateAbs", rotateAbs.getPosition());
+    SmartDashboard.putNumber("PivotAbs", pivotAbs.getPosition());
+    //SmartDashboard.putNumber("ClawRencoder", Claw.getEncoder().getPosition());
+    SmartDashboard.putNumber("RotateRencoder", rotate.getEncoder().getPosition());
+    SmartDashboard.putNumber("PivotRencoder", pivot.getEncoder().getPosition());
+    SmartDashboard.putNumber("RotateTargetPosition", rotateTargetPostion);
+    SmartDashboard.putNumber("PivotTargetPosition", pivotTargetPostion);
+    SmartDashboard.putString("Score State", this.scoreState.toString());
   }
 }

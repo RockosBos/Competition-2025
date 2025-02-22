@@ -30,11 +30,13 @@ public class ClawOpened extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    System.out.println("Command ClawOpened Complete");
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return s_Score.atClawTarget();
   }
 }
