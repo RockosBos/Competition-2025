@@ -15,6 +15,9 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import au.grapplerobotics.LaserCan;
+
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.util.datalog.BooleanLogEntry;
@@ -39,13 +42,17 @@ public class Intake extends SubsystemBase {
   private SparkMaxConfig intakeRotateConfig = new SparkMaxConfig();
   private AbsoluteEncoderConfig IAEC = new AbsoluteEncoderConfig();
 
+  private LaserCan leftyLazy = new LaserCan(Constants.LASERCAN_INTAKE_LEFT);
+  private LaserCan rightyLazy = new LaserCan(Constants.LASERCAN_INTAKE_RIGHT); 
+
   //Other Variables
-  private double voltage = 0.0, targetPosition = 0.0, intakeRotateTargetErr = 0.0;
+  private double voltage = 0.0, targetPosition = Constants.INTAKE_ROTATE_HANDOFF_POS, intakeRotateTargetErr = 0.0;
   private boolean errFlag = false;
 
   //Logging variables
   private DoubleLogEntry intakeInAmpLog, intakeInVoltageLog;
   private DoubleLogEntry intakeRotateAmpLog, intakeRotateVoltageLog, intakeRotateTargetPositionLog, intakeRotateAbsCurrentPositionLog, intakeRotateErrLog;
+  private DoubleLogEntry leftLaserDistLog, rightLaserDistLog;
   private BooleanLogEntry intakeRotateInPosLog;
 
   /** Creates a new Intake. */
@@ -60,14 +67,14 @@ public class Intake extends SubsystemBase {
     intakeRotateConfig.idleMode(IdleMode.kBrake);
     intakeRotateConfig.smartCurrentLimit(20);
 
-    IAEC.zeroOffset(0.728);
+    IAEC.zeroOffset(Constants.OFFSET_INTAKE_ROTATE_ABS);
     intakeRotateConfig.absoluteEncoder.apply(IAEC);
     intakeRotateConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder)
-    .p(0.1)
+    .p(Constants.P_INTAKE_ROTATE)
    .i(0)
    .d(0)
    .velocityFF(0)
-   .outputRange(-0.1, 0.1);
+   .outputRange(Constants.MIN_OUTPUT_INTAKE_ROTATE, Constants.MAX_OUTPUT_INTAKE_ROTATE);
 
    //Apply Configurations
     IntakeRotate.configure(intakeRotateConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -84,6 +91,9 @@ public class Intake extends SubsystemBase {
     intakeRotateTargetPositionLog = new DoubleLogEntry(log, "/U/Intake/intakeRotateTargetPosition");
     intakeRotateAbsCurrentPositionLog = new DoubleLogEntry(log, "/U/Intake/intakeRotateAbsCurrentPosition");
     intakeRotateErrLog = new DoubleLogEntry(log, "/U/Intake/intakeRotateErrLog");
+
+    leftLaserDistLog = new DoubleLogEntry(log, "U/Intake/leftLaserDist");
+    rightLaserDistLog = new DoubleLogEntry(log, "U/Intake/rightLaserDist");
 
   }
 
@@ -122,6 +132,27 @@ public class Intake extends SubsystemBase {
     return false;
   }
 
+      /**
+     * Returns true if the Left LaserCan Sensor detects a game piece
+     */
+  public boolean leftLaserObstructed(){
+    if(leftyLazy.getMeasurement().distance_mm < Constants.THRESHOLD_LASERCAN_INTAKE_LEFT){
+      return true;
+    }
+    return false;
+  }
+
+  public boolean rightLaserObstructed(){
+    if(rightyLazy.getMeasurement().distance_mm < Constants.THRESHOLD_LASERCAN_INTAKE_RIGHT){
+      return true;
+    }
+    return false;
+  }
+
+  public boolean hasCoral(){
+    return (leftLaserObstructed() && rightLaserObstructed());
+  }
+
   @Override
   public void periodic() {
 
@@ -144,7 +175,12 @@ public class Intake extends SubsystemBase {
     intakeRotateTargetPositionLog.append(targetPosition);
     intakeRotateAbsCurrentPositionLog.append(intakeAbsEncoder.getPosition());
     intakeRotateErrLog.append(intakeRotateTargetErr);
-    intakeRotateInPosLog.append(this.inPosition());
+    //intakeRotateInPosLog.append(this.inPosition());
+
+    SmartDashboard.putNumber("IntakeRotateAbs", intakeAbsEncoder.getPosition());
+    SmartDashboard.putNumber("Left Laser Distance", leftyLazy.getMeasurement().distance_mm);
+    SmartDashboard.putNumber("Right Laser Distance", rightyLazy.getMeasurement().distance_mm);
+    SmartDashboard.putBoolean("hasCoral", hasCoral());
 
   }
 }

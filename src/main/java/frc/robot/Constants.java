@@ -2,6 +2,8 @@ package frc.robot;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
 public class Constants {
 
     //CAN ID's

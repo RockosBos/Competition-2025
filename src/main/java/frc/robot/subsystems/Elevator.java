@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.enums.ControlState;
 
 public class Elevator extends SubsystemBase {
   private SparkMax IntakeEle = new SparkMax(Constants.ID_INTAKE_ELEVATOR, MotorType.kBrushless);
@@ -38,10 +39,14 @@ public class Elevator extends SubsystemBase {
   private SparkClosedLoopController ScoreEleLoopy = ScoreEle.getClosedLoopController();
   private RelativeEncoder ScoreEleEncoder = ScoreEle.getEncoder();
   private SparkMaxConfig ConfigScore = new SparkMaxConfig();
-  private double targetPostionScoreInLa = 0.0;
-  private double targetPostion = 0.0;
+  private double targetPostionScoreInLa = Constants.SCORE_ELEVATOR_INTAKE_POSITION;
+  private double targetPostion = Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS;
   private SparkMaxConfig Configaroo = new SparkMaxConfig();
-  private DigitalInput InnyScory = new DigitalInput(8);
+
+  private ControlState intakeEleControlState = ControlState.CLOSEDLOOP;
+  private ControlState scoreEleControlState = ControlState.CLOSEDLOOP;
+
+  private double intakeEleVoltage = 0.0, scoreEleVoltage = 0.0;
     
   DataLog log = DataLogManager.getLog();
   private DoubleLogEntry intakeElevatorAmpLog, intakeElevatorVoltageLog, intakeElevatorTargetPositionLog, intakeElevatorCurrentPositionLog;
@@ -51,43 +56,49 @@ public class Elevator extends SubsystemBase {
 
   private final NetworkTable table = inst.getTable("Elevator");
   private final DoublePublisher intakeElevatorPosPub = table.getDoubleTopic("elevator").publish(),
-                                intakeElevatorSetpointPub = table.getDoubleTopic("elevator").publish(), 
+                                intakeElevatorSetpointPub = table.getDoubleTopic("elevator").publish(),
+                                intakeElevatorAmpsPub = table.getDoubleTopic("elevator").publish(), 
                                 scoreElevatorPosPub = table.getDoubleTopic("elevator").publish(),
-                                scoreElevatorSetpointPub = table.getDoubleTopic("elevator").publish();
+                                scoreElevatorSetpointPub = table.getDoubleTopic("elevator").publish(),
+                                scoreElevatorAmpsPub = table.getDoubleTopic("elevator").publish();
 
   /** Creates a new Elevator. */
   public Elevator() {
-    IntakeEleEncoder.setPosition(0.0);
-    Configaroo.encoder.positionConversionFactor(1).velocityConversionFactor(1);
-    Configaroo.idleMode(IdleMode.kCoast);
+    //IntakeEleEncoder.setPosition(0.0);
+    Configaroo.idleMode(Constants.IDLEMODE_INTAKE_ELEVATOR);
+    Configaroo.closedLoopRampRate(Constants.RAMPRATE_INTAKE_ELEVATOR);
+    Configaroo.smartCurrentLimit(Constants.CURRENTLIMIT_INTAKE_ELEVATOR);
+    Configaroo.inverted(Constants.INVERT_INTAKE_ELEVATOR);
     Configaroo.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-   .p(1)
+   .p(Constants.P_INTAKE_ELEVATOR)
    .i(0)
    .d(0)
    .velocityFF(0.0)
-   .outputRange(-0.6, 0.6);
+   .outputRange(Constants.MIN_OUTPUT_INTAKE_ELEVATOR, Constants.MAX_OUTPUT_INTAKE_ELEVATOR);
 
     IntakeEle.configure(Configaroo, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
-    ScoreEleEncoder.setPosition(0.0);
-    ConfigScore.encoder.positionConversionFactor(1).velocityConversionFactor(1);
-    ConfigScore.idleMode(IdleMode.kBrake);
-    ConfigScore.closedLoopRampRate(0.1);
-    ConfigScore.smartCurrentLimit(15);
+    //ScoreEleEncoder.setPosition(0.0);
+    ConfigScore.idleMode(Constants.IDLEMODE_SCORE_ELEVATOR);
+    ConfigScore.closedLoopRampRate(Constants.RAMPRATE_SCORE_ELEVATOR);
+    ConfigScore.smartCurrentLimit(Constants.CURRENTLIMIT_SCORE_ELEVATOR);
+    ConfigScore.inverted(Constants.INVERT_SCORE_ELEVATOR);
     ConfigScore.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
-   .p(0.05)
+   .p(Constants.P_SCORE_ELEVATOR)
    .i(0)
    .d(0)
    .velocityFF(0)
-   .outputRange(-0.75, 0.75);
+   .outputRange(Constants.MIN_OUTPUT_SCORE_ELEVATOR, Constants.MAX_OUTPUT_SCORE_ELEVATOR);
 
     ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
     intakeElevatorTargetPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorTargetPosition");
     intakeElevatorCurrentPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorCurrentPosition");
+    intakeElevatorAmpLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorAmps");
 
     scoreElevatorTargetPositionLog = new DoubleLogEntry(log, "/U/Elevator/scoreElevatorTargetPosition");
     scoreElevatorCurrentPositionLog = new DoubleLogEntry(log, "/U/Elevator/scoreElevatorCurrentPosition");
+    scoreElevatorAmpLog = new DoubleLogEntry(log, "/U/Elevator/scoreElevatorAmps");
     
   }
 
@@ -110,23 +121,103 @@ public class Elevator extends SubsystemBase {
   }
 
   public boolean inPosition(){
+    return (intakeEleInPosition() && scoreEleInPosition());
+  }
+
+  public boolean intakeEleInPosition(){
+    if(Math.abs(IntakeEleEncoder.getPosition() - targetPostion) < Constants.THRESHOLD_ELEVATOR_INTAKE_POS){
+      return true;
+    }
     return false;
+  }
+
+  public boolean scoreEleInPosition(){
+    if(Math.abs(ScoreEleEncoder.getPosition() - targetPostionScoreInLa) < Constants.THRESHOLD_ELEVATOR_SCORE_POS){
+      return true;
+    }
+    return false;
+  }
+
+  public void setScoreEleSpeedLimits(double minSpeed, double maxSpeed){
+    ConfigScore.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).outputRange(minSpeed, maxSpeed);
+    ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+
+  }
+
+  public void setIntakeEleSpeedLimits(double minSpeed, double maxSpeed){
+    Configaroo.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).outputRange(minSpeed, maxSpeed);
+    IntakeEle.configure(Configaroo, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+
+  }
+
+  public double getIntakeEleCurrent(){
+    return IntakeEle.getOutputCurrent();
+  }
+
+  public double getScoreEleCurrent(){
+    return ScoreEle.getOutputCurrent();
+  }
+
+  public void setIntakeEleControlState(ControlState controlState){
+    intakeEleControlState = controlState;
+  }
+
+  public void setScoreEleControlState(ControlState controlState){
+    scoreEleControlState = controlState;
+  }
+
+  public void setIntakeEleVoltage(double voltage){
+    intakeEleVoltage = voltage;
+  }
+
+  public void setScoreEleVoltage(double voltage){
+    scoreEleVoltage = voltage;
+  }
+
+  public void resetIntakeEle(){
+    IntakeEleEncoder.setPosition(0.0);
+  }
+
+  public void resetScoreEle(){
+    ScoreEleEncoder.setPosition(0.0);
+  }
+
+  public double getScoreEleRelativePosition(){
+    return ScoreEleEncoder.getPosition();
   }
 
   @Override
   public void periodic() {
-    IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
-    ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    if(intakeEleControlState == ControlState.CLOSEDLOOP){
+      IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    }
+    else{
+      //IntakeEle.setVoltage(intakeEleVoltage);
+    }
+
+    if(scoreEleControlState == ControlState.CLOSEDLOOP){
+      ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    }
+    else{
+      //ScoreEle.setVoltage(scoreEleVoltage);
+    }
+
+    SmartDashboard.putNumber("EleTarget", targetPostion);
+    SmartDashboard.putNumber("IntakeEleEnc", ScoreEle.getEncoder().getPosition());
+    SmartDashboard.putNumber("EleScoreTarget", targetPostionScoreInLa);
+    SmartDashboard.putNumber("ScoreEleEnc", ScoreEle.getEncoder().getPosition());
 
     //logging
     intakeElevatorTargetPositionLog.append(IntakeEleEncoder.getPosition());;
     intakeElevatorCurrentPositionLog.append(targetPostion);
+    intakeElevatorAmpLog.append(IntakeEle.getOutputCurrent());
 
     intakeElevatorPosPub.set(IntakeEleEncoder.getPosition());
     intakeElevatorSetpointPub.set(targetPostion);
 
     scoreElevatorTargetPositionLog.append(ScoreEleEncoder.getPosition());;
     scoreElevatorCurrentPositionLog.append(targetPostionScoreInLa);
+    scoreElevatorAmpLog.append(ScoreEle.getOutputCurrent());
 
     scoreElevatorPosPub.set(ScoreEleEncoder.getPosition());
     scoreElevatorSetpointPub.set(targetPostionScoreInLa);
