@@ -46,11 +46,6 @@ public class DriveToPose extends Command {
     yDrive = 0;
     tDrive = 0;
 
-    driveSubsystem.applyRequest(() ->
-                drive.withVelocityX(-yDrive * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-xDrive * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-tDrive * MaxAngularRate) // Drive counterclockwise with negative X (left)
-            );
   }
 
   // Called every time the scheduler runs while the command is scheduled.

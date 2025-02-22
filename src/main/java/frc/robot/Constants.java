@@ -49,7 +49,7 @@ public class Constants {
 
     public static final double SCORE_ROTATE_LEFT_POS = 0.24;
     public static final double SCORE_ROTATE_RIGHT_POS = 0.76;
-    public static final double SCORE_ROTATE_CENTER_POS = 0.496;
+    public static final double SCORE_ROTATE_CENTER_POS = 0.5;
 
     public static final double SCORE_PIVOT_IN_POS = 0.79;
     public static final double SCORE_PIVOT_OUT_LEFT_POS = 0.65;
@@ -126,7 +126,7 @@ public class Constants {
     public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = -0.3;
 
-    public static final double P_INTAKE_ROTATE = 2.25;
+    public static final double P_INTAKE_ROTATE = 3.0;
     public static final double MAX_OUTPUT_INTAKE_ROTATE = 0.5;
     public static final double MIN_OUTPUT_INTAKE_ROTATE = -0.4;
 
@@ -134,7 +134,7 @@ public class Constants {
     public static final double MAX_OUTPUT_SCORE_ROTATE = 0.2;
     public static final double MIN_OUTPUT_SCORE_ROTATE = -0.2;
 
-    public static final double P_SCORE_PIVOT = 3.0;
+    public static final double P_SCORE_PIVOT = 3.5;
     public static final double MAX_OUTPUT_SCORE_PIVOT = 0.1;
     public static final double MIN_OUTPUT_SCORE_PIVOT = -0.1;
 
