@@ -12,6 +12,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -23,6 +24,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.Commands.RumbleController;
+import frc.robot.Commands.RumbleCooldown;
+import frc.robot.Commands.CommandGroups.Sequential.AutoIntakeLoading;
 import frc.robot.Commands.CommandGroups.Sequential.Handoff;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeFloor;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeLoading;
@@ -86,6 +90,10 @@ public class RobotContainer {
     private final Elevator elevatorSubsytem = new Elevator();
     private final Score scoreSubsystem = new Score();
 
+    private InterpolatingDoubleTreeMap driveSpeedLimiter = new InterpolatingDoubleTreeMap();
+    private double driveSpeedLimitedX = 1.0, driveSpeedLimitedY = 1.0;
+    private boolean rumbleCooldown = false;
+
     //Triggers
     private final Trigger driverLeftTrigger = new Trigger(() -> operaterController.getLeftTriggerAxis() > 0.3);
     private final Trigger driverRightTrigger = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3);
@@ -93,6 +101,7 @@ public class RobotContainer {
     private final Trigger operaterRightTrigger = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3);
 
     private final Trigger hasCoral = new Trigger(() -> intakeSubsystem.hasCoral() && !DriverStation.isAutonomous());
+    private final Trigger hasCoralRumble = new Trigger(() -> intakeSubsystem.hasCoral() && !DriverStation.isAutonomous() && !rumbleCooldown);
 
     //Chooser for Autonomous Modes
     private final SendableChooser<Command> autoChooser;
@@ -103,8 +112,21 @@ public class RobotContainer {
         DataLogManager.start();
         DriverStation.startDataLog(DataLogManager.getLog());
 
+        //Drive Speed Limiter Mapping
+        driveSpeedLimiter.put(0.0, 1.0);
+        driveSpeedLimiter.put(30.0, 0.9);
+        driveSpeedLimiter.put(60.0, 0.7);
+        driveSpeedLimiter.put(100.0, 0.6);
+        driveSpeedLimiter.put(130.0, 0.4);
+        driveSpeedLimiter.put(160.0, 0.25);
+
         //Named Commands for Pathplanner
-        //NamedCommands.registerCommand("FloorIntakePosition", new FloorIntakePosition(intakeSubsystem, elevatorSubsytem, scoreSubsystem));
+        NamedCommands.registerCommand("ScoreL1", new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("ScoreL2", new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("ScoreL3", new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("ScoreL4", new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("AutoIntakeLoading", new AutoIntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("Handoff", new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         //Auto Mode Setup
         autoChooser = AutoBuilder.buildAutoChooser("Tests");
@@ -117,13 +139,17 @@ public class RobotContainer {
 
         //Driver Controller
 
+        //Drive Speed Limiter
+        driveSpeedLimitedX = driveSpeedLimiter.get(elevatorSubsytem.getScoreEleRelativePosition());
+        driveSpeedLimitedY = driveSpeedLimiter.get(elevatorSubsytem.getScoreEleRelativePosition());
+
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                drive.withVelocityX(-driverController.getLeftY() * driveSpeedLimitedY * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-driverController.getLeftX() * driveSpeedLimitedX * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
@@ -156,14 +182,11 @@ public class RobotContainer {
         operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         operaterController.povDown().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        // operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
-        // operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
-        // operaterController.a().onTrue(new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        // operaterController.b().onTrue(new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        // operaterController.x().onTrue(new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        // operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        hasCoralRumble.onTrue(new RumbleController(driverController, 0.25));
+        hasCoral.onFalse(new RumbleCooldown(rumbleCooldown));
+        
 
         //Telemetry
 

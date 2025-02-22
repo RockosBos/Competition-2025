@@ -2,43 +2,48 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Commands.Elevator;
+package frc.robot.Commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
-import frc.robot.subsystems.Elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class IntakeEleHandoffPos extends Command {
-  Elevator e_Elevator;
-  /** Creates a new EleHandoffPos. */
-  public IntakeEleHandoffPos(Elevator e_Elevator) {
+public class RumbleCooldown extends Command {
+  boolean cooldownState;
+  Timer timer;
+  /** Creates a new RumbleCooldown. */
+  public RumbleCooldown(boolean cooldownState) {
+    this.cooldownState = cooldownState;
     // Use addRequirements() here to declare subsystem dependencies.
-    this.e_Elevator = e_Elevator;
-    addRequirements(e_Elevator);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer = new Timer();
+    timer.reset();
+    timer.start();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //e_Elevator.setIntakeEleSpeedLimits(Constants.MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR, Constants.MAX_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR);
-    e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_HANDOFF_POS);
+    cooldownState = true;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("Intake Elevator Handoff Command Completed");
-    //e_Elevator.setIntakeEleSpeedLimits(Constants.MIN_OUTPUT_INTAKE_ELEVATOR, Constants.MAX_OUTPUT_INTAKE_ELEVATOR);
+    cooldownState = false;
+    timer.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return e_Elevator.intakeEleInPosition();
+    if(timer.get() > 5.0){
+      return true;
+    }
+    return false;
   }
 }

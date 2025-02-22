@@ -40,11 +40,9 @@ public class Constants {
 
     //Score Arm Constant Values
 
-    //Lowest Position at 0
-    //Highest Position at 160
     public static final double SCORE_ELEVATOR_INTAKE_POSITION = 6.4;
     public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 40.0;
-    public static final double SCORE_ELEVATOR_L2_POS = 1.0;
+    public static final double SCORE_ELEVATOR_L2_POS = 6.4;
     public static final double SCORE_ELEVATOR_L3_POS = 70.0;
     public static final double SCORE_ELEVATOR_L4_POS = 157.0;
     public static final double SCORE_HANDOFF_POS = 6.4;
@@ -100,9 +98,9 @@ public class Constants {
     public static final double RAMPRATE_SCORE_ELEVATOR = 0.2;
     public static final double RAMPRATE_INTAKE_ROTATE = 0.1;
     public static final double RAMPRATE_INTAKE_ROLLER = 0.1;
-    public static final double RAMPRATE_SCORE_ROTATE = 0.1;
-    public static final double RAMPRATE_SCORE_PIVOT = 0.1;
-    public static final double RAMPRATE_SCORE_CLAW = 0.1;
+    public static final double RAMPRATE_SCORE_ROTATE = 0.0;
+    public static final double RAMPRATE_SCORE_PIVOT = 0.0;
+    public static final double RAMPRATE_SCORE_CLAW = 0.0;
     public static final double RAMPRATE_SCORE_AGITATOR = 0.1;
 
     public static final int CURRENTLIMIT_INTAKE_ELEVATOR = 20;
@@ -128,15 +126,15 @@ public class Constants {
     public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = -0.3;
 
-    public static final double P_INTAKE_ROTATE = 3.0;
+    public static final double P_INTAKE_ROTATE = 2.25;
     public static final double MAX_OUTPUT_INTAKE_ROTATE = 0.5;
     public static final double MIN_OUTPUT_INTAKE_ROTATE = -0.4;
 
-    public static final double P_SCORE_ROTATE = 5.0;
+    public static final double P_SCORE_ROTATE = 3.0;
     public static final double MAX_OUTPUT_SCORE_ROTATE = 0.2;
     public static final double MIN_OUTPUT_SCORE_ROTATE = -0.2;
 
-    public static final double P_SCORE_PIVOT = 2.0;
+    public static final double P_SCORE_PIVOT = 3.0;
     public static final double MAX_OUTPUT_SCORE_PIVOT = 0.1;
     public static final double MIN_OUTPUT_SCORE_PIVOT = -0.1;
 
@@ -154,8 +152,8 @@ public class Constants {
 
     //LaserCan Thresholds
 
-    public static final double THRESHOLD_LASERCAN_INTAKE_LEFT = 5; //In mm
-    public static final double THRESHOLD_LASERCAN_INTAKE_RIGHT = 5; //In mm
+    public static final double THRESHOLD_LASERCAN_INTAKE_LEFT = 20; //In mm
+    public static final double THRESHOLD_LASERCAN_INTAKE_RIGHT = 20; //In mm
 
 
 }

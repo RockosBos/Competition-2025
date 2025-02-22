@@ -6,12 +6,12 @@ package frc.robot.Commands.CommandGroups.Sequential;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Commands.Elevator.IntakeEleFloorPos;
+import frc.robot.Commands.Elevator.IntakeEleLoadingPos;
 import frc.robot.Commands.Elevator.ScoreEleIdlePosition;
-import frc.robot.Commands.Intake.IntakeRollerOff;
-import frc.robot.Commands.Intake.OutfeedRoller;
-import frc.robot.Commands.Score.AgitatorOff;
-import frc.robot.Commands.Score.ClawOpened;
-import frc.robot.Commands.Score.ClawRelease;
+import frc.robot.Commands.Intake.FloorIntakePosition;
+import frc.robot.Commands.Intake.IntakeWaitForCoral;
+import frc.robot.Commands.Intake.LoadingIntakePosition;
 import frc.robot.Commands.Score.ScoreSetCenter;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -20,24 +20,23 @@ import frc.robot.subsystems.Score;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ScoreCoral extends SequentialCommandGroup {
+public class AutoIntakeLoading extends SequentialCommandGroup {
   
   Elevator e_Elevator;
   Intake i_Intake;
   Score s_Score;
  
-  public ScoreCoral(Elevator e_Elevator, Intake i_Intake, Score s_Score) {
+  public AutoIntakeLoading(Elevator e_Elevator, Intake i_Intake, Score s_Score) {
 
     this.e_Elevator = e_Elevator;
     this.i_Intake = i_Intake;
     this.s_Score = s_Score;
 
     addCommands(
-      new ParallelCommandGroup(new ClawRelease(s_Score), new OutfeedRoller(i_Intake)),
-      new ClawOpened(s_Score),
-      new AgitatorOff(s_Score),
-      new ParallelCommandGroup(new ScoreEleIdlePosition(e_Elevator), new ScoreSetCenter(s_Score), new IntakeRollerOff(i_Intake)),
-      new IntakeRollerOff(i_Intake)
+      new ParallelCommandGroup(new ScoreEleIdlePosition(e_Elevator), new ScoreSetCenter(s_Score)),
+      new IntakeEleLoadingPos(e_Elevator),
+      new LoadingIntakePosition(i_Intake),
+      new IntakeWaitForCoral(i_Intake)
     );
   }
 }

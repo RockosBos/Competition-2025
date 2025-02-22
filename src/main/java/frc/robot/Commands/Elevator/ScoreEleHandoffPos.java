@@ -25,14 +25,14 @@ public class ScoreEleHandoffPos extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    e_Elevator.setScoreEleSpeedLimits(Constants.MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR, Constants.MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR);
+    //e_Elevator.setScoreEleSpeedLimits(Constants.MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR, Constants.MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR);
     e_Elevator.setScoreTargetPosition(Constants.SCORE_HANDOFF_POS);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    e_Elevator.setScoreEleSpeedLimits(Constants.MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR, Constants.MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR);
+    //e_Elevator.setScoreEleSpeedLimits(Constants.MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR, Constants.MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR);
     System.out.println("Score Elevator Handoff Command Completed");
   }
 

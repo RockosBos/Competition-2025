@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.enums.ControlState;
 
 public class Elevator extends SubsystemBase {
   private SparkMax IntakeEle = new SparkMax(Constants.ID_INTAKE_ELEVATOR, MotorType.kBrushless);
@@ -41,7 +42,11 @@ public class Elevator extends SubsystemBase {
   private double targetPostionScoreInLa = Constants.SCORE_ELEVATOR_INTAKE_POSITION;
   private double targetPostion = Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS;
   private SparkMaxConfig Configaroo = new SparkMaxConfig();
-  //private DigitalInput InnyScory = new DigitalInput(8);
+
+  private ControlState intakeEleControlState = ControlState.CLOSEDLOOP;
+  private ControlState scoreEleControlState = ControlState.CLOSEDLOOP;
+
+  private double intakeEleVoltage = 0.0, scoreEleVoltage = 0.0;
     
   DataLog log = DataLogManager.getLog();
   private DoubleLogEntry intakeElevatorAmpLog, intakeElevatorVoltageLog, intakeElevatorTargetPositionLog, intakeElevatorCurrentPositionLog;
@@ -59,7 +64,7 @@ public class Elevator extends SubsystemBase {
 
   /** Creates a new Elevator. */
   public Elevator() {
-    IntakeEleEncoder.setPosition(0.0);
+    //IntakeEleEncoder.setPosition(0.0);
     Configaroo.idleMode(Constants.IDLEMODE_INTAKE_ELEVATOR);
     Configaroo.closedLoopRampRate(Constants.RAMPRATE_INTAKE_ELEVATOR);
     Configaroo.smartCurrentLimit(Constants.CURRENTLIMIT_INTAKE_ELEVATOR);
@@ -73,7 +78,7 @@ public class Elevator extends SubsystemBase {
 
     IntakeEle.configure(Configaroo, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
-    ScoreEleEncoder.setPosition(0.0);
+    //ScoreEleEncoder.setPosition(0.0);
     ConfigScore.idleMode(Constants.IDLEMODE_SCORE_ELEVATOR);
     ConfigScore.closedLoopRampRate(Constants.RAMPRATE_SCORE_ELEVATOR);
     ConfigScore.smartCurrentLimit(Constants.CURRENTLIMIT_SCORE_ELEVATOR);
@@ -145,13 +150,60 @@ public class Elevator extends SubsystemBase {
 
   }
 
+  public double getIntakeEleCurrent(){
+    return IntakeEle.getOutputCurrent();
+  }
+
+  public double getScoreEleCurrent(){
+    return ScoreEle.getOutputCurrent();
+  }
+
+  public void setIntakeEleControlState(ControlState controlState){
+    intakeEleControlState = controlState;
+  }
+
+  public void setScoreEleControlState(ControlState controlState){
+    scoreEleControlState = controlState;
+  }
+
+  public void setIntakeEleVoltage(double voltage){
+    intakeEleVoltage = voltage;
+  }
+
+  public void setScoreEleVoltage(double voltage){
+    scoreEleVoltage = voltage;
+  }
+
+  public void resetIntakeEle(){
+    IntakeEleEncoder.setPosition(0.0);
+  }
+
+  public void resetScoreEle(){
+    ScoreEleEncoder.setPosition(0.0);
+  }
+
+  public double getScoreEleRelativePosition(){
+    return ScoreEleEncoder.getPosition();
+  }
+
   @Override
   public void periodic() {
-    IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
-    ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    if(intakeEleControlState == ControlState.CLOSEDLOOP){
+      IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    }
+    else{
+      //IntakeEle.setVoltage(intakeEleVoltage);
+    }
 
-    // SmartDashboard.putNumber("EleTarget", targetPostion);
-    // SmartDashboard.putNumber("IntakeEleEnc", ScoreEle.getEncoder().getPosition());
+    if(scoreEleControlState == ControlState.CLOSEDLOOP){
+      ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    }
+    else{
+      //ScoreEle.setVoltage(scoreEleVoltage);
+    }
+
+    SmartDashboard.putNumber("EleTarget", targetPostion);
+    SmartDashboard.putNumber("IntakeEleEnc", ScoreEle.getEncoder().getPosition());
     SmartDashboard.putNumber("EleScoreTarget", targetPostionScoreInLa);
     SmartDashboard.putNumber("ScoreEleEnc", ScoreEle.getEncoder().getPosition());
 
