@@ -8,6 +8,7 @@ import com.ctre.phoenix6.Utils;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PoseHandler extends SubsystemBase {
@@ -52,5 +53,9 @@ public class PoseHandler extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("xController", xDrive);
+    SmartDashboard.putNumber("yController", yDrive);
+    SmartDashboard.putNumber("tController", tDrive);
+
   }
 }
