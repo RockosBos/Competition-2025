@@ -13,6 +13,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -36,6 +38,7 @@ import frc.robot.Commands.CommandGroups.Sequential.L2;
 import frc.robot.Commands.CommandGroups.Sequential.L3;
 import frc.robot.Commands.CommandGroups.Sequential.L4;
 import frc.robot.Commands.CommandGroups.Sequential.ScoreCoral;
+import frc.robot.Commands.Drive.DriveToNearestScore;
 import frc.robot.Commands.Elevator.IntakeEleHandoffPos;
 import frc.robot.Commands.Elevator.IntakeEleFloorPos;
 import frc.robot.Commands.Elevator.ScoreEleL2Position;
@@ -57,7 +60,9 @@ import frc.robot.Commands.Score.ScoreLeftState;
 import frc.robot.Commands.Score.ScoreRightState;
 import frc.robot.Commands.Score.ScoreSetCenter;
 import frc.robot.Commands.Score.ScoreSetScore;
+import frc.robot.enums.CameraType;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -92,6 +97,9 @@ public class RobotContainer {
     private final Elevator elevatorSubsytem = new Elevator();
     private final Score scoreSubsystem = new Score();
     private final PoseHandler PoseHandlerSubsystem = new PoseHandler();
+
+    public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(-0.4064, 0.0381, 0.152, new Rotation3d(0,0,0)));
+    //public final CameraSubsystem PhotonVisionCamera2 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 2", new Transform3d(-0.4064, -0.0381, 0.152, new Rotation3d(0,0,0)));
 
     private boolean rumbleCooldown = false;
 
@@ -163,6 +171,7 @@ public class RobotContainer {
                 .withRotationalRate(PoseHandlerSubsystem.getTController(drivetrain.getPigeon2().getYaw().getValueAsDouble()) * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
+        driverController.rightBumper().whileTrue(new DriveToNearestScore(drivetrain, PoseHandlerSubsystem));
 
         //Operator Controller
 

@@ -71,7 +71,7 @@ public class PoseHandler extends SubsystemBase {
   }
 
   public double getDistanceToCoord(double currentX, double currentY, double targetX, double targetY){
-    return Math.sqrt(Math.pow((targetX - currentX), 2) + Math.pow((targetY - targetY), 2));
+    return Math.sqrt(Math.pow((targetX - currentX), 2) + Math.pow((targetY - currentY), 2));
   }
 
   public void updateNearestPose(Pose2d pose){
@@ -80,7 +80,7 @@ public class PoseHandler extends SubsystemBase {
     nearRightDist = getDistanceToCoord(pose.getX(), pose.getY(), SCORING_POSES.RIGHT_NEAR.X, SCORING_POSES.RIGHT_NEAR.Y);
     farRightDist = getDistanceToCoord(pose.getX(), pose.getY(), SCORING_POSES.RIGHT_FAR.X, SCORING_POSES.RIGHT_FAR.Y);
     farCenterDist = getDistanceToCoord(pose.getX(), pose.getY(), SCORING_POSES.CENTER_FAR.X, SCORING_POSES.CENTER_FAR.Y);
-    farRightDist = getDistanceToCoord(pose.getX(), pose.getY(), SCORING_POSES.LEFT_FAR.X, SCORING_POSES.LEFT_FAR.Y);
+    farLeftDist = getDistanceToCoord(pose.getX(), pose.getY(), SCORING_POSES.LEFT_FAR.X, SCORING_POSES.LEFT_FAR.Y);
   
     if(nearCenterDist < nearLeftDist){
       closestScoringDist = nearCenterDist;
@@ -152,6 +152,7 @@ public class PoseHandler extends SubsystemBase {
 
   @Override
   public void periodic() {
+    
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("xController", xDrive);
     SmartDashboard.putNumber("yController", yDrive);
@@ -163,6 +164,9 @@ public class PoseHandler extends SubsystemBase {
     SmartDashboard.putNumber("farCenterDistance", farCenterDist);
     SmartDashboard.putNumber("farLeftDistance", farLeftDist);
     SmartDashboard.putNumber("farRightDistance", farRightDist);
+    SmartDashboard.putNumber("closestScoringPoseX", closestScoringPoseX);
+    SmartDashboard.putNumber("closestScoringPoseY", closestScoringPoseY);
+    SmartDashboard.putString("Closest Pose", closestScoringLocation);
 
   }
 }
