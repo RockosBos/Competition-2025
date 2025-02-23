@@ -68,11 +68,11 @@ public class Intake extends SubsystemBase {
   public Intake() {
 
     //Set Up Configurations
-    intakeInConfig.inverted(false);
+    intakeInConfig.inverted(Constants.INVERT_INTAKE_ROLLER);
     intakeInConfig.idleMode(IdleMode.kCoast);
     intakeInConfig.smartCurrentLimit(Constants.CURRENTLIMIT_INTAKE_ROLLER);
     
-    intakeRotateConfig.inverted(false);
+    intakeRotateConfig.inverted(Constants.INVERT_INTAKE_ROTATE);
     intakeRotateConfig.idleMode(IdleMode.kBrake);
     intakeRotateConfig.smartCurrentLimit(Constants.CURRENTLIMIT_INTAKE_ROTATE);
 
@@ -170,13 +170,13 @@ public class Intake extends SubsystemBase {
   public void periodic() {
 
     //Calculate the distance between current location and target location in rotations
-    intakeRotateTargetErr = Math.abs(targetPosition - intakeAbsEncoder.getPosition());
+    //intakeRotateTargetErr = Math.abs(targetPosition - intakeAbsEncoder.getPosition());
 
     //Set Intake Roller Voltage
-    IntakeIn.setVoltage(voltage);
+    //IntakeIn.setVoltage(voltage);
 
     //Set Closed Loop Controller for Intake Rotate Arm
-    BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    //BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 
     //Logging
 

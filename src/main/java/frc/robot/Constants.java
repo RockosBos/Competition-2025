@@ -155,5 +155,42 @@ public class Constants {
     public static final double THRESHOLD_LASERCAN_INTAKE_LEFT = 20; //In mm
     public static final double THRESHOLD_LASERCAN_INTAKE_RIGHT = 20; //In mm
 
+    public static class SCORING_POSES{
+        public class CENTER_NEAR{
+            public static final double X = 3.069;
+            public static final double Y = 4.00;
+            public static final double T = 0.0;
+        }
+
+        public static final class CENTER_FAR{
+            public static final double X = 5.898;
+            public static final double Y = 4.00;
+            public static final double T = 180.0;
+        }
+
+        public static final class LEFT_NEAR{
+            public static final double X = 3.8;
+            public static final double Y = 5.254;
+            public static final double T = 60.0;
+        }
+
+        public static final class LEFT_FAR{
+            public static final double X = 5.191;
+            public static final double Y = 5.254;
+            public static final double T = 120.0;
+        }
+
+        public static final class RIGHT_NEAR{
+            public static final double X = 3.74;
+            public static final double Y = 2.736;
+            public static final double T = -60.0;
+        }
+
+        public static final class RIGHT_FAR{
+            public static final double X = 5.287;
+            public static final double Y = 2.736;
+            public static final double T = -120.0;
+        }
+    };
 
 }

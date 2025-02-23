@@ -204,14 +204,14 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     if(intakeEleControlState == ControlState.CLOSEDLOOP){
-      IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+      //IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
     else{
       //IntakeEle.setVoltage(intakeEleVoltage);
     }
 
     if(scoreEleControlState == ControlState.CLOSEDLOOP){
-      ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+      //ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
     else{
       //ScoreEle.setVoltage(scoreEleVoltage);

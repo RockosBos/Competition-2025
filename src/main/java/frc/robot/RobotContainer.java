@@ -158,30 +158,30 @@ public class RobotContainer {
         driverController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
         driverController.rightBumper().whileTrue(
             drivetrain.applyRequest(() ->
-            drive.withVelocityX(-PoseHandlerSubsystem.getXController(drivetrain.samplePoseAt(Utils.getCurrentTimeSeconds()).get()) * MaxSpeed) // Drive forward with negative Y (forward)
-                .withVelocityY(-PoseHandlerSubsystem.getYController(drivetrain.samplePoseAt(Utils.getCurrentTimeSeconds()).get()) * MaxSpeed) // Drive left with negative X (left)
-                .withRotationalRate(PoseHandlerSubsystem.getTController(drivetrain.samplePoseAt(Utils.getCurrentTimeSeconds()).get()) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+            drive.withVelocityX(PoseHandlerSubsystem.getXController(drivetrain.samplePoseAt(Utils.getCurrentTimeSeconds()).get()) * MaxSpeed) // Drive forward with negative Y (forward)
+                .withVelocityY(PoseHandlerSubsystem.getYController(drivetrain.samplePoseAt(Utils.getCurrentTimeSeconds()).get()) * MaxSpeed) // Drive left with negative X (left)
+                .withRotationalRate(PoseHandlerSubsystem.getTController(drivetrain.getPigeon2().getYaw().getValueAsDouble()) * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
 
         //Operator Controller
 
-        operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
-        operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
+        // operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
+        // operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
 
-        operaterLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.leftBumper().onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.a().onTrue(new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.b().onTrue(new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.x().onTrue(new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.leftBumper().onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.a().onTrue(new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.b().onTrue(new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.x().onTrue(new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
-        operaterController.povDown().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.povDown().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
-        hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        hasCoralRumble.onTrue(new RumbleController(driverController, 0.5));
-        hasCoral.onFalse(new RumbleCooldown(rumbleCooldown));
+        // hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // hasCoralRumble.onTrue(new RumbleController(driverController, 0.5));
+        // hasCoral.onFalse(new RumbleCooldown(rumbleCooldown));
         
 
         //Telemetry
