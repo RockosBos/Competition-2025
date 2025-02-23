@@ -121,6 +121,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutoIntakeLoading", new AutoIntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         NamedCommands.registerCommand("Handoff", new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         NamedCommands.registerCommand("ScoreCoral", new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        //NamedCommands.registerCommand("AutoAlign", new Command());
 
         //Auto Mode Setup
         autoChooser = AutoBuilder.buildAutoChooser("Tests");

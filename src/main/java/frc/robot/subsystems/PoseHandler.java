@@ -14,6 +14,7 @@ public class PoseHandler extends SubsystemBase {
 
   PIDController xController, yController, tController;
   double xDrive, yDrive, tDrive;
+  private final double maxSpeedX = 0.2, maxSpeedY = 0.2, maxSpeedT = 0.2;
   /** Creates a new PoseHandler. */
   public PoseHandler() {
     xController = new PIDController(0.1, 0, 0);
@@ -26,16 +27,25 @@ public class PoseHandler extends SubsystemBase {
 
   public double getXController(Pose2d pose){
       xDrive = xController.calculate(pose.getX(), 0);
+      if(xDrive > maxSpeedX){
+        return maxSpeedX;
+      }
       return xDrive;
   }
 
   public double getYController(Pose2d pose){
     yDrive = yController.calculate(pose.getY(), 0);
+    if(yDrive > maxSpeedY){
+      return maxSpeedY;
+    }
     return yDrive;
   }
 
   public double getTController(Pose2d pose){
     tDrive = yController.calculate(pose.getRotation().getDegrees(), 0);
+    if(tDrive > maxSpeedT){
+      return maxSpeedT;
+    }
     return tDrive;
   }
 
