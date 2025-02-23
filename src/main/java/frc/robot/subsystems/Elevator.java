@@ -220,10 +220,10 @@ public class Elevator extends SubsystemBase {
     //Drive Speed Limiter
     driveSpeedLimit = driveSpeedLimiter.get(ScoreEleEncoder.getPosition());
 
-    SmartDashboard.putNumber("EleTarget", targetPostion);
-    SmartDashboard.putNumber("IntakeEleEnc", ScoreEle.getEncoder().getPosition());
-    SmartDashboard.putNumber("EleScoreTarget", targetPostionScoreInLa);
-    SmartDashboard.putNumber("ScoreEleEnc", ScoreEle.getEncoder().getPosition());
+    // SmartDashboard.putNumber("EleTarget", targetPostion);
+    // SmartDashboard.putNumber("IntakeEleEnc", ScoreEle.getEncoder().getPosition());
+    // SmartDashboard.putNumber("EleScoreTarget", targetPostionScoreInLa);
+    // SmartDashboard.putNumber("ScoreEleEnc", ScoreEle.getEncoder().getPosition());
 
     //logging
     intakeElevatorTargetPositionLog.append(IntakeEleEncoder.getPosition());;

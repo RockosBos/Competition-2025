@@ -82,7 +82,7 @@ public class Constants {
 
     public static final boolean INVERT_INTAKE_ELEVATOR = false;
     public static final boolean INVERT_SCORE_ELEVATOR = false;
-    public static final boolean INVERT_INTAKE_ROTATE = false;
+    public static final boolean INVERT_INTAKE_ROTATE = true;
     public static final boolean INVERT_INTAKE_ROLLER = false;
     public static final boolean INVERT_SCORE_ROTATE = true;
     public static final boolean INVERT_SCORE_PIVOT = false;
@@ -96,7 +96,7 @@ public class Constants {
 
     public static final double RAMPRATE_INTAKE_ELEVATOR = 0.1;
     public static final double RAMPRATE_SCORE_ELEVATOR = 0.2;
-    public static final double RAMPRATE_INTAKE_ROTATE = 0.1;
+    public static final double RAMPRATE_INTAKE_ROTATE = 0.05;
     public static final double RAMPRATE_INTAKE_ROLLER = 0.1;
     public static final double RAMPRATE_SCORE_ROTATE = 0.0;
     public static final double RAMPRATE_SCORE_PIVOT = 0.0;
@@ -126,9 +126,9 @@ public class Constants {
     public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = -0.3;
 
-    public static final double P_INTAKE_ROTATE = 3.0;
-    public static final double MAX_OUTPUT_INTAKE_ROTATE = 0.5;
-    public static final double MIN_OUTPUT_INTAKE_ROTATE = -0.4;
+    public static final double P_INTAKE_ROTATE = 1.75;
+    public static final double MAX_OUTPUT_INTAKE_ROTATE = 0.2;
+    public static final double MIN_OUTPUT_INTAKE_ROTATE = -0.2;
 
     public static final double P_SCORE_ROTATE = 3.0;
     public static final double MAX_OUTPUT_SCORE_ROTATE = 0.2;

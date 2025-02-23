@@ -120,6 +120,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("ScoreL4", new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         NamedCommands.registerCommand("AutoIntakeLoading", new AutoIntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         NamedCommands.registerCommand("Handoff", new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("ScoreCoral", new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         //Auto Mode Setup
         autoChooser = AutoBuilder.buildAutoChooser("Tests");
