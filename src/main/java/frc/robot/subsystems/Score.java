@@ -226,11 +226,11 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotate
   @Override
   public void periodic() {
     
-    // rotateLoopy.setReference(rotateTargetPostion, ControlType.kPosition);
-    // pivotLoopy.setReference(pivotTargetPostion, ControlType.kPosition);
-    // ClawLoopy.setReference(clawTargetPostion, ControlType.kPosition);
+    rotateLoopy.setReference(rotateTargetPostion, ControlType.kPosition);
+    pivotLoopy.setReference(pivotTargetPostion, ControlType.kPosition);
+    ClawLoopy.setReference(clawTargetPostion, ControlType.kPosition);
 
-    // agitator.setVoltage(agitatorVoltage);
+    agitator.setVoltage(agitatorVoltage);
     
     // Logging
     clawCurrentPositionLog.append(ClawAbs.getPosition());

@@ -96,12 +96,12 @@ public class Elevator extends SubsystemBase {
     ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
 
     //Drive Speed Limiter Mapping
-    driveSpeedLimiter.put(0.0, 1.0);
-    driveSpeedLimiter.put(30.0, 0.9);
-    driveSpeedLimiter.put(60.0, 0.7);
-    driveSpeedLimiter.put(100.0, 0.6);
-    driveSpeedLimiter.put(130.0, 0.4);
-    driveSpeedLimiter.put(160.0, 0.25);
+    driveSpeedLimiter.put(0.0, 0.9);
+    driveSpeedLimiter.put(30.0, 0.8);
+    driveSpeedLimiter.put(60.0, 0.65);
+    driveSpeedLimiter.put(100.0, 0.55);
+    driveSpeedLimiter.put(130.0, 0.3);
+    driveSpeedLimiter.put(160.0, 0.17);
 
     intakeElevatorTargetPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorTargetPosition");
     intakeElevatorCurrentPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorCurrentPosition");
@@ -204,14 +204,14 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     if(intakeEleControlState == ControlState.CLOSEDLOOP){
-      //IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+      IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
     else{
       //IntakeEle.setVoltage(intakeEleVoltage);
     }
 
     if(scoreEleControlState == ControlState.CLOSEDLOOP){
-      //ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+      ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
     else{
       //ScoreEle.setVoltage(scoreEleVoltage);
@@ -220,10 +220,10 @@ public class Elevator extends SubsystemBase {
     //Drive Speed Limiter
     driveSpeedLimit = driveSpeedLimiter.get(ScoreEleEncoder.getPosition());
 
-    // SmartDashboard.putNumber("EleTarget", targetPostion);
-    // SmartDashboard.putNumber("IntakeEleEnc", ScoreEle.getEncoder().getPosition());
-    // SmartDashboard.putNumber("EleScoreTarget", targetPostionScoreInLa);
-    // SmartDashboard.putNumber("ScoreEleEnc", ScoreEle.getEncoder().getPosition());
+    SmartDashboard.putNumber("EleTarget", targetPostion);
+    SmartDashboard.putNumber("IntakeEleEnc", ScoreEle.getEncoder().getPosition());
+    SmartDashboard.putNumber("EleScoreTarget", targetPostionScoreInLa);
+    SmartDashboard.putNumber("ScoreEleEnc", ScoreEle.getEncoder().getPosition());
 
     //logging
     intakeElevatorTargetPositionLog.append(IntakeEleEncoder.getPosition());;

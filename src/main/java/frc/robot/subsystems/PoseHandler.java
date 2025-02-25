@@ -7,6 +7,8 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.Utils;
 import com.google.flatbuffers.Constants;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -22,6 +24,7 @@ public class PoseHandler extends SubsystemBase {
           farCenterDist = 0.0, farLeftDist = 0.0, farRightDist = 0.0;
   double closestScoringPoseX = 7.0, closestScoringPoseY = 4.0, closestScoringPoseT = 0.0, closestScoringDist = 0.0;
   String closestScoringLocation = "FC";
+  AprilTagFieldLayout aprilTagFieldLayout;
   
   
   private final double maxSpeedX = 0.2, maxSpeedY = 0.2, maxSpeedT = 0.2;
@@ -33,6 +36,7 @@ public class PoseHandler extends SubsystemBase {
     xDrive = 0;
     yDrive = 0;
     tDrive = 0;
+    aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
   }
 
   public double getXController(Pose2d pose){
@@ -150,23 +154,27 @@ public class PoseHandler extends SubsystemBase {
 
   }
 
+  public AprilTagFieldLayout getAprilTagFieldLayout(){
+    return aprilTagFieldLayout;
+  }
+
   @Override
   public void periodic() {
     
-    // This method will be called once per scheduler run
-    SmartDashboard.putNumber("xController", xDrive);
-    SmartDashboard.putNumber("yController", yDrive);
-    SmartDashboard.putNumber("tController", tDrive);
-    SmartDashboard.putNumber("PigeonAngle", angle);
-    SmartDashboard.putNumber("nearCenterDistance", nearCenterDist);
-    SmartDashboard.putNumber("nearLeftDistance", nearLeftDist);
-    SmartDashboard.putNumber("nearRightDistance", nearRightDist);
-    SmartDashboard.putNumber("farCenterDistance", farCenterDist);
-    SmartDashboard.putNumber("farLeftDistance", farLeftDist);
-    SmartDashboard.putNumber("farRightDistance", farRightDist);
-    SmartDashboard.putNumber("closestScoringPoseX", closestScoringPoseX);
-    SmartDashboard.putNumber("closestScoringPoseY", closestScoringPoseY);
-    SmartDashboard.putString("Closest Pose", closestScoringLocation);
+    // // This method will be called once per scheduler run
+    // SmartDashboard.putNumber("xController", xDrive);
+    // SmartDashboard.putNumber("yController", yDrive);
+    // SmartDashboard.putNumber("tController", tDrive);
+    // SmartDashboard.putNumber("PigeonAngle", angle);
+    // SmartDashboard.putNumber("nearCenterDistance", nearCenterDist);
+    // SmartDashboard.putNumber("nearLeftDistance", nearLeftDist);
+    // SmartDashboard.putNumber("nearRightDistance", nearRightDist);
+    // SmartDashboard.putNumber("farCenterDistance", farCenterDist);
+    // SmartDashboard.putNumber("farLeftDistance", farLeftDist);
+    // SmartDashboard.putNumber("farRightDistance", farRightDist);
+    // SmartDashboard.putNumber("closestScoringPoseX", closestScoringPoseX);
+    // SmartDashboard.putNumber("closestScoringPoseY", closestScoringPoseY);
+    // SmartDashboard.putString("Closest Pose", closestScoringLocation);
 
   }
 }

@@ -29,7 +29,7 @@ public class FloorIntakePosition extends Command {
   @Override
   public void execute() {
     m_Intake.setTargetPostion(Constants.INTAKE_ROTATE_FLOOR_INTAKE_POS);
-    m_Intake.setMotorVoltage(Constants.INTAKE_ROLLER_INFEED_VOLTAGE);
+    // m_Intake.setMotorVoltage(Constants.INTAKE_ROLLER_INFEED_VOLTAGE);
   }
 
   // Called once the command ends or is interrupted.

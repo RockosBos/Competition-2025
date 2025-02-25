@@ -170,13 +170,13 @@ public class Intake extends SubsystemBase {
   public void periodic() {
 
     //Calculate the distance between current location and target location in rotations
-    //intakeRotateTargetErr = Math.abs(targetPosition - intakeAbsEncoder.getPosition());
+    intakeRotateTargetErr = Math.abs(targetPosition - intakeAbsEncoder.getPosition());
 
     //Set Intake Roller Voltage
-    //IntakeIn.setVoltage(voltage);
+    IntakeIn.setVoltage(voltage);
 
     //Set Closed Loop Controller for Intake Rotate Arm
-    //BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 
     //Logging
 
@@ -190,10 +190,11 @@ public class Intake extends SubsystemBase {
     intakeRotateErrLog.append(intakeRotateTargetErr);
     //intakeRotateInPosLog.append(this.inPosition());
 
-    // SmartDashboard.putNumber("IntakeRotateAbs", intakeAbsEncoder.getPosition());
-    // // SmartDashboard.putNumber("Left Laser Distance", leftyLazy.getMeasurement().distance_mm);
-    // // SmartDashboard.putNumber("Right Laser Distance", rightyLazy.getMeasurement().distance_mm);
-    // SmartDashboard.putBoolean("hasCoral", hasCoral());
+    SmartDashboard.putNumber("IntakeRotateAbs", intakeAbsEncoder.getPosition());
+    SmartDashboard.putNumber("Left Laser Distance", leftyLazy.getMeasurement().distance_mm);
+    SmartDashboard.putNumber("Right Laser Distance", rightyLazy.getMeasurement().distance_mm);
+    SmartDashboard.putBoolean("hasCoral", hasCoral());
+    SmartDashboard.putBoolean("inPos", inPosition());
 
     scoreRotatePosPub.set(intakeAbsEncoder.getPosition());
     scoreRotateSetpointPub.set(targetPosition);

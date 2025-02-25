@@ -51,68 +51,68 @@ public class CameraSubsystem extends SubsystemBase {
   StructPublisher<Pose2d> cameraPosePublisher;
 
   /** Creates a new CameraSubsystem. */
-  public CameraSubsystem(CameraType cameraType, String cameraName, Transform3d cameraToRobotOffset) {
+  public CameraSubsystem(CameraType cameraType, String cameraName, Transform3d cameraToRobotOffset, AprilTagFieldLayout fieldLayout) {
     this.cameraType = cameraType;
     this.cameraName = cameraName;
     this.cameraToRobotPose = cameraToRobotOffset;
-    // //DataLog log = DataLogManager.getLog();
+    aprilTagFieldLayout = fieldLayout;
+    DataLog log = DataLogManager.getLog();
 
-    // if(cameraType == CameraType.PHOTONVISION){
-    aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
-    //   photonCamera = new PhotonCamera(cameraName);
-    // }
-    // cameraPosePublisher = NetworkTableInstance.getDefault().getStructTopic(cameraName + "Pose Log", Pose2d.struct).publish();
+    if(cameraType == CameraType.PHOTONVISION){
+      photonCamera = new PhotonCamera(cameraName);
+    }
+    cameraPosePublisher = NetworkTableInstance.getDefault().getStructTopic(cameraName + "Pose Log", Pose2d.struct).publish();
   }
 
-  // public CameraSubsystem(CameraType cameraType, String cameraName) {
-  //   this.cameraType = cameraType;
-  //   this.cameraName = cameraName;
-  //   DataLog log = DataLogManager.getLog();
+  public CameraSubsystem(CameraType cameraType, String cameraName) {
+    this.cameraType = cameraType;
+    this.cameraName = cameraName;
+    DataLog log = DataLogManager.getLog();
 
-  //   if(cameraType == CameraType.PHOTONVISION){
-  //     aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
-  //     photonCamera = new PhotonCamera(cameraName);
-  //   }
-  //     cameraPosePublisher = NetworkTableInstance.getDefault().getStructTopic(cameraName + "Pose Log", Pose2d.struct).publish();
-  // }
+    // if(cameraType == CameraType.PHOTONVISION){
+    //   aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
+    //   photonCamera = new PhotonCamera(cameraName);
+    // }
+    cameraPosePublisher = NetworkTableInstance.getDefault().getStructTopic(cameraName + "Pose Log", Pose2d.struct).publish();
+  }
 
-  // public void setRobotYaw(double yaw){
-  //   robotYaw = yaw;
-  // }
+  public void setRobotYaw(double yaw){
+    robotYaw = yaw;
+  }
 
-  // public CameraType getCameraType(){
-  //   return cameraType;
-  // }
+  public CameraType getCameraType(){
+    return cameraType;
+  }
 
-  // public Pose3d update3DPose(){
-  //   if (aprilTagFieldLayout.getTagPose(target.getFiducialId()).isPresent()) {
-  //     pose3d = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), cameraToRobotPose);
-  //   }
-  //   return this.pose3d;
-  // }
+  public Pose3d update3DPose(){
+    if (aprilTagFieldLayout.getTagPose(target.getFiducialId()).isPresent()) {
+      pose3d = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), cameraToRobotPose);
+    }
+    return this.pose3d;
+  }
 
-  // public Pose2d update2DPose(){
-  //   return update3DPose().toPose2d();
-  // }
+  public Pose2d update2DPose(){
+    return update3DPose().toPose2d();
+  }
 
-  // public Pose2d getPose2d(){
-  //   return currentPose;
-  // }
+  public Pose2d getPose2d(){
+    return currentPose;
+  }
 
   @Override
   public void periodic() {
-    // if(CameraType.PHOTONVISION == cameraType){
-      //result = photonCamera.getLatestResult();
-      //target = result.getBestTarget();
-      // if(result.hasTargets()){
-      //   currentPose = update2DPose();
-      // }
-    // }
-    // else{
-    //   LimelightHelpers.SetRobotOrientation(cameraName, robotYaw, 0, 0, 0, 0, 0);
-    //   currentPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName).pose;
-    // }
-    //cameraPosePublisher.set(new Pose2d(new Translation2d(currentPose.getX(), currentPose.getY()), currentPose.getRotation()));
+    if(CameraType.PHOTONVISION == cameraType){
+      result = photonCamera.getLatestResult();
+      target = result.getBestTarget();
+      if(result.hasTargets()){
+        currentPose = update2DPose();
+      }
+    }
+    else{
+      // LimelightHelpers.SetRobotOrientation(cameraName, robotYaw, 0, 0, 0, 0, 0);
+      // currentPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName).pose;
+    }
+    cameraPosePublisher.set(new Pose2d(new Translation2d(currentPose.getX(), currentPose.getY()), currentPose.getRotation()));
     
   }
 }
