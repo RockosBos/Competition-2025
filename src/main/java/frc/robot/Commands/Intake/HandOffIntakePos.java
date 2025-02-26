@@ -24,6 +24,7 @@ public class HandOffIntakePos extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("Command HandoffIntakePosition Started");
   }
 
   // Called every time the scheduler runs while the command is scheduled.

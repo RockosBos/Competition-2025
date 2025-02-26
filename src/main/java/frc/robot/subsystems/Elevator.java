@@ -17,6 +17,7 @@ import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.networktables.DoubleArrayPublisher;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTable;
@@ -47,6 +48,8 @@ public class Elevator extends SubsystemBase {
   private ControlState scoreEleControlState = ControlState.CLOSEDLOOP;
 
   private double intakeEleVoltage = 0.0, scoreEleVoltage = 0.0;
+  private InterpolatingDoubleTreeMap driveSpeedLimiter = new InterpolatingDoubleTreeMap();
+  private double driveSpeedLimit = 1.0;
     
   DataLog log = DataLogManager.getLog();
   private DoubleLogEntry intakeElevatorAmpLog, intakeElevatorVoltageLog, intakeElevatorTargetPositionLog, intakeElevatorCurrentPositionLog;
@@ -91,6 +94,14 @@ public class Elevator extends SubsystemBase {
    .outputRange(Constants.MIN_OUTPUT_SCORE_ELEVATOR, Constants.MAX_OUTPUT_SCORE_ELEVATOR);
 
     ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+
+    //Drive Speed Limiter Mapping
+    driveSpeedLimiter.put(0.0, 0.9);
+    driveSpeedLimiter.put(30.0, 0.8);
+    driveSpeedLimiter.put(60.0, 0.65);
+    driveSpeedLimiter.put(100.0, 0.55);
+    driveSpeedLimiter.put(130.0, 0.3);
+    driveSpeedLimiter.put(160.0, 0.17);
 
     intakeElevatorTargetPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorTargetPosition");
     intakeElevatorCurrentPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorCurrentPosition");
@@ -186,21 +197,28 @@ public class Elevator extends SubsystemBase {
     return ScoreEleEncoder.getPosition();
   }
 
+  public double getDriveSpeedLimit(){
+    return driveSpeedLimit;
+  }
+
   @Override
   public void periodic() {
     if(intakeEleControlState == ControlState.CLOSEDLOOP){
-      IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+      // IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
     else{
       //IntakeEle.setVoltage(intakeEleVoltage);
     }
 
     if(scoreEleControlState == ControlState.CLOSEDLOOP){
-      ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+      // ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
     else{
       //ScoreEle.setVoltage(scoreEleVoltage);
     }
+
+    //Drive Speed Limiter
+    driveSpeedLimit = driveSpeedLimiter.get(ScoreEleEncoder.getPosition());
 
     SmartDashboard.putNumber("EleTarget", targetPostion);
     SmartDashboard.putNumber("IntakeEleEnc", ScoreEle.getEncoder().getPosition());

@@ -6,39 +6,41 @@ package frc.robot.Commands.Intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 
+
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class LoadingIntakePosition extends Command {
-  Intake i_Intake;
-  /** Creates a new LoadingIntakePosition. */
-  public LoadingIntakePosition(Intake intakeSubsystem) {
-    this.i_Intake = intakeSubsystem;
-    addRequirements(i_Intake);
+public class IntakeRollerIn extends Command {
+  private Intake i_Intake;
+  /** Creates a new HandOffIntakePos. */
+  public IntakeRollerIn(Intake i_Intake) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.i_Intake = i_Intake;
+    addRequirements(i_Intake);
   }
+
+  //
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    i_Intake.setTargetPostion(Constants.INTAKE_ROTATE_LOADING_INTAKE_POS);
-    //i_Intake.setMotorVoltage(Constants.INTAKE_ROLLER_INFEED_VOLTAGE);
+    i_Intake.setMotorVoltage(Constants.INTAKE_ROLLER_INFEED_VOLTAGE);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("Command LoadingIntakePosition Complete");
+    System.out.println("Command IntakeRollerOff Complete");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return i_Intake.inPosition();
+    return true;
   }
 }

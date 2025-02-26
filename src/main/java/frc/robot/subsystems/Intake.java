@@ -20,6 +20,9 @@ import au.grapplerobotics.LaserCan;
 
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.networktables.DoublePublisher;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.datalog.BooleanLogEntry;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
@@ -55,17 +58,23 @@ public class Intake extends SubsystemBase {
   private DoubleLogEntry leftLaserDistLog, rightLaserDistLog;
   private BooleanLogEntry intakeRotateInPosLog;
 
+  private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
+  private final NetworkTable table = inst.getTable("Intake");
+  private final DoublePublisher scoreRotatePosPub = table.getDoubleTopic("Intake").publish(),
+                                scoreRotateSetpointPub = table.getDoubleTopic("Intake").publish(),
+                                scoreRotateAmpsPub = table.getDoubleTopic("Intake").publish();
+
   /** Creates a new Intake. */
   public Intake() {
 
     //Set Up Configurations
-    intakeInConfig.inverted(false);
+    intakeInConfig.inverted(Constants.INVERT_INTAKE_ROLLER);
     intakeInConfig.idleMode(IdleMode.kCoast);
-    intakeInConfig.smartCurrentLimit(20);
+    intakeInConfig.smartCurrentLimit(Constants.CURRENTLIMIT_INTAKE_ROLLER);
     
-    intakeRotateConfig.inverted(false);
+    intakeRotateConfig.inverted(Constants.INVERT_INTAKE_ROTATE);
     intakeRotateConfig.idleMode(IdleMode.kBrake);
-    intakeRotateConfig.smartCurrentLimit(20);
+    intakeRotateConfig.smartCurrentLimit(Constants.CURRENTLIMIT_INTAKE_ROTATE);
 
     IAEC.zeroOffset(Constants.OFFSET_INTAKE_ROTATE_ABS);
     intakeRotateConfig.absoluteEncoder.apply(IAEC);
@@ -136,15 +145,19 @@ public class Intake extends SubsystemBase {
      * Returns true if the Left LaserCan Sensor detects a game piece
      */
   public boolean leftLaserObstructed(){
-    if(leftyLazy.getMeasurement().distance_mm < Constants.THRESHOLD_LASERCAN_INTAKE_LEFT){
-      return true;
+    if(leftyLazy.getMeasurement() != null){
+      if(leftyLazy.getMeasurement().distance_mm < Constants.THRESHOLD_LASERCAN_INTAKE_LEFT){
+        return true;
+      }
     }
     return false;
   }
 
   public boolean rightLaserObstructed(){
-    if(rightyLazy.getMeasurement().distance_mm < Constants.THRESHOLD_LASERCAN_INTAKE_RIGHT){
-      return true;
+    if(rightyLazy.getMeasurement() != null){
+      if(rightyLazy.getMeasurement().distance_mm < Constants.THRESHOLD_LASERCAN_INTAKE_RIGHT){
+        return true;
+      }
     }
     return false;
   }
@@ -160,10 +173,10 @@ public class Intake extends SubsystemBase {
     intakeRotateTargetErr = Math.abs(targetPosition - intakeAbsEncoder.getPosition());
 
     //Set Intake Roller Voltage
-    IntakeIn.setVoltage(voltage);
+    // IntakeIn.setVoltage(voltage);
 
     //Set Closed Loop Controller for Intake Rotate Arm
-    BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    // BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 
     //Logging
 
@@ -181,6 +194,11 @@ public class Intake extends SubsystemBase {
     SmartDashboard.putNumber("Left Laser Distance", leftyLazy.getMeasurement().distance_mm);
     SmartDashboard.putNumber("Right Laser Distance", rightyLazy.getMeasurement().distance_mm);
     SmartDashboard.putBoolean("hasCoral", hasCoral());
+    SmartDashboard.putBoolean("inPos", inPosition());
+
+    scoreRotatePosPub.set(intakeAbsEncoder.getPosition());
+    scoreRotateSetpointPub.set(targetPosition);
+    scoreRotateAmpsPub.set(IntakeRotate.getOutputCurrent());
 
   }
 }
