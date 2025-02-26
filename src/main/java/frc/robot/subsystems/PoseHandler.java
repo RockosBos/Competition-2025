@@ -15,6 +15,10 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -30,6 +34,7 @@ public class PoseHandler extends SubsystemBase {
   double closestScoringPoseX = 7.0, closestScoringPoseY = 4.0, closestScoringPoseT = 0.0, closestScoringDist = 0.0;
   String closestScoringLocation = "FC";
   AprilTagFieldLayout aprilTagFieldLayout;
+  StructPublisher<Pose2d> closestPosePublisher;
   
   
   private final double maxSpeedX = 0.2, maxSpeedY = 0.2, maxSpeedT = 0.75;
@@ -42,7 +47,7 @@ public class PoseHandler extends SubsystemBase {
     yDrive = 0;
     tDrive = 0;
     aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
-
+    closestPosePublisher = NetworkTableInstance.getDefault().getStructTopic("PoseHandler", Pose2d.struct).publish();
   }
 
   public double getXController(Pose2d pose){
@@ -181,6 +186,8 @@ public class PoseHandler extends SubsystemBase {
 
   @Override
   public void periodic() {
+
+    closestPosePublisher.set(new Pose2d(new Translation2d(closestScoringPoseX, closestScoringPoseY), new Rotation2d(closestScoringPoseT)));
     
     // // This method will be called once per scheduler run
     // SmartDashboard.putNumber("xController", xDrive);

@@ -96,8 +96,16 @@ public class CameraSubsystem extends SubsystemBase {
     return this.pose3d;
   }
 
-  public Pose2d update2DPose(){
-    return update3DPose().toPose2d();
+  public void  update2DPose(){
+    if(CameraType.PHOTONVISION == cameraType){
+      result = photonCamera.getLatestResult();
+      if(result.hasTargets()){
+        target = result.getBestTarget();
+      }
+    }
+    
+    currentPose = update3DPose().toPose2d();
+    cameraPosePublisher.set(new Pose2d(new Translation2d(currentPose.getX(), currentPose.getY()), currentPose.getRotation()));
   }
 
   public Pose2d getPose2d(){
@@ -119,18 +127,17 @@ public class CameraSubsystem extends SubsystemBase {
       }
     }
 
-    if(CameraType.PHOTONVISION == cameraType){
-      result = photonCamera.getLatestResult();
-      if(result.hasTargets()){
-        target = result.getBestTarget();
-        currentPose = update2DPose();
-      }
-    }
-    else{
-      LimelightHelpers.SetRobotOrientation(cameraName, robotYaw, 0, 0, 0, 0, 0);
-      currentPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName).pose;
-    }
-    cameraPosePublisher.set(new Pose2d(new Translation2d(currentPose.getX(), currentPose.getY()), currentPose.getRotation()));
+    // if(CameraType.PHOTONVISION == cameraType){
+    //   result = photonCamera.getLatestResult();
+    //   if(result.hasTargets()){
+    //     target = result.getBestTarget();
+    //     currentPose = update2DPose();
+    //   }
+    // }
+    // else{
+    //   LimelightHelpers.SetRobotOrientation(cameraName, robotYaw, 0, 0, 0, 0, 0);
+    //   currentPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName).pose;
+    // }
 
   }
 }
