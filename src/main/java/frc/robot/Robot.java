@@ -24,8 +24,12 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
-    //m_robotContainer.drivetrain.addVisionMeasurement(m_robotContainer.PhotonVisionCamera1.getPose2d(), Utils.getCurrentTimeSeconds());
-    //m_robotContainer.drivetrain.addVisionMeasurement(m_robotContainer.PhotonVisionCamera2.getPose2d(), Utils.getCurrentTimeSeconds());
+    if(m_robotContainer.PhotonVisionCamera1.hasTarget()){
+      m_robotContainer.drivetrain.addVisionMeasurement(m_robotContainer.PhotonVisionCamera1.getPose2d(), Utils.getCurrentTimeSeconds());
+    }
+    if(m_robotContainer.PhotonVisionCamera2.hasTarget()){
+      m_robotContainer.drivetrain.addVisionMeasurement(m_robotContainer.PhotonVisionCamera2.getPose2d(), Utils.getCurrentTimeSeconds());
+    }
   }
 
   @Override

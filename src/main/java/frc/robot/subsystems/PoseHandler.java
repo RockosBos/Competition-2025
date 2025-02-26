@@ -4,14 +4,19 @@
 
 package frc.robot.subsystems;
 
+import java.util.Optional;
+
 import com.ctre.phoenix6.Utils;
 import com.google.flatbuffers.Constants;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.SCORING_POSES;
@@ -27,7 +32,7 @@ public class PoseHandler extends SubsystemBase {
   AprilTagFieldLayout aprilTagFieldLayout;
   
   
-  private final double maxSpeedX = 0.2, maxSpeedY = 0.2, maxSpeedT = 0.2;
+  private final double maxSpeedX = 0.2, maxSpeedY = 0.2, maxSpeedT = 0.75;
   /** Creates a new PoseHandler. */
   public PoseHandler() {
     xController = new PIDController(1.2, 0, 0);
@@ -36,7 +41,8 @@ public class PoseHandler extends SubsystemBase {
     xDrive = 0;
     yDrive = 0;
     tDrive = 0;
-    aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
+    aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
+
   }
 
   public double getXController(Pose2d pose){
@@ -172,9 +178,9 @@ public class PoseHandler extends SubsystemBase {
     // SmartDashboard.putNumber("farCenterDistance", farCenterDist);
     // SmartDashboard.putNumber("farLeftDistance", farLeftDist);
     // SmartDashboard.putNumber("farRightDistance", farRightDist);
-    // SmartDashboard.putNumber("closestScoringPoseX", closestScoringPoseX);
-    // SmartDashboard.putNumber("closestScoringPoseY", closestScoringPoseY);
-    // SmartDashboard.putString("Closest Pose", closestScoringLocation);
+    SmartDashboard.putNumber("closestScoringPoseX", closestScoringPoseX);
+    SmartDashboard.putNumber("closestScoringPoseY", closestScoringPoseY);
+    SmartDashboard.putString("Closest Pose", closestScoringLocation);
 
   }
 }

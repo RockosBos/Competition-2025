@@ -159,13 +159,13 @@ public class Constants {
         public class CENTER_NEAR{
             public static final double X = 3.069;
             public static final double Y = 4.00;
-            public static final double T = 0.0;
+            public static final double T = 180.0;
         }
 
         public static final class CENTER_FAR{
             public static final double X = 5.898;
             public static final double Y = 4.00;
-            public static final double T = 180.0;
+            public static final double T = 0;
         }
 
         public static final class LEFT_NEAR{

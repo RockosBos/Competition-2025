@@ -5,13 +5,17 @@
 package frc.robot.subsystems;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.photonvision.EstimatedRobotPose;
 import org.photonvision.PhotonCamera;
+import org.photonvision.PhotonPoseEstimator;
 import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -25,6 +29,7 @@ import edu.wpi.first.util.datalog.DataLogEntry;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
@@ -54,8 +59,8 @@ public class CameraSubsystem extends SubsystemBase {
   public CameraSubsystem(CameraType cameraType, String cameraName, Transform3d cameraToRobotOffset, AprilTagFieldLayout fieldLayout) {
     this.cameraType = cameraType;
     this.cameraName = cameraName;
+    this.aprilTagFieldLayout = fieldLayout;
     this.cameraToRobotPose = cameraToRobotOffset;
-    aprilTagFieldLayout = fieldLayout;
     DataLog log = DataLogManager.getLog();
 
     if(cameraType == CameraType.PHOTONVISION){
@@ -69,10 +74,10 @@ public class CameraSubsystem extends SubsystemBase {
     this.cameraName = cameraName;
     DataLog log = DataLogManager.getLog();
 
-    // if(cameraType == CameraType.PHOTONVISION){
-    //   aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
-    //   photonCamera = new PhotonCamera(cameraName);
-    // }
+    if(cameraType == CameraType.PHOTONVISION){
+      aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
+      photonCamera = new PhotonCamera(cameraName);
+    }
     cameraPosePublisher = NetworkTableInstance.getDefault().getStructTopic(cameraName + "Pose Log", Pose2d.struct).publish();
   }
 
@@ -99,20 +104,33 @@ public class CameraSubsystem extends SubsystemBase {
     return currentPose;
   }
 
+  public boolean hasTarget(){
+    return result.hasTargets();
+  }
+
   @Override
   public void periodic() {
+    if(DriverStation.getAlliance().isPresent()){
+      if(DriverStation.getAlliance().get() == Alliance.Blue){
+        aprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
+      }
+      else{
+        aprilTagFieldLayout.setOrigin(OriginPosition.kRedAllianceWallRightSide);
+      }
+    }
+
     if(CameraType.PHOTONVISION == cameraType){
       result = photonCamera.getLatestResult();
-      target = result.getBestTarget();
       if(result.hasTargets()){
+        target = result.getBestTarget();
         currentPose = update2DPose();
       }
     }
     else{
-      // LimelightHelpers.SetRobotOrientation(cameraName, robotYaw, 0, 0, 0, 0, 0);
-      // currentPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName).pose;
+      LimelightHelpers.SetRobotOrientation(cameraName, robotYaw, 0, 0, 0, 0, 0);
+      currentPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName).pose;
     }
     cameraPosePublisher.set(new Pose2d(new Translation2d(currentPose.getX(), currentPose.getY()), currentPose.getRotation()));
-    
+
   }
 }
