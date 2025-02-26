@@ -53,6 +53,11 @@ public class PoseHandler extends SubsystemBase {
       if(xDrive < -maxSpeedX){
         return -maxSpeedX;
       }
+      if(DriverStation.getAlliance().isPresent()){
+        if(DriverStation.getAlliance().get() == Alliance.Red){
+          xDrive = -xDrive;
+        }
+      }
       return xDrive;
   }
 
@@ -63,6 +68,11 @@ public class PoseHandler extends SubsystemBase {
     }
     if(yDrive < -maxSpeedY){
       return -maxSpeedY;
+    }
+    if(DriverStation.getAlliance().isPresent()){
+      if(DriverStation.getAlliance().get() == Alliance.Red){
+        yDrive = -yDrive;
+      }
     }
     return yDrive;
   }
@@ -158,6 +168,11 @@ public class PoseHandler extends SubsystemBase {
         break;
     }
 
+    if(DriverStation.getAlliance().isPresent()){
+      if(DriverStation.getAlliance().get() == Alliance.Red){
+        closestScoringPoseT = closestScoringPoseT - 180.0;
+      }
+    }
   }
 
   public AprilTagFieldLayout getAprilTagFieldLayout(){
@@ -178,9 +193,9 @@ public class PoseHandler extends SubsystemBase {
     // SmartDashboard.putNumber("farCenterDistance", farCenterDist);
     // SmartDashboard.putNumber("farLeftDistance", farLeftDist);
     // SmartDashboard.putNumber("farRightDistance", farRightDist);
-    SmartDashboard.putNumber("closestScoringPoseX", closestScoringPoseX);
-    SmartDashboard.putNumber("closestScoringPoseY", closestScoringPoseY);
-    SmartDashboard.putString("Closest Pose", closestScoringLocation);
+    // SmartDashboard.putNumber("closestScoringPoseX", closestScoringPoseX);
+    // SmartDashboard.putNumber("closestScoringPoseY", closestScoringPoseY);
+    // SmartDashboard.putString("Closest Pose", closestScoringLocation);
 
   }
 }
