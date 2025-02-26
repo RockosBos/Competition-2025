@@ -96,16 +96,16 @@ public class CameraSubsystem extends SubsystemBase {
     return this.pose3d;
   }
 
-  public void  update2DPose(){
-    if(CameraType.PHOTONVISION == cameraType){
-      result = photonCamera.getLatestResult();
-      if(result.hasTargets()){
-        target = result.getBestTarget();
-      }
-    }
+  public Pose2d update2DPose(){
+    // if(CameraType.PHOTONVISION == cameraType){
+    //   if(result.hasTargets()){
+    //     target = result.getBestTarget();
+    //   }
+    // }
     
     currentPose = update3DPose().toPose2d();
     cameraPosePublisher.set(new Pose2d(new Translation2d(currentPose.getX(), currentPose.getY()), currentPose.getRotation()));
+    return currentPose;
   }
 
   public Pose2d getPose2d(){
@@ -113,6 +113,7 @@ public class CameraSubsystem extends SubsystemBase {
   }
 
   public boolean hasTarget(){
+
     return result.hasTargets();
   }
 
@@ -126,18 +127,19 @@ public class CameraSubsystem extends SubsystemBase {
         aprilTagFieldLayout.setOrigin(OriginPosition.kRedAllianceWallRightSide);
       }
     }
+    result = photonCamera.getLatestResult();
 
-    // if(CameraType.PHOTONVISION == cameraType){
-    //   result = photonCamera.getLatestResult();
-    //   if(result.hasTargets()){
-    //     target = result.getBestTarget();
-    //     currentPose = update2DPose();
-    //   }
-    // }
-    // else{
-    //   LimelightHelpers.SetRobotOrientation(cameraName, robotYaw, 0, 0, 0, 0, 0);
-    //   currentPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName).pose;
-    // }
+    if(CameraType.PHOTONVISION == cameraType){
+      result = photonCamera.getLatestResult();
+      if(result.hasTargets()){
+        target = result.getBestTarget();
+        currentPose = update2DPose();
+      }
+    }
+    else{
+      LimelightHelpers.SetRobotOrientation(cameraName, robotYaw, 0, 0, 0, 0, 0);
+      currentPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName).pose;
+    }
 
   }
 }

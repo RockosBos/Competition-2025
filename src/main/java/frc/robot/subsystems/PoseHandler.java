@@ -175,7 +175,7 @@ public class PoseHandler extends SubsystemBase {
 
     if(DriverStation.getAlliance().isPresent()){
       if(DriverStation.getAlliance().get() == Alliance.Red){
-        closestScoringPoseT = closestScoringPoseT - 180.0;
+        //closestScoringPoseT = closestScoringPoseT - 180.0;
       }
     }
   }
