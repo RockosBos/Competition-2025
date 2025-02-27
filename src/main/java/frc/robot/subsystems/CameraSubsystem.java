@@ -66,6 +66,7 @@ public class CameraSubsystem extends SubsystemBase {
     if(cameraType == CameraType.PHOTONVISION){
       photonCamera = new PhotonCamera(cameraName);
     }
+    result = photonCamera.getLatestResult();
     cameraPosePublisher = NetworkTableInstance.getDefault().getStructTopic(cameraName + "Pose Log", Pose2d.struct).publish();
   }
 
@@ -113,7 +114,6 @@ public class CameraSubsystem extends SubsystemBase {
   }
 
   public boolean hasTarget(){
-
     return result.hasTargets();
   }
 

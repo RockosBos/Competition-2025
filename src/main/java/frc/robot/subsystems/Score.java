@@ -58,15 +58,15 @@ private ScoreState scoreState = ScoreState.CENTER;
 
 private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
 private final NetworkTable table = inst.getTable("Score");
-private final DoublePublisher scoreRotatePosPub = table.getDoubleTopic("Score").publish(),
-                              scoreRotateSetpointPub = table.getDoubleTopic("Score").publish(),
-                              scoreRotateAmpsPub = table.getDoubleTopic("Score").publish(), 
-                              scorePivotPosPub = table.getDoubleTopic("Score").publish(),
-                              scorePivotSetpointPub = table.getDoubleTopic("Score").publish(),
-                              scorePivotAmpsPub = table.getDoubleTopic("Score").publish(),
-                              scoreClawPosPub = table.getDoubleTopic("Score").publish(),
-                              scoreClawSetpointPub = table.getDoubleTopic("Score").publish(),
-                              scoreClawAmpsPub = table.getDoubleTopic("Score").publish();
+private final DoublePublisher scoreRotatePosPub = table.getDoubleTopic("ScoreRotatePos").publish(),
+                              scoreRotateSetpointPub = table.getDoubleTopic("ScoreRotateSetpoint").publish(),
+                              scoreRotateAmpsPub = table.getDoubleTopic("ScoreRotateAmps").publish(), 
+                              scorePivotPosPub = table.getDoubleTopic("ScorePivotPos").publish(),
+                              scorePivotSetpointPub = table.getDoubleTopic("ScorePivotSetpoint").publish(),
+                              scorePivotAmpsPub = table.getDoubleTopic("ScorePivotAmps").publish(),
+                              scoreClawPosPub = table.getDoubleTopic("ScoreClawPos").publish(),
+                              scoreClawSetpointPub = table.getDoubleTopic("ScoreClawSetpoint").publish(),
+                              scoreClawAmpsPub = table.getDoubleTopic("ScoreClawAmps").publish();
 
 DataLog log = DataLogManager.getLog();
 private DoubleLogEntry clawTargetPositionLog, clawCurrentPositionLog, clawAmpsLog;
@@ -76,7 +76,7 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotate
   /** Creates a new Score. */
   public Score() {
     
-      ClawAbsConfig.zeroOffset(Constants.OFFSET_SCORE_PIVOT_ABS);
+      ClawAbsConfig.zeroOffset(Constants.OFFSET_SCORE_CLAW_ABS);
       ClawConfig.absoluteEncoder.apply(ClawAbsConfig);
       ClawConfig.inverted(Constants.INVERT_SCORE_CLAW);
       ClawConfig.idleMode(Constants.IDLEMODE_SCORE_CLAW);
@@ -226,9 +226,9 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotate
   @Override
   public void periodic() {
     
-    // rotateLoopy.setReference(rotateTargetPostion, ControlType.kPosition);
-    // pivotLoopy.setReference(pivotTargetPostion, ControlType.kPosition);
-    // ClawLoopy.setReference(clawTargetPostion, ControlType.kPosition);
+    rotateLoopy.setReference(rotateTargetPostion, ControlType.kPosition);
+    pivotLoopy.setReference(pivotTargetPostion, ControlType.kPosition);
+    ClawLoopy.setReference(clawTargetPostion, ControlType.kPosition);
 
     agitator.setVoltage(agitatorVoltage);
     

@@ -33,7 +33,7 @@ public class Constants {
     public static final double INTAKE_ELEVATOR_HANDOFF_POS = 79.836;
     public static final double INTAKE_ELEVATOR_L1_POS = 100.0;
 
-    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.64;
+    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.655;
     public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.39;
     public static final double INTAKE_ROTATE_HANDOFF_POS = 0.33;
     public static final double INTAKE_ROTATE_L1_POS = 0.55;
@@ -55,9 +55,9 @@ public class Constants {
     public static final double SCORE_PIVOT_OUT_LEFT_POS = 0.65;
     public static final double SCORE_PIVOT_OUT_RIGHT_POS = 0.92;
 
-    public static final double SCORE_CLAW_CLOSED_POS = 0.91;
-    public static final double SCORE_CLAW_OPEN_POS = 0.6;
-    public static final double SCORE_CLAW_RELEASE_POS = 0.8755;
+    public static final double SCORE_CLAW_CLOSED_POS = 0.425;
+    public static final double SCORE_CLAW_OPEN_POS = 0.25;
+    public static final double SCORE_CLAW_RELEASE_POS = 0.375;
 
     public static final double SCORE_AGITATOR_INFEED_VOLTAGE = 8.0;
     public static final double SCORE_AGITATOR_OUTFEED_VOLTAGE = -8.0;
@@ -67,7 +67,7 @@ public class Constants {
     public static final double OFFSET_INTAKE_ROTATE_ABS = 0.430 - 0.25;
     public static final double OFFSET_SCORE_ROTATE_ABS = 0.228 - 0.20;
     public static final double OFFSET_SCORE_PIVOT_ABS = 0.522 - 0.5;
-    public static final double OFFSET_SCORE_CLAW_ABS = 0.505 - 0.25;
+    public static final double OFFSET_SCORE_CLAW_ABS = 0.595 - 0.1;
 
     //Motor Configuration Constants
 
@@ -159,13 +159,13 @@ public class Constants {
         public class CENTER_NEAR{
             public static final double X = 3.069;
             public static final double Y = 4.00;
-            public static final double T = 180.0;
+            public static final double T = 0.0;
         }
 
         public static final class CENTER_FAR{
             public static final double X = 5.898;
             public static final double Y = 4.00;
-            public static final double T = 0;
+            public static final double T = 180.0;
         }
 
         public static final class LEFT_NEAR{

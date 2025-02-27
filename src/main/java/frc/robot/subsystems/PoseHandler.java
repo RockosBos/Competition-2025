@@ -52,33 +52,35 @@ public class PoseHandler extends SubsystemBase {
 
   public double getXController(Pose2d pose){
       xDrive = xController.calculate(pose.getX(), closestScoringPoseX);
+      if(DriverStation.getAlliance().isPresent()){
+        if(DriverStation.getAlliance().get() == Alliance.Red){
+          xDrive = -xDrive;
+        }
+      }
       if(xDrive > maxSpeedX){
         return maxSpeedX;
       }
       if(xDrive < -maxSpeedX){
         return -maxSpeedX;
       }
-      if(DriverStation.getAlliance().isPresent()){
-        if(DriverStation.getAlliance().get() == Alliance.Red){
-          xDrive = -xDrive;
-        }
-      }
+      
       return xDrive;
   }
 
   public double getYController(Pose2d pose){
     yDrive = yController.calculate(pose.getY(), closestScoringPoseY);
+    if(DriverStation.getAlliance().isPresent()){
+      if(DriverStation.getAlliance().get() == Alliance.Red){
+        yDrive = -yDrive;
+      }
+    }
     if(yDrive > maxSpeedY){
       return maxSpeedY;
     }
     if(yDrive < -maxSpeedY){
       return -maxSpeedY;
     }
-    if(DriverStation.getAlliance().isPresent()){
-      if(DriverStation.getAlliance().get() == Alliance.Red){
-        yDrive = -yDrive;
-      }
-    }
+
     return yDrive;
   }
 
@@ -188,7 +190,10 @@ public class PoseHandler extends SubsystemBase {
   public void periodic() {
 
     closestPosePublisher.set(new Pose2d(new Translation2d(closestScoringPoseX, closestScoringPoseY), new Rotation2d(closestScoringPoseT)));
-    
+    SmartDashboard.putNumber("t Drive", tDrive);
+    SmartDashboard.putNumber("angle", angle);
+    SmartDashboard.putNumber("closestScroingPoseT", closestScoringPoseT);
+    SmartDashboard.putString("Alliance", DriverStation.getAlliance().get().toString());
     // // This method will be called once per scheduler run
     // SmartDashboard.putNumber("xController", xDrive);
     // SmartDashboard.putNumber("yController", yDrive);

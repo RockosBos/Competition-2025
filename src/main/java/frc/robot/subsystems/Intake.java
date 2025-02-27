@@ -173,10 +173,10 @@ public class Intake extends SubsystemBase {
     intakeRotateTargetErr = Math.abs(targetPosition - intakeAbsEncoder.getPosition());
 
     //Set Intake Roller Voltage
-    // IntakeIn.setVoltage(voltage);
+    IntakeIn.setVoltage(voltage);
 
     //Set Closed Loop Controller for Intake Rotate Arm
-    // BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 
     //Logging
 
