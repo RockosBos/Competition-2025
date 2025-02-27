@@ -21,6 +21,11 @@ public class Constants {
     public static final int LASERCAN_INTAKE_LEFT = 52;
     public static final int LASERCAN_INTAKE_RIGHT = 51;
 
+    //Drive constant Values
+
+    public static final double TIP_PROTECTION_THRESHOLD_ROLL = 20.0;
+    public static final double TIP_PROTECTION_THRESHOLD_PITCH = 20.0;
+
     //Intake Constant Values
 
     public static final double INTAKE_ROLLER_INFEED_VOLTAGE = 12.0;

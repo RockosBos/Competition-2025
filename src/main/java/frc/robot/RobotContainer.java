@@ -38,6 +38,7 @@ import frc.robot.Commands.CommandGroups.Sequential.L2;
 import frc.robot.Commands.CommandGroups.Sequential.L3;
 import frc.robot.Commands.CommandGroups.Sequential.L4;
 import frc.robot.Commands.CommandGroups.Sequential.ScoreCoral;
+import frc.robot.Commands.CommandGroups.Sequential.TipProtection;
 import frc.robot.Commands.Drive.DriveToNearestScore;
 import frc.robot.Commands.Drive.UpdateCameras;
 import frc.robot.Commands.Elevator.IntakeEleHandoffPos;
@@ -116,6 +117,9 @@ public class RobotContainer {
 
     private final Trigger hasCoral = new Trigger(() -> intakeSubsystem.hasCoral() && !DriverStation.isAutonomous());
     private final Trigger hasCoralRumble = new Trigger(() -> intakeSubsystem.hasCoral() && !DriverStation.isAutonomous() && !rumbleCooldown);
+    private final Trigger tipProtection = new Trigger(() -> 
+                                            Math.abs(drivetrain.getPigeon2().getRoll().getValueAsDouble()) > Constants.TIP_PROTECTION_THRESHOLD_ROLL ||
+                                            Math.abs(drivetrain.getPigeon2().getPitch().getValueAsDouble()) > Constants.TIP_PROTECTION_THRESHOLD_ROLL);
 
     //Chooser for Autonomous Modes
     private final SendableChooser<Command> autoChooser;
@@ -197,6 +201,7 @@ public class RobotContainer {
         hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         hasCoralRumble.onTrue(new RumbleController(driverController, 0.5));
         hasCoral.onFalse(new RumbleCooldown(rumbleCooldown));
+        tipProtection.onTrue(new TipProtection(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         
 
         //Telemetry
