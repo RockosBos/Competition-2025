@@ -42,6 +42,8 @@ public class Elevator extends SubsystemBase {
   private double targetPostionScoreInLa = Constants.SCORE_ELEVATOR_INTAKE_POSITION;
   private double targetPostion = Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS;
   private SparkMaxConfig Configaroo = new SparkMaxConfig();
+  private DigitalInput InEleDiInput = new DigitalInput(4);
+  private DigitalInput ScoreEleDiInput = new DigitalInput(7);
 
   private ControlState intakeEleControlState = ControlState.CLOSEDLOOP;
   private ControlState scoreEleControlState = ControlState.CLOSEDLOOP;
