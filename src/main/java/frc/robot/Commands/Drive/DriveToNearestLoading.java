@@ -20,13 +20,13 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.PoseHandler;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class DriveToNearestScore extends Command {
+public class DriveToNearestLoading extends Command {
   CommandSwerveDrivetrain driveSubsystem;
   PoseHandler poseHandler;
 
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric().withDriveRequestType(DriveRequestType.OpenLoopVoltage);
   /** Creates a new PathplannerToPose. */
-  public DriveToNearestScore(CommandSwerveDrivetrain driveSubsystem, PoseHandler poseHandler) {
+  public DriveToNearestLoading(CommandSwerveDrivetrain driveSubsystem, PoseHandler poseHandler) {
     this.driveSubsystem = driveSubsystem;
     this.poseHandler = poseHandler;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -42,7 +42,7 @@ public class DriveToNearestScore extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    poseHandler.updateNearestScorePose(driveSubsystem.samplePoseAt(Utils.getCurrentTimeSeconds()).get());
+    poseHandler.updateNearestLoadingPose(driveSubsystem.samplePoseAt(Utils.getCurrentTimeSeconds()).get());
 
   }
 

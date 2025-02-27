@@ -39,6 +39,7 @@ import frc.robot.Commands.CommandGroups.Sequential.L3;
 import frc.robot.Commands.CommandGroups.Sequential.L4;
 import frc.robot.Commands.CommandGroups.Sequential.ScoreCoral;
 import frc.robot.Commands.CommandGroups.Sequential.TipProtection;
+import frc.robot.Commands.Drive.DriveToNearestLoading;
 import frc.robot.Commands.Drive.DriveToNearestScore;
 import frc.robot.Commands.Drive.UpdateCameras;
 import frc.robot.Commands.Elevator.IntakeEleHandoffPos;
@@ -182,6 +183,8 @@ public class RobotContainer {
         );
         driverController.rightBumper().whileTrue(new DriveToNearestScore(drivetrain, PoseHandlerSubsystem));
         driverController.rightBumper().whileTrue(new UpdateCameras(PhotonVisionCamera1, PhotonVisionCamera2));
+        driverController.leftBumper().whileTrue(new DriveToNearestLoading(drivetrain, PoseHandlerSubsystem));
+        driverController.leftBumper().whileTrue(new UpdateCameras(PhotonVisionCamera1, PhotonVisionCamera2));
 
         //Operator Controller
 

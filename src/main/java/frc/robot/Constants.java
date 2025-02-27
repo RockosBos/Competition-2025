@@ -198,4 +198,17 @@ public class Constants {
         }
     };
 
+    public static class LOADING_POSES{
+        public static final class LEFT{
+            public static final double X = 1.654;
+            public static final double Y = 7.436;
+            public static final double T = 120.0;
+        }
+
+        public static final class RIGHT{
+            public static final double X = 1.67;
+            public static final double Y = 0.567;
+            public static final double T = -120.0;
+        }
+    }
 }
