@@ -6,12 +6,14 @@ package frc.robot.Commands.CommandGroups.Sequential;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Commands.Elevator.ScoreEleIdlePosition;
+import frc.robot.Commands.Elevator.BothEleLow;
+import frc.robot.Commands.Elevator.IntakeEleFloorPos;
+import frc.robot.Commands.Elevator.IntakeEleHandoffPos;
+import frc.robot.Commands.Elevator.ScoreEleHandoffPos;
+import frc.robot.Commands.Intake.HandOffIntakePos;
 import frc.robot.Commands.Intake.IntakeRollerOff;
-import frc.robot.Commands.Intake.OutfeedRoller;
-import frc.robot.Commands.Score.AgitatorOff;
 import frc.robot.Commands.Score.ClawOpened;
-import frc.robot.Commands.Score.ClawRelease;
+import frc.robot.Commands.Score.HandoffScorePosition;
 import frc.robot.Commands.Score.ScoreSetCenter;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -20,24 +22,21 @@ import frc.robot.subsystems.Score;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ScoreCoral extends SequentialCommandGroup {
-  
+public class TipProtection extends SequentialCommandGroup {
+
   Elevator e_Elevator;
   Intake i_Intake;
   Score s_Score;
- 
-  public ScoreCoral(Elevator e_Elevator, Intake i_Intake, Score s_Score) {
+  /** Creates a new Handoff. */
+  public TipProtection(Elevator e_Elevator, Intake i_Intake, Score s_Score) {
 
     this.e_Elevator = e_Elevator;
     this.i_Intake = i_Intake;
     this.s_Score = s_Score;
-
+    // Add your commands in the addCommands() call, e.g.
+    // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new ParallelCommandGroup(new ClawRelease(s_Score), new OutfeedRoller(i_Intake)),
-      new ClawOpened(s_Score),
-      new AgitatorOff(s_Score),
-      new ScoreSetCenter(s_Score),
-      new ParallelCommandGroup(new ScoreEleIdlePosition(e_Elevator), new IntakeRollerOff(i_Intake))
+      new ParallelCommandGroup(new ScoreSetCenter(s_Score), new HandOffIntakePos(i_Intake), new BothEleLow(e_Elevator))
     );
   }
 }

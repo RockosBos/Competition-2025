@@ -60,9 +60,9 @@ public class Intake extends SubsystemBase {
 
   private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
   private final NetworkTable table = inst.getTable("Intake");
-  private final DoublePublisher scoreRotatePosPub = table.getDoubleTopic("Intake").publish(),
-                                scoreRotateSetpointPub = table.getDoubleTopic("Intake").publish(),
-                                scoreRotateAmpsPub = table.getDoubleTopic("Intake").publish();
+  private final DoublePublisher scoreRotatePosPub = table.getDoubleTopic("IntakeRotatePos").publish(),
+                                scoreRotateSetpointPub = table.getDoubleTopic("IntakeRotateSetpoint").publish(),
+                                scoreRotateAmpsPub = table.getDoubleTopic("IntakeRotateAmps").publish();
 
   /** Creates a new Intake. */
   public Intake() {
@@ -173,10 +173,10 @@ public class Intake extends SubsystemBase {
     intakeRotateTargetErr = Math.abs(targetPosition - intakeAbsEncoder.getPosition());
 
     //Set Intake Roller Voltage
-    // IntakeIn.setVoltage(voltage);
+    IntakeIn.setVoltage(voltage);
 
     //Set Closed Loop Controller for Intake Rotate Arm
-    // BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
 
     //Logging
 

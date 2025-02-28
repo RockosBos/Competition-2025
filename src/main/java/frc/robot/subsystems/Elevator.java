@@ -58,12 +58,12 @@ public class Elevator extends SubsystemBase {
   private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
 
   private final NetworkTable table = inst.getTable("Elevator");
-  private final DoublePublisher intakeElevatorPosPub = table.getDoubleTopic("elevator").publish(),
-                                intakeElevatorSetpointPub = table.getDoubleTopic("elevator").publish(),
-                                intakeElevatorAmpsPub = table.getDoubleTopic("elevator").publish(), 
-                                scoreElevatorPosPub = table.getDoubleTopic("elevator").publish(),
-                                scoreElevatorSetpointPub = table.getDoubleTopic("elevator").publish(),
-                                scoreElevatorAmpsPub = table.getDoubleTopic("elevator").publish();
+  private final DoublePublisher intakeElevatorPosPub = table.getDoubleTopic("intakeElevatorPos").publish(),
+                                intakeElevatorSetpointPub = table.getDoubleTopic("intakeElevatorSetpoint").publish(),
+                                intakeElevatorAmpsPub = table.getDoubleTopic("intakeElevatorAmps").publish(), 
+                                scoreElevatorPosPub = table.getDoubleTopic("scoreElevatorPos").publish(),
+                                scoreElevatorSetpointPub = table.getDoubleTopic("scoreElevatorSetpoint").publish(),
+                                scoreElevatorAmpsPub = table.getDoubleTopic("scoreElevatorAmps").publish();
 
   /** Creates a new Elevator. */
   public Elevator() {
@@ -100,8 +100,8 @@ public class Elevator extends SubsystemBase {
     driveSpeedLimiter.put(30.0, 0.8);
     driveSpeedLimiter.put(60.0, 0.65);
     driveSpeedLimiter.put(100.0, 0.55);
-    driveSpeedLimiter.put(130.0, 0.3);
-    driveSpeedLimiter.put(160.0, 0.17);
+    driveSpeedLimiter.put(130.0, 0.4);
+    driveSpeedLimiter.put(160.0, 0.25);
 
     intakeElevatorTargetPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorTargetPosition");
     intakeElevatorCurrentPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorCurrentPosition");
@@ -204,14 +204,14 @@ public class Elevator extends SubsystemBase {
   @Override
   public void periodic() {
     if(intakeEleControlState == ControlState.CLOSEDLOOP){
-      // IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+      IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
     else{
       //IntakeEle.setVoltage(intakeEleVoltage);
     }
 
     if(scoreEleControlState == ControlState.CLOSEDLOOP){
-      // ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+      ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
     else{
       //ScoreEle.setVoltage(scoreEleVoltage);

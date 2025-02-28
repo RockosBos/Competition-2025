@@ -38,7 +38,10 @@ import frc.robot.Commands.CommandGroups.Sequential.L2;
 import frc.robot.Commands.CommandGroups.Sequential.L3;
 import frc.robot.Commands.CommandGroups.Sequential.L4;
 import frc.robot.Commands.CommandGroups.Sequential.ScoreCoral;
+import frc.robot.Commands.CommandGroups.Sequential.TipProtection;
+import frc.robot.Commands.Drive.DriveToNearestLoading;
 import frc.robot.Commands.Drive.DriveToNearestScore;
+import frc.robot.Commands.Drive.UpdateCameras;
 import frc.robot.Commands.Elevator.IntakeEleHandoffPos;
 import frc.robot.Commands.Elevator.IntakeEleFloorPos;
 import frc.robot.Commands.Elevator.ScoreEleL2Position;
@@ -115,6 +118,9 @@ public class RobotContainer {
 
     private final Trigger hasCoral = new Trigger(() -> intakeSubsystem.hasCoral() && !DriverStation.isAutonomous());
     private final Trigger hasCoralRumble = new Trigger(() -> intakeSubsystem.hasCoral() && !DriverStation.isAutonomous() && !rumbleCooldown);
+    private final Trigger tipProtection = new Trigger(() -> 
+                                            Math.abs(drivetrain.getPigeon2().getRoll().getValueAsDouble()) > Constants.TIP_PROTECTION_THRESHOLD_ROLL ||
+                                            Math.abs(drivetrain.getPigeon2().getPitch().getValueAsDouble()) > Constants.TIP_PROTECTION_THRESHOLD_ROLL);
 
     //Chooser for Autonomous Modes
     private final SendableChooser<Command> autoChooser;
@@ -172,10 +178,20 @@ public class RobotContainer {
             drivetrain.applyRequest(() ->
             drive.withVelocityX(PoseHandlerSubsystem.getXController(drivetrain.samplePoseAt(Utils.getCurrentTimeSeconds()).get()) * MaxSpeed) // Drive forward with negative Y (forward)
                 .withVelocityY(PoseHandlerSubsystem.getYController(drivetrain.samplePoseAt(Utils.getCurrentTimeSeconds()).get()) * MaxSpeed) // Drive left with negative X (left)
-                .withRotationalRate(PoseHandlerSubsystem.getTController(drivetrain.getPigeon2().getYaw().getValueAsDouble()) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                .withRotationalRate(PoseHandlerSubsystem.getTController(drivetrain.samplePoseAt(Utils.getCurrentTimeSeconds()).get().getRotation().getDegrees()) * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
+        // driverController.leftBumper().whileTrue(
+        //     drivetrain.applyRequest(() ->
+        //     drive.withVelocityX(PoseHandlerSubsystem.getXController(drivetrain.samplePoseAt(Utils.getCurrentTimeSeconds()).get()) * MaxSpeed) // Drive forward with negative Y (forward)
+        //         .withVelocityY(PoseHandlerSubsystem.getYController(drivetrain.samplePoseAt(Utils.getCurrentTimeSeconds()).get()) * MaxSpeed) // Drive left with negative X (left)
+        //         .withRotationalRate(PoseHandlerSubsystem.getTController(drivetrain.getPigeon2().getYaw().getValueAsDouble()) * MaxAngularRate) // Drive counterclockwise with negative X (left)
+        //     )
+        // // );
         driverController.rightBumper().whileTrue(new DriveToNearestScore(drivetrain, PoseHandlerSubsystem));
+        driverController.rightBumper().whileTrue(new UpdateCameras(PhotonVisionCamera1, PhotonVisionCamera2));
+        // driverController.leftBumper().whileTrue(new DriveToNearestLoading(drivetrain, PoseHandlerSubsystem));
+        // driverController.leftBumper().whileTrue(new UpdateCameras(PhotonVisionCamera1, PhotonVisionCamera2));
 
         //Operator Controller
 
@@ -195,6 +211,7 @@ public class RobotContainer {
         hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         hasCoralRumble.onTrue(new RumbleController(driverController, 0.5));
         hasCoral.onFalse(new RumbleCooldown(rumbleCooldown));
+        tipProtection.onTrue(new TipProtection(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         
 
         //Telemetry

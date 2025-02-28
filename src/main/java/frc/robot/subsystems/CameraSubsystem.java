@@ -29,6 +29,7 @@ import edu.wpi.first.util.datalog.DataLogEntry;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -54,6 +55,7 @@ public class CameraSubsystem extends SubsystemBase {
   Transform3d cameraToRobotPose = new Transform3d();
 
   StructPublisher<Pose2d> cameraPosePublisher;
+  Timer loopTimer = new Timer();
 
   /** Creates a new CameraSubsystem. */
   public CameraSubsystem(CameraType cameraType, String cameraName, Transform3d cameraToRobotOffset, AprilTagFieldLayout fieldLayout) {
@@ -66,6 +68,9 @@ public class CameraSubsystem extends SubsystemBase {
     if(cameraType == CameraType.PHOTONVISION){
       photonCamera = new PhotonCamera(cameraName);
     }
+    result = photonCamera.getLatestResult();
+    loopTimer.start();
+    
     cameraPosePublisher = NetworkTableInstance.getDefault().getStructTopic(cameraName + "Pose Log", Pose2d.struct).publish();
   }
 
@@ -90,14 +95,19 @@ public class CameraSubsystem extends SubsystemBase {
   }
 
   public Pose3d update3DPose(){
-    if (aprilTagFieldLayout.getTagPose(target.getFiducialId()).isPresent()) {
-      pose3d = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), cameraToRobotPose);
+    if(target != null){
+      if (aprilTagFieldLayout.getTagPose(target.getFiducialId()).isPresent()) {
+        pose3d = PhotonUtils.estimateFieldToRobotAprilTag(target.getBestCameraToTarget(), aprilTagFieldLayout.getTagPose(target.getFiducialId()).get(), cameraToRobotPose);
+      }
     }
     return this.pose3d;
   }
 
   public Pose2d update2DPose(){
-    return update3DPose().toPose2d();
+    
+    currentPose = update3DPose().toPose2d();
+    cameraPosePublisher.set(new Pose2d(new Translation2d(currentPose.getX(), currentPose.getY()), currentPose.getRotation()));
+    return currentPose;
   }
 
   public Pose2d getPose2d(){
@@ -110,13 +120,17 @@ public class CameraSubsystem extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if(DriverStation.getAlliance().isPresent()){
-      if(DriverStation.getAlliance().get() == Alliance.Blue){
-        aprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
+    if(loopTimer.get() > 5.0){
+      
+      if(DriverStation.getAlliance().isPresent()){
+        if(DriverStation.getAlliance().get() == Alliance.Blue){
+          aprilTagFieldLayout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
+        }
+        else{
+          aprilTagFieldLayout.setOrigin(OriginPosition.kRedAllianceWallRightSide);
+        }
       }
-      else{
-        aprilTagFieldLayout.setOrigin(OriginPosition.kRedAllianceWallRightSide);
-      }
+      loopTimer.reset();
     }
 
     if(CameraType.PHOTONVISION == cameraType){
@@ -130,7 +144,8 @@ public class CameraSubsystem extends SubsystemBase {
       LimelightHelpers.SetRobotOrientation(cameraName, robotYaw, 0, 0, 0, 0, 0);
       currentPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(cameraName).pose;
     }
-    cameraPosePublisher.set(new Pose2d(new Translation2d(currentPose.getX(), currentPose.getY()), currentPose.getRotation()));
+    
+    result = photonCamera.getLatestResult();
 
   }
 }
