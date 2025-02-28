@@ -21,6 +21,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LOADING_POSES;
@@ -38,6 +39,7 @@ public class PoseHandler extends SubsystemBase {
   String closestScoringLocation = "FC", closestLoadinglocation = "L";
   AprilTagFieldLayout aprilTagFieldLayout;
   StructPublisher<Pose2d> closestPosePublisher, closestLoadingPosePublisher;
+  Timer loopTimer = new Timer();
   
   
   private final double maxSpeedX = 0.2, maxSpeedY = 0.2, maxSpeedT = 0.75;
@@ -233,25 +235,25 @@ public double getTControllerLoading(double angle){
     }
   }
 
-  public void updateNearestLoadingPose(Pose2d pose){
-    loadingLeftDist = getDistanceToCoord(pose.getX(), pose.getY(), LOADING_POSES.LEFT.X, LOADING_POSES.LEFT.Y);
-    loadingRightDist = getDistanceToCoord(pose.getX(), pose.getY(), LOADING_POSES.RIGHT.X, LOADING_POSES.RIGHT.Y);
+  // public void updateNearestLoadingPose(Pose2d pose){
+  //   loadingLeftDist = getDistanceToCoord(pose.getX(), pose.getY(), LOADING_POSES.LEFT.X, LOADING_POSES.LEFT.Y);
+  //   loadingRightDist = getDistanceToCoord(pose.getX(), pose.getY(), LOADING_POSES.RIGHT.X, LOADING_POSES.RIGHT.Y);
 
-    if(loadingLeftDist < loadingRightDist){
-      closestLoadingDist = loadingLeftDist;
-      closestLoadinglocation = "L";
-      closestScoringPoseX = LOADING_POSES.LEFT.X;
-      closestScoringPoseY = LOADING_POSES.LEFT.Y;
-      closestScoringPoseT = LOADING_POSES.LEFT.T;
-    }
-    else{
-      closestLoadingDist = loadingRightDist;
-      closestLoadinglocation = "R";
-      closestScoringPoseX = LOADING_POSES.RIGHT.X;
-      closestScoringPoseY = LOADING_POSES.RIGHT.Y;
-      closestScoringPoseT = LOADING_POSES.RIGHT.T;
-    }
-  }
+  //   if(loadingLeftDist < loadingRightDist){
+  //     closestLoadingDist = loadingLeftDist;
+  //     closestLoadinglocation = "L";
+  //     closestScoringPoseX = LOADING_POSES.LEFT.X;
+  //     closestScoringPoseY = LOADING_POSES.LEFT.Y;
+  //     closestScoringPoseT = LOADING_POSES.LEFT.T;
+  //   }
+  //   else{
+  //     closestLoadingDist = loadingRightDist;
+  //     closestLoadinglocation = "R";
+  //     closestScoringPoseX = LOADING_POSES.RIGHT.X;
+  //     closestScoringPoseY = LOADING_POSES.RIGHT.Y;
+  //     closestScoringPoseT = LOADING_POSES.RIGHT.T;
+  //   }
+  // }
   
   public AprilTagFieldLayout getAprilTagFieldLayout(){
     return aprilTagFieldLayout;

@@ -42,7 +42,7 @@ public class DriveToNearestLoading extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    poseHandler.updateNearestLoadingPose(driveSubsystem.samplePoseAt(Utils.getCurrentTimeSeconds()).get());
+    //poseHandler.updateNearestLoadingPose(driveSubsystem.samplePoseAt(Utils.getCurrentTimeSeconds()).get());
 
   }
 
