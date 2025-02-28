@@ -38,7 +38,7 @@ public class Constants {
     public static final double INTAKE_ELEVATOR_HANDOFF_POS = 79.836;
     public static final double INTAKE_ELEVATOR_L1_POS = 100.0;
 
-    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.655;
+    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.66;
     public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.39;
     public static final double INTAKE_ROTATE_HANDOFF_POS = 0.33;
     public static final double INTAKE_ROTATE_L1_POS = 0.55;
@@ -52,15 +52,15 @@ public class Constants {
     public static final double SCORE_ELEVATOR_L4_POS = 157.0;
     public static final double SCORE_HANDOFF_POS = 6.4;
 
-    public static final double SCORE_ROTATE_LEFT_POS = 0.24;
-    public static final double SCORE_ROTATE_RIGHT_POS = 0.76;
-    public static final double SCORE_ROTATE_CENTER_POS = 0.5;
+    public static final double SCORE_ROTATE_LEFT_POS = 0.075;
+    public static final double SCORE_ROTATE_RIGHT_POS = 0.595;
+    public static final double SCORE_ROTATE_CENTER_POS = 0.336;
 
     public static final double SCORE_PIVOT_IN_POS = 0.79;
     public static final double SCORE_PIVOT_OUT_LEFT_POS = 0.65;
     public static final double SCORE_PIVOT_OUT_RIGHT_POS = 0.92;
 
-    public static final double SCORE_CLAW_CLOSED_POS = 0.425;
+    public static final double SCORE_CLAW_CLOSED_POS = 0.44;
     public static final double SCORE_CLAW_OPEN_POS = 0.15;
     public static final double SCORE_CLAW_RELEASE_POS = 0.375;
 
@@ -99,7 +99,7 @@ public class Constants {
     public static final boolean INVERT_SCORE_CLAW_ABS = false;
     public static final boolean INVERT_INTAKE_ROTATE_ABS = false;
 
-    public static final double RAMPRATE_INTAKE_ELEVATOR = 0.1;
+    public static final double RAMPRATE_INTAKE_ELEVATOR = 0.15;
     public static final double RAMPRATE_SCORE_ELEVATOR = 0.2;
     public static final double RAMPRATE_INTAKE_ROTATE = 0.05;
     public static final double RAMPRATE_INTAKE_ROLLER = 0.1;
@@ -135,13 +135,13 @@ public class Constants {
     public static final double MAX_OUTPUT_INTAKE_ROTATE = 0.3;
     public static final double MIN_OUTPUT_INTAKE_ROTATE = -0.3;
 
-    public static final double P_SCORE_ROTATE = 3.0;
-    public static final double MAX_OUTPUT_SCORE_ROTATE = 0.2;
-    public static final double MIN_OUTPUT_SCORE_ROTATE = -0.2;
+    public static final double P_SCORE_ROTATE = 4.0;
+    public static final double MAX_OUTPUT_SCORE_ROTATE = 0.35;
+    public static final double MIN_OUTPUT_SCORE_ROTATE = -0.35;
 
-    public static final double P_SCORE_PIVOT = 3.5;
-    public static final double MAX_OUTPUT_SCORE_PIVOT = 0.1;
-    public static final double MIN_OUTPUT_SCORE_PIVOT = -0.1;
+    public static final double P_SCORE_PIVOT = 4.0;
+    public static final double MAX_OUTPUT_SCORE_PIVOT = 0.2;
+    public static final double MIN_OUTPUT_SCORE_PIVOT = -0.2;
 
     public static final double P_SCORE_CLAW = 3.0;
     public static final double MAX_OUTPUT_SCORE_CLAW = 0.25;

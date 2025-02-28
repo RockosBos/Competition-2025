@@ -260,25 +260,12 @@ public double getTControllerLoading(double angle){
   @Override
   public void periodic() {
 
-    closestPosePublisher.set(new Pose2d(new Translation2d(closestScoringPoseX, closestScoringPoseY), new Rotation2d(closestScoringPoseT)));
-    SmartDashboard.putNumber("t Drive", tDrive);
-    SmartDashboard.putNumber("angle", angle);
-    SmartDashboard.putNumber("closestScroingPoseT", closestScoringPoseT);
-    SmartDashboard.putString("Alliance", DriverStation.getAlliance().get().toString());
-    // // This method will be called once per scheduler run
-    // SmartDashboard.putNumber("xController", xDrive);
-    // SmartDashboard.putNumber("yController", yDrive);
-    // SmartDashboard.putNumber("tController", tDrive);
-    // SmartDashboard.putNumber("PigeonAngle", angle);
-    // SmartDashboard.putNumber("nearCenterDistance", nearCenterDist);
-    // SmartDashboard.putNumber("nearLeftDistance", nearLeftDist);
-    // SmartDashboard.putNumber("nearRightDistance", nearRightDist);
-    // SmartDashboard.putNumber("farCenterDistance", farCenterDist);
-    // SmartDashboard.putNumber("farLeftDistance", farLeftDist);
-    // SmartDashboard.putNumber("farRightDistance", farRightDist);
-    // SmartDashboard.putNumber("closestScoringPoseX", closestScoringPoseX);
-    // SmartDashboard.putNumber("closestScoringPoseY", closestScoringPoseY);
-    // SmartDashboard.putString("Closest Pose", closestScoringLocation);
+    //closestPosePublisher.set(new Pose2d(new Translation2d(closestScoringPoseX, closestScoringPoseY), new Rotation2d(closestScoringPoseT)));
+    //closestLoadingPosePublisher.set(new Pose2d(new Translation2d(closestloadingPoseX, closestLoadingPoseY), new Rotation2d(closestLoadingPoseT)));
+    // SmartDashboard.putNumber("t Drive", tDrive);
+    // SmartDashboard.putNumber("angle", angle);
+    // SmartDashboard.putNumber("closestScroingPoseT", closestScoringPoseT);
+    // SmartDashboard.putString("Alliance", DriverStation.getAlliance().get().toString());
 
   }
 }
