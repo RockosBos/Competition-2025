@@ -92,6 +92,9 @@ public class PoseHandler extends SubsystemBase {
 
   public double getTController(double angle){
     this.angle = angle;
+    if(angle < -160){
+      angle = angle + 360;
+    }
     tDrive = tController.calculate(angle, closestScoringPoseT);
     //return 0;
     if(tDrive > maxSpeedT){
@@ -228,11 +231,13 @@ public double getTControllerLoading(double angle){
         break;
     }
 
-    if(DriverStation.getAlliance().isPresent()){
-      if(DriverStation.getAlliance().get() == Alliance.Red){
-        //closestScoringPoseT = closestScoringPoseT - 180.0;
-      }
-    }
+    // if(DriverStation.getAlliance().isPresent()){
+    //   if(DriverStation.getAlliance().get() == Alliance.Blue){
+    //     closestScoringPoseT = closestScoringPoseT - 180.0;
+    //   }
+    // }
+
+    //closestScoringPoseT = closestScoringPoseT - 180.0;
   }
 
   // public void updateNearestLoadingPose(Pose2d pose){
@@ -262,8 +267,13 @@ public double getTControllerLoading(double angle){
   @Override
   public void periodic() {
 
-    //closestPosePublisher.set(new Pose2d(new Translation2d(closestScoringPoseX, closestScoringPoseY), new Rotation2d(closestScoringPoseT)));
-    //closestLoadingPosePublisher.set(new Pose2d(new Translation2d(closestloadingPoseX, closestLoadingPoseY), new Rotation2d(closestLoadingPoseT)));
+    // if(loopTimer.get() > 1.0){
+    //   closestPosePublisher.set(new Pose2d(new Translation2d(closestScoringPoseX, closestScoringPoseY), new Rotation2d(closestScoringPoseT)));
+    //   //closestLoadingPosePublisher.set(new Pose2d(new Translation2d(closestloadingPoseX, closestLoadingPoseY), new Rotation2d(closestLoadingPoseT)));
+    //   loopTimer.reset();
+    // }
+    closestPosePublisher.set(new Pose2d(new Translation2d(closestScoringPoseX, closestScoringPoseY), new Rotation2d(closestScoringPoseT)));
+    
     // SmartDashboard.putNumber("t Drive", tDrive);
     // SmartDashboard.putNumber("angle", angle);
     // SmartDashboard.putNumber("closestScroingPoseT", closestScoringPoseT);

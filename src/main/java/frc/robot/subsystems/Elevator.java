@@ -100,8 +100,8 @@ public class Elevator extends SubsystemBase {
     driveSpeedLimiter.put(30.0, 0.8);
     driveSpeedLimiter.put(60.0, 0.65);
     driveSpeedLimiter.put(100.0, 0.55);
-    driveSpeedLimiter.put(130.0, 0.3);
-    driveSpeedLimiter.put(160.0, 0.17);
+    driveSpeedLimiter.put(130.0, 0.4);
+    driveSpeedLimiter.put(160.0, 0.25);
 
     intakeElevatorTargetPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorTargetPosition");
     intakeElevatorCurrentPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorCurrentPosition");

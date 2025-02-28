@@ -23,8 +23,8 @@ public class Constants {
 
     //Drive constant Values
 
-    public static final double TIP_PROTECTION_THRESHOLD_ROLL = 20.0;
-    public static final double TIP_PROTECTION_THRESHOLD_PITCH = 20.0;
+    public static final double TIP_PROTECTION_THRESHOLD_ROLL = 10.0;
+    public static final double TIP_PROTECTION_THRESHOLD_PITCH = 10.0;
 
     //Intake Constant Values
 
@@ -47,8 +47,8 @@ public class Constants {
 
     public static final double SCORE_ELEVATOR_INTAKE_POSITION = 6.4;
     public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 40.0;
-    public static final double SCORE_ELEVATOR_L2_POS = 6.4;
-    public static final double SCORE_ELEVATOR_L3_POS = 65.0;
+    public static final double SCORE_ELEVATOR_L2_POS = 7.0;
+    public static final double SCORE_ELEVATOR_L3_POS = 69.0;
     public static final double SCORE_ELEVATOR_L4_POS = 157.0;
     public static final double SCORE_HANDOFF_POS = 6.4;
 
@@ -162,38 +162,38 @@ public class Constants {
 
     public static class SCORING_POSES{
         public class CENTER_NEAR{
-            public static final double X = 3.069;
-            public static final double Y = 4.00;
+            public static final double X = 3.31;
+            public static final double Y = 4.05;
             public static final double T = 0.0;
         }
 
         public static final class CENTER_FAR{
-            public static final double X = 5.898;
-            public static final double Y = 4.00;
+            public static final double X = 5.63;
+            public static final double Y = 4.05;
             public static final double T = 180.0;
         }
 
         public static final class LEFT_NEAR{
-            public static final double X = 3.8;
-            public static final double Y = 5.254;
+            public static final double X = 3.91;
+            public static final double Y = 5.02;
             public static final double T = -60.0;
         }
 
         public static final class LEFT_FAR{
-            public static final double X = 5.191;
-            public static final double Y = 5.254;
+            public static final double X = 5.02;
+            public static final double Y = 5.03;
             public static final double T = -120.0;
         }
 
         public static final class RIGHT_NEAR{
-            public static final double X = 3.74;
-            public static final double Y = 2.736;
+            public static final double X = 3.92;
+            public static final double Y = 3.02;
             public static final double T = 60.0;
         }
 
         public static final class RIGHT_FAR{
-            public static final double X = 5.287;
-            public static final double Y = 2.736;
+            public static final double X = 5.0;
+            public static final double Y = 3.05;
             public static final double T = 120.0;
         }
     };
