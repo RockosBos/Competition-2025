@@ -14,7 +14,7 @@ public class Constants {
     public static final int ID_SCORE_CLAW = 12;
     public static final int ID_SCORE_ROTATE = 11;
     public static final int ID_SCORE_PIVOT = 10;
-    public static final int ID_CLIMB_ROTATE = 9;
+    public static final int ID_CLIMB_ROTATE = 8;
     
     
     public static final int LASERCAN_INTAKE_LEFT = 52;
@@ -71,14 +71,14 @@ public class Constants {
     //Climb Constant Values
 
     public static final double CLIMB_IN_POS = 0.0;
-    public static final double CLIMB_CLIMBING_POS = 0.0;
-    public static final double CLIMB_OUT_POS = 0.0;
+    public static final double CLIMB_CLIMBING_POS = 98.0;
+    public static final double CLIMB_CAPTURE_POS = 217.0;
 
     //Absolute Encoder offsets
 
     public static final double OFFSET_INTAKE_ROTATE_ABS = 0.430 - 0.25;
     public static final double OFFSET_SCORE_ROTATE_ABS = 0.228 - 0.20;
-    public static final double OFFSET_SCORE_PIVOT_ABS = 0.522 - 0.5;
+    public static final double OFFSET_SCORE_PIVOT_ABS = 0.847 - 0.5;
     public static final double OFFSET_SCORE_CLAW_ABS = 0.595 - 0.1;
 
     //Motor Configuration Constants
@@ -91,7 +91,7 @@ public class Constants {
     public static final IdleMode IDLEMODE_SCORE_PIVOT = IdleMode.kBrake;
     public static final IdleMode IDLEMODE_SCORE_CLAW = IdleMode.kBrake;
     public static final IdleMode IDLEMODE_SCORE_AGITATOR = IdleMode.kCoast;
-    public static final IdleMode IDELMODE_CLIMB = IdleMode.kBrake;
+    public static final IdleMode IDELMODE_CLIMB = IdleMode.kCoast;
 
     public static final boolean INVERT_INTAKE_ELEVATOR = false;
     public static final boolean INVERT_SCORE_ELEVATOR = false;
@@ -101,13 +101,12 @@ public class Constants {
     public static final boolean INVERT_SCORE_PIVOT = false;
     public static final boolean INVERT_SCORE_CLAW = true;
     public static final boolean INVERT_SCORE_AGITATOR = true;
-    public static final boolean INVERT_CLIMB_ROTATE = false;
+    public static final boolean INVERT_CLIMB_ROTATE = true;
 
     public static final boolean INVERT_SCORE_PIVOT_ABS = true;
     public static final boolean INVERT_SCORE_ROTATE_ABS = false;
     public static final boolean INVERT_SCORE_CLAW_ABS = false;
     public static final boolean INVERT_INTAKE_ROTATE_ABS = false;
-    public static final boolean INVERT_CLIMB_ROTATE_ABS = false;
 
     public static final double RAMPRATE_INTAKE_ELEVATOR = 0.15;
     public static final double RAMPRATE_SCORE_ELEVATOR = 0.2;
@@ -159,9 +158,9 @@ public class Constants {
     public static final double MAX_OUTPUT_SCORE_CLAW = 0.25;
     public static final double MIN_OUTPUT_SCORE_CLAW = -0.25;
 
-    public static final double P_CLIMB = 0.0;
-    public static final double MAX_OUTPUT_CLIMB = 0.2;
-    public static final double MIN_OUTPUT_CLIMB = -0.2;
+    public static final double P_CLIMB = 0.1;
+    public static final double MAX_OUTPUT_CLIMB = 1.0;
+    public static final double MIN_OUTPUT_CLIMB = -1.0;
     
 
     //Position Thresholds

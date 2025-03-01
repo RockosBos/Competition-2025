@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.ClimbClimbingPosition;
+import frc.robot.Commands.ClimbInPosition;
 import frc.robot.Commands.ClimbOutPosition;
 import frc.robot.Commands.RumbleController;
 import frc.robot.Commands.RumbleCooldown;
@@ -174,7 +175,7 @@ public class RobotContainer {
         //     point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))
         // ));
 
-        driverController.a().onTrue(new ClimbClimbingPosition(climbSubsytem));
+        driverController.a().onTrue(new ClimbInPosition(climbSubsytem));
         driverController.b().onTrue(new ClimbClimbingPosition(climbSubsytem));
         driverController.y().onTrue(new ClimbOutPosition(climbSubsytem));
 

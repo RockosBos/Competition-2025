@@ -18,6 +18,9 @@ import com.revrobotics.spark.config.AbsoluteEncoderConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.networktables.DoublePublisher;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -32,8 +35,16 @@ public class Climb extends SubsystemBase {
 
 
   private double CRclimbingTargetPos = 0.0;
+
+  private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
+  private final NetworkTable table = inst.getTable("Climb");
+  private final DoublePublisher climbPosPub = table.getDoubleTopic("climbPos").publish(),
+                                climbSetpointPub = table.getDoubleTopic("climbSetpointPub").publish(),
+                                climbAmpsPub = table.getDoubleTopic("ClimbAps").publish();
   /** Creates a new Climb. */
    public Climb() {
+    ToLAconfig.inverted(Constants.INVERT_CLIMB_ROTATE);
+    ToLAconfig.idleMode(Constants.IDELMODE_CLIMB);
     ToLAconfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
      .p(Constants.P_CLIMB)
     .i(0)
@@ -59,5 +70,9 @@ public class Climb extends SubsystemBase {
    public void periodic() {
     errWereNotInLA = Math.abs(CRclimbingTargetPos - toLAencoder.getPosition());
     ToLALoopy.setReference(CRclimbingTargetPos, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+
+    climbPosPub.set(toLAencoder.getPosition());
+    climbSetpointPub.set(CRclimbingTargetPos);
+    climbAmpsPub.set(WereClimbingToLA.getOutputCurrent());
    }
   }
