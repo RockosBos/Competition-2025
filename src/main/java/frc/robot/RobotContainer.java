@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.Commands.ClimbClimbingPosition;
+import frc.robot.Commands.ClimbOutPosition;
 import frc.robot.Commands.RumbleController;
 import frc.robot.Commands.RumbleCooldown;
 import frc.robot.Commands.CommandGroups.Sequential.AutoIntakeLoading;
@@ -57,6 +59,7 @@ import frc.robot.Commands.Score.ScoreRightState;
 import frc.robot.Commands.Score.ScoreSetCenter;
 import frc.robot.Commands.Score.ScoreSetScore;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -89,6 +92,7 @@ public class RobotContainer {
     private final Intake intakeSubsystem = new Intake();
     private final Elevator elevatorSubsytem = new Elevator();
     private final Score scoreSubsystem = new Score();
+    private final Climb climbSubsytem = new Climb();
 
     private InterpolatingDoubleTreeMap driveSpeedLimiter = new InterpolatingDoubleTreeMap();
     private double driveSpeedLimitedX = 1.0, driveSpeedLimitedY = 1.0;
@@ -154,10 +158,14 @@ public class RobotContainer {
             )
         );
 
-        driverController.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        driverController.b().whileTrue(drivetrain.applyRequest(() ->
-            point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))
-        ));
+        // driverController.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        // driverController.b().whileTrue(drivetrain.applyRequest(() ->
+        //     point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))
+        // ));
+
+        driverController.a().onTrue(new ClimbClimbingPosition(climbSubsytem));
+        driverController.b().onTrue(new ClimbClimbingPosition(climbSubsytem));
+        driverController.y().onTrue(new ClimbOutPosition(climbSubsytem));
 
         driverController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
         driverController.back().and(driverController.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));

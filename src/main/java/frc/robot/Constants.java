@@ -2,8 +2,6 @@ package frc.robot;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-import us.hebi.quickbuf.Schubfach.DoubleEncoder;
-
 public class Constants {
 
     //CAN ID's
@@ -156,7 +154,8 @@ public class Constants {
     public static final double MIN_OUTPUT_SCORE_CLAW = -0.25;
 
     public static final double P_CLIMB = 0.0;
-    public static final double MAX_OUTPUT_CLIMB = 0.0;
+    public static final double MAX_OUTPUT_CLIMB = 0.2;
+    public static final double MIN_OUTPUT_CLIMB = -0.2;
     
 
     //Position Thresholds
@@ -166,9 +165,7 @@ public class Constants {
     public static final double THRESHOLD_SCORE_ROTATE_POS = 0.05;
     public static final double THRESHOLD_SCORE_PIVOT_POS = 0.05;
     public static final double THRESHOLD_SCORE_CLAW_POS = 0.05;
-    public static final double THRESHOLD_CLIMB_IN_POS = 0.0;
-    public static final double THRESHOLD_CLIMB_OUT_POS = 0.0;
-    public static final double THRESHOLD_CLIMB_CLIMBING_POS = 0.0;
+    public static final double THRESHOLD_CLIMB_POS = 0.05;
 
     //LaserCan Thresholds
 

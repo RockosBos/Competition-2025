@@ -25,7 +25,7 @@ public class ClimbClimbingPosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    c_Climb.ClimbClimbingTargetPosition(Constants.CLIMB_CLIMBING_POS);
+    c_Climb.setClimbTargetPosition(Constants.CLIMB_CLIMBING_POS);
   }
 
   // Called once the command ends or is interrupted.
@@ -35,6 +35,6 @@ public class ClimbClimbingPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return c_Climb.areWeInLA();
   }
 }
