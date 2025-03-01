@@ -2,6 +2,8 @@ package frc.robot;
 
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import us.hebi.quickbuf.Schubfach.DoubleEncoder;
+
 public class Constants {
 
     //CAN ID's
@@ -73,6 +75,7 @@ public class Constants {
     public static final double OFFSET_SCORE_ROTATE_ABS = 0.228 - 0.20;
     public static final double OFFSET_SCORE_PIVOT_ABS = 0.522 - 0.5;
     public static final double OFFSET_SCORE_CLAW_ABS = 0.505 - 0.25;
+    public static final double OFFSET_CLIMB_ABS = 0.0 - 0.0;
 
     //Motor Configuration Constants
 
@@ -84,6 +87,7 @@ public class Constants {
     public static final IdleMode IDLEMODE_SCORE_PIVOT = IdleMode.kBrake;
     public static final IdleMode IDLEMODE_SCORE_CLAW = IdleMode.kBrake;
     public static final IdleMode IDLEMODE_SCORE_AGITATOR = IdleMode.kCoast;
+    public static final IdleMode IDELMODE_CLIMB = IdleMode.kBrake;
 
     public static final boolean INVERT_INTAKE_ELEVATOR = false;
     public static final boolean INVERT_SCORE_ELEVATOR = false;
@@ -93,11 +97,13 @@ public class Constants {
     public static final boolean INVERT_SCORE_PIVOT = false;
     public static final boolean INVERT_SCORE_CLAW = true;
     public static final boolean INVERT_SCORE_AGITATOR = true;
+    public static final boolean INVERT_CLIMB_ROTATE = false;
 
     public static final boolean INVERT_SCORE_PIVOT_ABS = true;
     public static final boolean INVERT_SCORE_ROTATE_ABS = false;
     public static final boolean INVERT_SCORE_CLAW_ABS = false;
     public static final boolean INVERT_INTAKE_ROTATE_ABS = false;
+    public static final boolean INVERT_CLIMB_ROTATE_ABS = false;
 
     public static final double RAMPRATE_INTAKE_ELEVATOR = 0.1;
     public static final double RAMPRATE_SCORE_ELEVATOR = 0.2;
@@ -107,6 +113,7 @@ public class Constants {
     public static final double RAMPRATE_SCORE_PIVOT = 0.0;
     public static final double RAMPRATE_SCORE_CLAW = 0.0;
     public static final double RAMPRATE_SCORE_AGITATOR = 0.1;
+    public static final double RAMPRATE_CLIMB = 0.1;
 
     public static final int CURRENTLIMIT_INTAKE_ELEVATOR = 20;
     public static final int CURRENTLIMIT_SCORE_ELEVATOR = 20;
@@ -116,6 +123,7 @@ public class Constants {
     public static final int CURRENTLIMIT_SCORE_PIVOT = 20;
     public static final int CURRENTLIMIT_SCORE_CLAW = 20;
     public static final int CURRENTLIMIT_SCORE_AGITATOR = 20;
+    public static final int CURRENTLIMIT_CLIMB_ = 20;
 
     //Closed Loop controller Config
 
@@ -146,6 +154,10 @@ public class Constants {
     public static final double P_SCORE_CLAW = 3.0;
     public static final double MAX_OUTPUT_SCORE_CLAW = 0.25;
     public static final double MIN_OUTPUT_SCORE_CLAW = -0.25;
+
+    public static final double P_CLIMB = 0.0;
+    public static final double MAX_OUTPUT_CLIMB = 0.0;
+    
 
     //Position Thresholds
     public static final double THRESHOLD_INTAKE_ROTATE_POS = 0.05;
