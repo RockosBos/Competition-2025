@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.204610655737704,
+        "y": 5.517469262295082
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.71311475409836,
+        "y": 5.42156762295082
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.1,
+        "y": 5.1
+      },
+      "prevControl": {
+        "x": 5.675409836065573,
+        "y": 5.076024590163934
+      },
+      "nextControl": null,
+      "isLocked": true,
+      "linkedName": "Far Left Score"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 0.75,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -123.69006752597976
+  },
+  "reversed": false,
+  "folder": "Left Start",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 177.9545915111129
+  },
+  "useDefaultConstraints": true
+}

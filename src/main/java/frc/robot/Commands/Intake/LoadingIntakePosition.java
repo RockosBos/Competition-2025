@@ -27,7 +27,7 @@ public class LoadingIntakePosition extends Command {
   @Override
   public void execute() {
     i_Intake.setTargetPostion(Constants.INTAKE_ROTATE_LOADING_INTAKE_POS);
-    i_Intake.setMotorVoltage(Constants.INTAKE_ROLLER_INFEED_VOLTAGE);
+    //i_Intake.setMotorVoltage(Constants.INTAKE_ROLLER_INFEED_VOLTAGE);
   }
 
   // Called once the command ends or is interrupted.

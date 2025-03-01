@@ -36,8 +36,8 @@ public class ScoreCoral extends SequentialCommandGroup {
       new ParallelCommandGroup(new ClawRelease(s_Score), new OutfeedRoller(i_Intake)),
       new ClawOpened(s_Score),
       new AgitatorOff(s_Score),
-      new ParallelCommandGroup(new ScoreEleIdlePosition(e_Elevator), new ScoreSetCenter(s_Score), new IntakeRollerOff(i_Intake)),
-      new IntakeRollerOff(i_Intake)
+      new ScoreSetCenter(s_Score),
+      new ParallelCommandGroup(new ScoreEleIdlePosition(e_Elevator), new IntakeRollerOff(i_Intake))
     );
   }
 }

@@ -17,6 +17,9 @@ import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.networktables.DoublePublisher;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
@@ -53,6 +56,18 @@ private double agitatorVoltage = 0.0;
 
 private ScoreState scoreState = ScoreState.CENTER;
 
+private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
+private final NetworkTable table = inst.getTable("Score");
+private final DoublePublisher scoreRotatePosPub = table.getDoubleTopic("ScoreRotatePos").publish(),
+                              scoreRotateSetpointPub = table.getDoubleTopic("ScoreRotateSetpoint").publish(),
+                              scoreRotateAmpsPub = table.getDoubleTopic("ScoreRotateAmps").publish(), 
+                              scorePivotPosPub = table.getDoubleTopic("ScorePivotPos").publish(),
+                              scorePivotSetpointPub = table.getDoubleTopic("ScorePivotSetpoint").publish(),
+                              scorePivotAmpsPub = table.getDoubleTopic("ScorePivotAmps").publish(),
+                              scoreClawPosPub = table.getDoubleTopic("ScoreClawPos").publish(),
+                              scoreClawSetpointPub = table.getDoubleTopic("ScoreClawSetpoint").publish(),
+                              scoreClawAmpsPub = table.getDoubleTopic("ScoreClawAmps").publish();
+
 DataLog log = DataLogManager.getLog();
 private DoubleLogEntry clawTargetPositionLog, clawCurrentPositionLog, clawAmpsLog;
 private DoubleLogEntry pivotTargetPositionLog, pivotCurrentPositionLog, pivotAmpsLog;
@@ -61,7 +76,7 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotate
   /** Creates a new Score. */
   public Score() {
     
-      ClawAbsConfig.zeroOffset(Constants.OFFSET_SCORE_PIVOT_ABS);
+      ClawAbsConfig.zeroOffset(Constants.OFFSET_SCORE_CLAW_ABS);
       ClawConfig.absoluteEncoder.apply(ClawAbsConfig);
       ClawConfig.inverted(Constants.INVERT_SCORE_CLAW);
       ClawConfig.idleMode(Constants.IDLEMODE_SCORE_CLAW);
@@ -230,14 +245,26 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotate
     rotateTargetPositionLog.append(rotateTargetPostion);
     rotateAmpsLog.append(rotate.getOutputCurrent());
 
-    //SmartDashboard.putNumber("ClawAbs", ClawAbs.getPosition());
-    SmartDashboard.putNumber("RotateAbs", rotateAbs.getPosition());
-    SmartDashboard.putNumber("PivotAbs", pivotAbs.getPosition());
-    //SmartDashboard.putNumber("ClawRencoder", Claw.getEncoder().getPosition());
-    SmartDashboard.putNumber("RotateRencoder", rotate.getEncoder().getPosition());
-    SmartDashboard.putNumber("PivotRencoder", pivot.getEncoder().getPosition());
-    SmartDashboard.putNumber("RotateTargetPosition", rotateTargetPostion);
-    SmartDashboard.putNumber("PivotTargetPosition", pivotTargetPostion);
-    SmartDashboard.putString("Score State", this.scoreState.toString());
+    scoreRotatePosPub.set(rotateAbs.getPosition());
+    scoreRotateSetpointPub.set(rotateTargetPostion);
+    scoreRotateAmpsPub.set(rotate.getOutputCurrent());
+
+    scorePivotPosPub.set(pivotAbs.getPosition());
+    scorePivotSetpointPub.set(pivotTargetPostion);
+    scorePivotAmpsPub.set(pivot.getOutputCurrent());
+
+    scoreClawPosPub.set(ClawAbs.getPosition());
+    scoreClawSetpointPub.set(clawTargetPostion);
+    scoreClawAmpsPub.set(Claw.getOutputCurrent());
+
+    // //SmartDashboard.putNumber("ClawAbs", ClawAbs.getPosition());
+    // SmartDashboard.putNumber("RotateAbs", rotateAbs.getPosition());
+    // SmartDashboard.putNumber("PivotAbs", pivotAbs.getPosition());
+    // //SmartDashboard.putNumber("ClawRencoder", Claw.getEncoder().getPosition());
+    // SmartDashboard.putNumber("RotateRencoder", rotate.getEncoder().getPosition());
+    // SmartDashboard.putNumber("PivotRencoder", pivot.getEncoder().getPosition());
+    // SmartDashboard.putNumber("RotateTargetPosition", rotateTargetPostion);
+    // SmartDashboard.putNumber("PivotTargetPosition", pivotTargetPostion);
+    // SmartDashboard.putString("Score State", this.scoreState.toString());
   }
 }

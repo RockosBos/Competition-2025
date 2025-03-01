@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.Utils;
+
 import au.grapplerobotics.CanBridge;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,6 +24,12 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run(); 
+    if(m_robotContainer.PhotonVisionCamera1.hasTarget()){
+      m_robotContainer.drivetrain.addVisionMeasurement(m_robotContainer.PhotonVisionCamera1.getPose2d(), Utils.getCurrentTimeSeconds());
+    }
+    if(m_robotContainer.PhotonVisionCamera2.hasTarget()){
+      m_robotContainer.drivetrain.addVisionMeasurement(m_robotContainer.PhotonVisionCamera2.getPose2d(), Utils.getCurrentTimeSeconds());
+    }
   }
 
   @Override

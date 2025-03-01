@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Baseline to Far Left Score"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Score to Loading Left"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Loading to Near Left Score"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Near Left Score to Left Loading"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left Loading to Near Left Score"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

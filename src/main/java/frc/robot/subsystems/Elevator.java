@@ -17,6 +17,7 @@ import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.networktables.DoubleArrayPublisher;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTable;
@@ -49,6 +50,8 @@ public class Elevator extends SubsystemBase {
   private ControlState scoreEleControlState = ControlState.CLOSEDLOOP;
 
   private double intakeEleVoltage = 0.0, scoreEleVoltage = 0.0;
+  private InterpolatingDoubleTreeMap driveSpeedLimiter = new InterpolatingDoubleTreeMap();
+  private double driveSpeedLimit = 1.0;
     
   DataLog log = DataLogManager.getLog();
   private DoubleLogEntry intakeElevatorAmpLog, intakeElevatorVoltageLog, intakeElevatorTargetPositionLog, intakeElevatorCurrentPositionLog;
@@ -57,12 +60,12 @@ public class Elevator extends SubsystemBase {
   private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
 
   private final NetworkTable table = inst.getTable("Elevator");
-  private final DoublePublisher intakeElevatorPosPub = table.getDoubleTopic("elevator").publish(),
-                                intakeElevatorSetpointPub = table.getDoubleTopic("elevator").publish(),
-                                intakeElevatorAmpsPub = table.getDoubleTopic("elevator").publish(), 
-                                scoreElevatorPosPub = table.getDoubleTopic("elevator").publish(),
-                                scoreElevatorSetpointPub = table.getDoubleTopic("elevator").publish(),
-                                scoreElevatorAmpsPub = table.getDoubleTopic("elevator").publish();
+  private final DoublePublisher intakeElevatorPosPub = table.getDoubleTopic("intakeElevatorPos").publish(),
+                                intakeElevatorSetpointPub = table.getDoubleTopic("intakeElevatorSetpoint").publish(),
+                                intakeElevatorAmpsPub = table.getDoubleTopic("intakeElevatorAmps").publish(), 
+                                scoreElevatorPosPub = table.getDoubleTopic("scoreElevatorPos").publish(),
+                                scoreElevatorSetpointPub = table.getDoubleTopic("scoreElevatorSetpoint").publish(),
+                                scoreElevatorAmpsPub = table.getDoubleTopic("scoreElevatorAmps").publish();
 
   /** Creates a new Elevator. */
   public Elevator() {
@@ -93,6 +96,14 @@ public class Elevator extends SubsystemBase {
    .outputRange(Constants.MIN_OUTPUT_SCORE_ELEVATOR, Constants.MAX_OUTPUT_SCORE_ELEVATOR);
 
     ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+
+    //Drive Speed Limiter Mapping
+    driveSpeedLimiter.put(0.0, 0.9);
+    driveSpeedLimiter.put(30.0, 0.8);
+    driveSpeedLimiter.put(60.0, 0.65);
+    driveSpeedLimiter.put(100.0, 0.55);
+    driveSpeedLimiter.put(130.0, 0.4);
+    driveSpeedLimiter.put(160.0, 0.25);
 
     intakeElevatorTargetPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorTargetPosition");
     intakeElevatorCurrentPositionLog = new DoubleLogEntry(log, "/U/Elevator/intakeElevatorCurrentPosition");
@@ -188,6 +199,10 @@ public class Elevator extends SubsystemBase {
     return ScoreEleEncoder.getPosition();
   }
 
+  public double getDriveSpeedLimit(){
+    return driveSpeedLimit;
+  }
+
   @Override
   public void periodic() {
     if(intakeEleControlState == ControlState.CLOSEDLOOP){
@@ -203,6 +218,9 @@ public class Elevator extends SubsystemBase {
     else{
       //ScoreEle.setVoltage(scoreEleVoltage);
     }
+
+    //Drive Speed Limiter
+    driveSpeedLimit = driveSpeedLimiter.get(ScoreEleEncoder.getPosition());
 
     SmartDashboard.putNumber("EleTarget", targetPostion);
     SmartDashboard.putNumber("IntakeEleEnc", ScoreEle.getEncoder().getPosition());
