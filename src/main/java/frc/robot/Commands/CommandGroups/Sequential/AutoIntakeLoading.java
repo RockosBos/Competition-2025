@@ -10,6 +10,7 @@ import frc.robot.Commands.Elevator.IntakeEleFloorPos;
 import frc.robot.Commands.Elevator.IntakeEleLoadingPos;
 import frc.robot.Commands.Elevator.ScoreEleIdlePosition;
 import frc.robot.Commands.Intake.FloorIntakePosition;
+import frc.robot.Commands.Intake.IntakeRollerIn;
 import frc.robot.Commands.Intake.IntakeWaitForCoral;
 import frc.robot.Commands.Intake.LoadingIntakePosition;
 import frc.robot.Commands.Score.ScoreSetCenter;
@@ -36,6 +37,7 @@ public class AutoIntakeLoading extends SequentialCommandGroup {
       new ParallelCommandGroup(new ScoreEleIdlePosition(e_Elevator), new ScoreSetCenter(s_Score)),
       new IntakeEleLoadingPos(e_Elevator),
       new LoadingIntakePosition(i_Intake),
+      new IntakeRollerIn(i_Intake),
       new IntakeWaitForCoral(i_Intake)
     );
   }

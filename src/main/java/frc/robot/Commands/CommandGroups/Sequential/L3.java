@@ -19,6 +19,7 @@ import frc.robot.Commands.Score.ClawClosed;
 import frc.robot.Commands.Score.ClawOpened;
 import frc.robot.Commands.Score.ClawRelease;
 import frc.robot.Commands.Score.ScoreSetScore;
+import frc.robot.Commands.Score.ScoreSetScoreShallow;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Score;
@@ -42,9 +43,10 @@ public class L3 extends SequentialCommandGroup {
       new ClawClosed(s_Score),
       new IntakeIdle(i_Intake),
       new ParallelCommandGroup(new ScoreEleL3Position(e_Elevator), new AgitatorOn(s_Score), new OutfeedRollerHandoff(i_Intake)),
-      new ParallelCommandGroup(new ScoreSetScore(s_Score)),
+      new ParallelCommandGroup(new ScoreSetScoreShallow(s_Score)),
       new ParallelCommandGroup(new AgitatorOff(s_Score), new IntakeRollerOff(i_Intake)),
-      new IntakeRollerOff(i_Intake)
+      new IntakeRollerOff(i_Intake),
+      new AgitatorOff(s_Score)
     );
   }
 }

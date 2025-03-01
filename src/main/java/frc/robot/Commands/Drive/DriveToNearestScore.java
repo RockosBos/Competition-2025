@@ -56,11 +56,12 @@ public class DriveToNearestScore extends Command {
   @Override
   public void end(boolean interrupted) {
     loopTimer.stop();
+    System.out.println("Command Drive to Score Completed");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return poseHandler.inPosition();
   }
 }

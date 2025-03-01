@@ -5,21 +5,35 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Left Baseline to Far Left Score"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Handoff"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "L4"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Left Baseline to Far Left Score"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Handoff"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "L4"
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {
@@ -75,6 +89,12 @@
         {
           "type": "named",
           "data": {
+            "name": "AutoAlign"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ScoreCoral"
           }
         },
@@ -120,6 +140,12 @@
           "type": "named",
           "data": {
             "name": "L4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAlign"
           }
         },
         {

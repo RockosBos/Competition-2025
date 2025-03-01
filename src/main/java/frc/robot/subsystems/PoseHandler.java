@@ -42,7 +42,7 @@ public class PoseHandler extends SubsystemBase {
   Timer loopTimer = new Timer();
   
   
-  private final double maxSpeedX = 0.2, maxSpeedY = 0.2, maxSpeedT = 0.75;
+  private final double maxSpeedX = 0.15, maxSpeedY = 0.15, maxSpeedT = 0.5;
   /** Creates a new PoseHandler. */
   public PoseHandler() {
     xController = new PIDController(1.2, 0, 0);
@@ -54,6 +54,31 @@ public class PoseHandler extends SubsystemBase {
     aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
     closestPosePublisher = NetworkTableInstance.getDefault().getStructTopic("PoseHandlerScoring", Pose2d.struct).publish();
     closestLoadingPosePublisher = NetworkTableInstance.getDefault().getStructTopic("PoseHandlerLoading", Pose2d.struct).publish();
+  }
+
+  public boolean xInPosition(){
+    if(Math.abs(xDrive) < 0.01){
+      return true;
+    }
+    return false;
+  }
+
+  public boolean yInPosition(){
+    if(Math.abs(yDrive) < 0.01){
+      return true;
+    }
+    return false;
+  }
+
+  public boolean tInPosition(){
+    if(Math.abs(tDrive) < 0.01){
+      return true;
+    }
+    return false;
+  }
+
+  public boolean inPosition(){
+    return xInPosition() && yInPosition() && tInPosition();
   }
 
   public double getXController(Pose2d pose){
@@ -272,6 +297,7 @@ public double getTControllerLoading(double angle){
     //   //closestLoadingPosePublisher.set(new Pose2d(new Translation2d(closestloadingPoseX, closestLoadingPoseY), new Rotation2d(closestLoadingPoseT)));
     //   loopTimer.reset();
     // }
+    
     closestPosePublisher.set(new Pose2d(new Translation2d(closestScoringPoseX, closestScoringPoseY), new Rotation2d(closestScoringPoseT)));
     
     // SmartDashboard.putNumber("t Drive", tDrive);
