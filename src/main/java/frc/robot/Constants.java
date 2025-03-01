@@ -58,7 +58,9 @@ public class Constants {
 
     public static final double SCORE_PIVOT_IN_POS = 0.79;
     public static final double SCORE_PIVOT_OUT_LEFT_POS = 0.65;
+    public static final double SCORE_PIVOT_OUT_LEFT_SHALLOW_POS = 0.67;
     public static final double SCORE_PIVOT_OUT_RIGHT_POS = 0.92;
+    public static final double SCORE_PIVOT_OUT_RIGHT_SHALLOW_POS = 0.94;
 
     public static final double SCORE_CLAW_CLOSED_POS = 0.44;
     public static final double SCORE_CLAW_OPEN_POS = 0.15;
@@ -139,7 +141,7 @@ public class Constants {
     public static final double MAX_OUTPUT_SCORE_ROTATE = 0.35;
     public static final double MIN_OUTPUT_SCORE_ROTATE = -0.35;
 
-    public static final double P_SCORE_PIVOT = 4.0;
+    public static final double P_SCORE_PIVOT = 2.0;
     public static final double MAX_OUTPUT_SCORE_PIVOT = 0.2;
     public static final double MIN_OUTPUT_SCORE_PIVOT = -0.2;
 

@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -30,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.RumbleController;
 import frc.robot.Commands.RumbleCooldown;
 import frc.robot.Commands.CommandGroups.Sequential.AutoIntakeLoading;
+import frc.robot.Commands.CommandGroups.Sequential.AutonomousAutoAlign;
 import frc.robot.Commands.CommandGroups.Sequential.Handoff;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeFloor;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeLoading;
@@ -132,14 +134,14 @@ public class RobotContainer {
         DriverStation.startDataLog(DataLogManager.getLog());
 
         //Named Commands for Pathplanner
-        NamedCommands.registerCommand("ScoreL1", new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        NamedCommands.registerCommand("ScoreL2", new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        NamedCommands.registerCommand("ScoreL3", new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        NamedCommands.registerCommand("ScoreL4", new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("L1", new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("L2", new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("L3", new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("L4", new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         NamedCommands.registerCommand("AutoIntakeLoading", new AutoIntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         NamedCommands.registerCommand("Handoff", new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         NamedCommands.registerCommand("ScoreCoral", new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        //NamedCommands.registerCommand("AutoAlign", new Command());
+        NamedCommands.registerCommand("AutoAlign", new AutonomousAutoAlign(drivetrain, PoseHandlerSubsystem));
 
         //Auto Mode Setup
         autoChooser = AutoBuilder.buildAutoChooser("Tests");

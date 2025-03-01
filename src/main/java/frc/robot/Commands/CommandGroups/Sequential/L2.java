@@ -18,6 +18,7 @@ import frc.robot.Commands.Score.ClawClosed;
 import frc.robot.Commands.Score.ClawOpened;
 import frc.robot.Commands.Score.ClawRelease;
 import frc.robot.Commands.Score.ScoreSetScore;
+import frc.robot.Commands.Score.ScoreSetScoreShallow;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Score;
@@ -42,8 +43,9 @@ public class L2 extends SequentialCommandGroup {
       new ParallelCommandGroup(new IntakeIdle(i_Intake), new IntakeEleFloorPos(e_Elevator)),
       new ParallelCommandGroup(new ScoreEleL2Position(e_Elevator), new OutfeedRollerHandoff(i_Intake)),
       new AgitatorOff(s_Score),
-      new ParallelCommandGroup(new ScoreSetScore(s_Score)),
-      new IntakeRollerOff(i_Intake)
+      new ParallelCommandGroup(new ScoreSetScoreShallow(s_Score)),
+      new IntakeRollerOff(i_Intake),
+      new AgitatorOff(s_Score)
     );
   }
 }
