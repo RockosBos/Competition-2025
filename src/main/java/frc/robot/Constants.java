@@ -72,7 +72,7 @@ public class Constants {
 
     public static final double CLIMB_IN_POS = 0.0;
     public static final double CLIMB_CLIMBING_POS = 98.0;
-    public static final double CLIMB_CAPTURE_POS = 217.0;
+    public static final double CLIMB_CAPTURE_POS = 221.0;
 
     //Absolute Encoder offsets
 
@@ -91,7 +91,7 @@ public class Constants {
     public static final IdleMode IDLEMODE_SCORE_PIVOT = IdleMode.kBrake;
     public static final IdleMode IDLEMODE_SCORE_CLAW = IdleMode.kBrake;
     public static final IdleMode IDLEMODE_SCORE_AGITATOR = IdleMode.kCoast;
-    public static final IdleMode IDELMODE_CLIMB = IdleMode.kCoast;
+    public static final IdleMode IDELMODE_CLIMB = IdleMode.kBrake;
 
     public static final boolean INVERT_INTAKE_ELEVATOR = false;
     public static final boolean INVERT_SCORE_ELEVATOR = false;
