@@ -4,20 +4,75 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
 
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.ControlType;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.ClosedLoopSlot;
+import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.AbsoluteEncoderConfig;
+import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
+import com.revrobotics.spark.config.SparkMaxConfig;
+
+import edu.wpi.first.networktables.DoublePublisher;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Climb extends SubsystemBase {
-  private SparkMax ClimbRight = new SparkMax(Constants.ID_CLIMB_RIGHT, MotorType.kBrushless);
-  private SparkMax ClimbLeft = new SparkMax(Constants.ID_CLIMB_LEFT, MotorType.kBrushless);
-  /** Creates a new Climb. */
-  public Climb() {}
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+public class Climb extends SubsystemBase {
+  private SparkMax WereClimbingToLA = new SparkMax(Constants.ID_CLIMB_ROTATE, MotorType.kBrushless);
+  private RelativeEncoder toLAencoder = WereClimbingToLA.getEncoder();
+  private SparkClosedLoopController ToLALoopy = WereClimbingToLA.getClosedLoopController();
+  private SparkMaxConfig ToLAconfig = new SparkMaxConfig();
+  private double errWereNotInLA = 0.0;
+
+
+  private double CRclimbingTargetPos = 0.0;
+
+  private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
+  private final NetworkTable table = inst.getTable("Climb");
+  private final DoublePublisher climbPosPub = table.getDoubleTopic("climbPos").publish(),
+                                climbSetpointPub = table.getDoubleTopic("climbSetpointPub").publish(),
+                                climbAmpsPub = table.getDoubleTopic("ClimbAps").publish();
+  /** Creates a new Climb. */
+   public Climb() {
+    ToLAconfig.inverted(Constants.INVERT_CLIMB_ROTATE);
+    ToLAconfig.idleMode(Constants.IDELMODE_CLIMB);
+    ToLAconfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder)
+     .p(Constants.P_CLIMB)
+    .i(0)
+   .d(0)
+   .velocityFF(0)
+  .outputRange(Constants.MIN_OUTPUT_CLIMB, Constants.MAX_OUTPUT_CLIMB);
+   
+   WereClimbingToLA.configure(ToLAconfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
-}
+
+  public void setClimbTargetPosition(double CRclimbingTargetPos){
+    this.CRclimbingTargetPos = CRclimbingTargetPos;
+  }
+
+  public boolean areWeInLA(){
+    if (errWereNotInLA < Constants.THRESHOLD_CLIMB_POS) {
+      return true;
+    } 
+      return false;
+  }
+
+   @Override
+   public void periodic() {
+    errWereNotInLA = Math.abs(CRclimbingTargetPos - toLAencoder.getPosition());
+    ToLALoopy.setReference(CRclimbingTargetPos, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+
+    climbPosPub.set(toLAencoder.getPosition());
+    climbSetpointPub.set(CRclimbingTargetPos);
+    climbAmpsPub.set(WereClimbingToLA.getOutputCurrent());
+   }
+  }
