@@ -86,6 +86,10 @@ public class CameraSubsystem extends SubsystemBase {
     cameraPosePublisher = NetworkTableInstance.getDefault().getStructTopic(cameraName + "Pose Log", Pose2d.struct).publish();
   }
 
+  public boolean isActive(){
+    return photonCamera.isConnected();
+  }
+
   public void setRobotYaw(double yaw){
     robotYaw = yaw;
   }

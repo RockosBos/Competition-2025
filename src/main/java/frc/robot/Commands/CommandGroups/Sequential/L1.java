@@ -34,10 +34,10 @@ public class L1 extends SequentialCommandGroup {
     this.s_Score = s_Score;
 
     addCommands(
+      new IntakeRollerOff(i_Intake),
       new ClawOpened(s_Score),
       new ScoreEleIdlePosition(e_Elevator),
       new IntakeEleL1Position(e_Elevator),
-      new IntakeRollerOff(i_Intake),
       new L1IntakePos(i_Intake)
     );
   }
