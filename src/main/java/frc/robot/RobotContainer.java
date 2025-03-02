@@ -42,6 +42,7 @@ import frc.robot.Commands.CommandGroups.Sequential.L1;
 import frc.robot.Commands.CommandGroups.Sequential.L2;
 import frc.robot.Commands.CommandGroups.Sequential.L3;
 import frc.robot.Commands.CommandGroups.Sequential.L4;
+import frc.robot.Commands.CommandGroups.Sequential.ResetElevators;
 import frc.robot.Commands.CommandGroups.Sequential.ScoreCoral;
 import frc.robot.Commands.CommandGroups.Sequential.TipProtection;
 import frc.robot.Commands.Drive.DriveToNearestLoading;
@@ -208,6 +209,7 @@ public class RobotContainer {
 
         operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
         operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
+        operaterController.povUp().onTrue(new ResetElevators(elevatorSubsytem));
 
         operaterLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterController.leftBumper().onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));

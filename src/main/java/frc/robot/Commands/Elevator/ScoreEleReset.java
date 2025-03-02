@@ -24,38 +24,26 @@ public class ScoreEleReset extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer = new Timer();
-    timer.reset();
     e_Elevator.setScoreEleControlState(ControlState.DIRECT);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    e_Elevator.setScoreEleVoltage(-2.0);
-    if(e_Elevator.getScoreEleCurrent() > 15){
-      timer.start();
-    }
-    else{
-      timer.reset();
-    }
+    e_Elevator.setScoreEleVoltage(-1.0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    e_Elevator.resetScoreEle();
+    e_Elevator.setScoreEleVoltage(0.0);
     e_Elevator.setScoreEleControlState(ControlState.CLOSEDLOOP);
     e_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_GO_AWAY_POSITION);
-    System.out.println("Score Elevator Reset Command Completed");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(timer.get() > 0.5){
-      return true;
-    }
-    return false;
+    return e_Elevator.scoreElevatorSensor();
   }
 }

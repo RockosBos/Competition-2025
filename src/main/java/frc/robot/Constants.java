@@ -20,6 +20,9 @@ public class Constants {
     public static final int LASERCAN_INTAKE_LEFT = 52;
     public static final int LASERCAN_INTAKE_RIGHT = 51;
 
+    public static final int SCORE_ELEVATOR_PROXIMITY_SENSOR = 0;
+    public static final int INTAKE_ELEVATOR_PROXIMITY_SENSOR = 1;
+
     //Drive constant Values
 
     public static final double TIP_PROTECTION_THRESHOLD_ROLL = 10.0;
