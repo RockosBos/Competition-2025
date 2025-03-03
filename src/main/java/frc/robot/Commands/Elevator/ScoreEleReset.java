@@ -37,6 +37,7 @@ public class ScoreEleReset extends Command {
   @Override
   public void end(boolean interrupted) {
     e_Elevator.setScoreEleVoltage(0.0);
+    e_Elevator.resetScoreEle();
     e_Elevator.setScoreEleControlState(ControlState.CLOSEDLOOP);
     e_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_GO_AWAY_POSITION);
   }

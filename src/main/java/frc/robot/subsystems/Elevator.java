@@ -234,13 +234,6 @@ public class Elevator extends SubsystemBase {
       ScoreEle.setVoltage(scoreEleVoltage);
     }
 
-    if(scoreElevatorSensor()){
-      ScoreEleEncoder.setPosition(0.0);
-    }
-    if(intakeElevatorSensor()){
-      IntakeEleEncoder.setPosition(0.0);
-    }
-
     //Drive Speed Limiter
     driveSpeedLimit = driveSpeedLimiter.get(ScoreEleEncoder.getPosition());
 

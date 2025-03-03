@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.1,
-        "y": 5.1
+        "x": 5.02,
+        "y": 5.03
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.404713114754099,
-        "y": 5.555532786885245
+        "x": 4.324713114754099,
+        "y": 5.485532786885246
       },
       "isLocked": false,
       "linkedName": "Far Left Score"

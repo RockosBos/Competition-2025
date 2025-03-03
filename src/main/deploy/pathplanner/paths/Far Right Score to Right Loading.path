@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.1786885245901635,
-        "y": 2.8561987704918033
+        "x": 5.0,
+        "y": 3.05
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.7042008196748704,
-        "y": 1.7173668032753853
+        "x": 3.525512295084707,
+        "y": 1.9111680327835818
       },
       "isLocked": false,
       "linkedName": "Far Right Score"

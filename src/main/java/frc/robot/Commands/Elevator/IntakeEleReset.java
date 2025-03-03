@@ -37,6 +37,7 @@ public class IntakeEleReset extends Command {
   @Override
   public void end(boolean interrupted) {
     e_Elevator.setIntakeEleVoltage(0.0);
+    e_Elevator.resetIntakeEle();
     e_Elevator.setIntakeEleControlState(ControlState.CLOSEDLOOP);
     e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS);
   }

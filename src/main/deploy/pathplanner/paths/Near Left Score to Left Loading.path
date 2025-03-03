@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7,
-        "y": 5.3
+        "x": 3.91,
+        "y": 5.02
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1605532786885244,
-        "y": 5.983299180327869
+        "x": 3.3705532786885244,
+        "y": 5.7032991803278685
       },
       "isLocked": false,
       "linkedName": "Near Left Score"
