@@ -55,9 +55,9 @@ public class DriveToPose extends Command {
     yDrive = yController.calculate(driveSubsystem.samplePoseAt(Utils.getCurrentTimeSeconds()).get().getY(), 0);
     tDrive = tController.calculate(driveSubsystem.getPigeon2().getYaw().getValueAsDouble(), 0);
 
-    SmartDashboard.putNumber("xDrive", xDrive);
-    SmartDashboard.putNumber("yDrive", yDrive);
-    SmartDashboard.putNumber("tDrive", tDrive);
+    // SmartDashboard.putNumber("xDrive", xDrive);
+    // SmartDashboard.putNumber("yDrive", yDrive);
+    // SmartDashboard.putNumber("tDrive", tDrive);
 
   }
 
