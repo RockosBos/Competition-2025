@@ -8,20 +8,36 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.324713114754099,
-        "y": 5.485532786885246
+        "x": 5.562295081967213,
+        "y": 5.649334016393442
       },
       "isLocked": false,
       "linkedName": "Far Left Score"
     },
     {
       "anchor": {
-        "x": 1.72,
-        "y": 7.2
+        "x": 3.728176229508197,
+        "y": 6.392571721311475
       },
       "prevControl": {
-        "x": 2.0556557377049174,
-        "y": 6.828381147540983
+        "x": 4.1837090163934425,
+        "y": 6.20076844262295
+      },
+      "nextControl": {
+        "x": 3.266653711242083,
+        "y": 6.586896992160366
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.6,
+        "y": 7.35
+      },
+      "prevControl": {
+        "x": 3.092827868852459,
+        "y": 6.608350409836065
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +49,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 0.75,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 1.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

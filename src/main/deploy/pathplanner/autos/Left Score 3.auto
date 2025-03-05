@@ -119,6 +119,12 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "SetScoreRight"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [

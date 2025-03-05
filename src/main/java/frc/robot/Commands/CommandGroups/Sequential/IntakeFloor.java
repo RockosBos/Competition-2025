@@ -10,6 +10,7 @@ import frc.robot.Commands.Elevator.IntakeEleFloorPos;
 import frc.robot.Commands.Elevator.ScoreEleIdlePosition;
 import frc.robot.Commands.Intake.FloorIntakePosition;
 import frc.robot.Commands.Intake.IntakeRollerIn;
+import frc.robot.Commands.Score.ClawOpened;
 import frc.robot.Commands.Score.ScoreSetCenter;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -31,6 +32,7 @@ public class IntakeFloor extends SequentialCommandGroup {
     this.s_Score = s_Score;
 
     addCommands(
+      new ClawOpened(s_Score),
       new ParallelCommandGroup(new IntakeEleFloorPos(e_Elevator), new ScoreSetCenter(s_Score)),
       new ParallelCommandGroup(new ScoreEleIdlePosition(e_Elevator), new FloorIntakePosition(i_Intake)),
       new IntakeRollerIn(i_Intake) 

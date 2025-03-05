@@ -68,23 +68,25 @@ public class CameraSubsystem extends SubsystemBase {
     if(cameraType == CameraType.PHOTONVISION){
       photonCamera = new PhotonCamera(cameraName);
     }
-    result = photonCamera.getLatestResult();
+    if(photonCamera.isConnected()){
+      result = photonCamera.getLatestResult();
+    }
     loopTimer.start();
     
     cameraPosePublisher = NetworkTableInstance.getDefault().getStructTopic(cameraName + "Pose Log", Pose2d.struct).publish();
   }
 
-  public CameraSubsystem(CameraType cameraType, String cameraName) {
-    this.cameraType = cameraType;
-    this.cameraName = cameraName;
-    DataLog log = DataLogManager.getLog();
+  // public CameraSubsystem(CameraType cameraType, String cameraName) {
+  //   this.cameraType = cameraType;
+  //   this.cameraName = cameraName;
+  //   DataLog log = DataLogManager.getLog();
 
-    if(cameraType == CameraType.PHOTONVISION){
-      aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
-      photonCamera = new PhotonCamera(cameraName);
-    }
-    cameraPosePublisher = NetworkTableInstance.getDefault().getStructTopic(cameraName + "Pose Log", Pose2d.struct).publish();
-  }
+  //   if(cameraType == CameraType.PHOTONVISION){
+  //     aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.kDefaultField);
+  //     photonCamera = new PhotonCamera(cameraName);
+  //   }
+  //   cameraPosePublisher = NetworkTableInstance.getDefault().getStructTopic(cameraName + "Pose Log", Pose2d.struct).publish();
+  // }
 
   public boolean isActive(){
     return photonCamera.isConnected();
@@ -139,9 +141,11 @@ public class CameraSubsystem extends SubsystemBase {
 
     if(CameraType.PHOTONVISION == cameraType){
       result = photonCamera.getLatestResult();
-      if(result.hasTargets()){
-        target = result.getBestTarget();
-        currentPose = update2DPose();
+      if(isActive()){
+        if(result.hasTargets()){
+          target = result.getBestTarget();
+          currentPose = update2DPose();
+        }
       }
     }
     else{

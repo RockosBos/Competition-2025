@@ -8,11 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.525512295084707,
-        "y": 1.9111680327835818
+        "x": 4.68719262295082,
+        "y": 1.6814036885245902
       },
       "isLocked": false,
       "linkedName": "Far Right Score"
+    },
+    {
+      "anchor": {
+        "x": 3.2366803278688523,
+        "y": 1.5495389344262287
+      },
+      "prevControl": {
+        "x": 3.8960040983606556,
+        "y": 1.9331454918032784
+      },
+      "nextControl": {
+        "x": 2.7188099594454194,
+        "y": 1.2482325382525947
+      },
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,8 +36,8 @@
         "y": 0.6744364754065327
       },
       "prevControl": {
-        "x": 3.1287909836092975,
-        "y": 1.9211577868819436
+        "x": 2.5893442622950817,
+        "y": 1.2258709016393436
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +49,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 0.75,
+    "maxVelocity": 2.5,
+    "maxAcceleration": 1.25,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

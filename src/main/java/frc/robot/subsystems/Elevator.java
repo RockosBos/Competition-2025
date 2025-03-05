@@ -257,7 +257,7 @@ public class Elevator extends SubsystemBase {
     scoreElevatorPosPub.set(ScoreEleEncoder.getPosition());
     scoreElevatorSetpointPub.set(targetPostionScoreInLa);
 
-    scoreElevatorSensorPub.set(scoreElevatorProximity.get());
-    intakeElevatorSensorPub.set(intakeElevatorProximity.get());
+    scoreElevatorSensorPub.set(scoreElevatorSensor());
+    intakeElevatorSensorPub.set(intakeElevatorSensor());
   }
 }
