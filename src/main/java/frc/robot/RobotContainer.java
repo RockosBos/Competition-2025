@@ -18,6 +18,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -77,6 +78,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.ControllerInputSubsystem;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PoseHandler;
@@ -111,6 +113,7 @@ public class RobotContainer {
     private final Score scoreSubsystem = new Score();
     private final Climb climbSubsytem = new Climb();
     private final PoseHandler PoseHandlerSubsystem = new PoseHandler();
+    private final ControllerInputSubsystem driveControllerModified = new ControllerInputSubsystem(driverController);
 
     public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.0762, 0.252349, 0.0271018, new Rotation3d(0,0,0)), PoseHandlerSubsystem.getAprilTagFieldLayout());
     public final CameraSubsystem PhotonVisionCamera2 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 2", new Transform3d(0.0762, -0.252349, 0.0271018, new Rotation3d(0,0,0)), PoseHandlerSubsystem.getAprilTagFieldLayout());
@@ -169,11 +172,12 @@ public class RobotContainer {
 
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
+
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
-            drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driverController.getLeftY() * elevatorSubsytem.getDriveSpeedLimit() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driverController.getLeftX() * elevatorSubsytem.getDriveSpeedLimit() * MaxSpeed) // Drive left with negative X (left)
+            drivetrain.applyRequest(() -> 
+                drive.withVelocityX(-driveControllerModified.getAllianceDirectedXDrive() * elevatorSubsytem.getDriveSpeedLimit() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-driveControllerModified.getAllianceDirectedYDrive() * elevatorSubsytem.getDriveSpeedLimit() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
