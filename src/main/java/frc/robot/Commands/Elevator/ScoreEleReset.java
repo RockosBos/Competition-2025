@@ -36,8 +36,10 @@ public class ScoreEleReset extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    if(!interrupted){
+      e_Elevator.resetScoreEle();
+    }
     e_Elevator.setScoreEleVoltage(0.0);
-    e_Elevator.resetScoreEle();
     e_Elevator.setScoreEleControlState(ControlState.CLOSEDLOOP);
     e_Elevator.setScoreTargetPosition(Constants.SCORE_ELEVATOR_GO_AWAY_POSITION);
   }

@@ -6,15 +6,12 @@ package frc.robot.Commands.CommandGroups.Sequential;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Commands.Elevator.IntakeEleHandoffPos;
-import frc.robot.Commands.Elevator.IntakeEleL1Position;
-import frc.robot.Commands.Elevator.ScoreEleIdlePosition;
-import frc.robot.Commands.Intake.IntakeRollerInSlow;
-import frc.robot.Commands.Intake.IntakeRollerOff;
-import frc.robot.Commands.Intake.L1IntakePos;
-import frc.robot.Commands.Intake.LoadingIntakePosition;
-import frc.robot.Commands.Score.ClawOpened;
-import frc.robot.Commands.Score.ClawRelease;
+import frc.robot.Commands.ClimbCapturePosition;
+import frc.robot.Commands.Elevator.BothEleLow;
+import frc.robot.Commands.Intake.HandOffIntakePos;
+import frc.robot.Commands.Score.AgitatorOff;
+import frc.robot.Commands.Score.ScoreSetCenter;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Score;
@@ -22,25 +19,26 @@ import frc.robot.subsystems.Score;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class L1 extends SequentialCommandGroup {
-  
+public class ClimbCapture extends SequentialCommandGroup {
+  /** Creates a new ClimbCapture. */
+
   Elevator e_Elevator;
   Intake i_Intake;
   Score s_Score;
- 
-  public L1(Elevator e_Elevator, Intake i_Intake, Score s_Score) {
+  Climb c_Climb;
+
+  public ClimbCapture(Elevator e_Elevator, Intake i_Intake, Score s_Score, Climb c_Climb) {
+    // Add your commands in the addCommands() call, e.g.
+    // addCommands(new FooCommand(), new BarCommand());
 
     this.e_Elevator = e_Elevator;
     this.i_Intake = i_Intake;
     this.s_Score = s_Score;
+    this.c_Climb = c_Climb;
 
     addCommands(
-      new IntakeRollerOff(i_Intake),
-      new IntakeEleHandoffPos(e_Elevator),
-      new ClawOpened(s_Score),
-      new ScoreEleIdlePosition(e_Elevator),
-      new IntakeEleL1Position(e_Elevator),
-      new L1IntakePos(i_Intake)
+      new AgitatorOff(s_Score),
+      new ParallelCommandGroup(new ClimbCapturePosition(c_Climb), new ScoreSetCenter(s_Score), new HandOffIntakePos(i_Intake), new BothEleLow(e_Elevator))
     );
   }
 }

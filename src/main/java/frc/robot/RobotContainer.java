@@ -35,6 +35,7 @@ import frc.robot.Commands.RumbleController;
 import frc.robot.Commands.RumbleCooldown;
 import frc.robot.Commands.CommandGroups.Sequential.AutoIntakeLoading;
 import frc.robot.Commands.CommandGroups.Sequential.AutonomousAutoAlign;
+import frc.robot.Commands.CommandGroups.Sequential.ClimbCapture;
 import frc.robot.Commands.CommandGroups.Sequential.Handoff;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeFloor;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeLoading;
@@ -152,6 +153,8 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutoAlign", new AutonomousAutoAlign(drivetrain, PoseHandlerSubsystem));
         NamedCommands.registerCommand("SetScoreLeft", new ScoreLeftState(scoreSubsystem));
         NamedCommands.registerCommand("SetScoreRight", new ScoreRightState(scoreSubsystem));
+        NamedCommands.registerCommand("ReleaseClaw", new ClawRelease(scoreSubsystem));
+        NamedCommands.registerCommand("OpenClaw", new ClawOpened(scoreSubsystem));
 
         //Auto Mode Setup
         autoChooser = AutoBuilder.buildAutoChooser("Tests");
@@ -182,7 +185,7 @@ public class RobotContainer {
 
         //driverController.a().onTrue(new ClimbInPosition(climbSubsytem));
         driverController.b().onTrue(new ClimbClimbingPosition(climbSubsytem));
-        driverController.y().onTrue(new ClimbCapturePosition(climbSubsytem));
+        driverController.y().onTrue(new ClimbCapture(elevatorSubsytem, intakeSubsystem, scoreSubsystem, climbSubsytem));
 
         // driverController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
         // driverController.back().and(driverController.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
@@ -213,7 +216,7 @@ public class RobotContainer {
 
         operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
         operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
-        operaterController.povUp().onTrue(new ResetElevators(elevatorSubsytem));
+        operaterController.povDown().onTrue(new ResetElevators(elevatorSubsytem));
 
         operaterLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterController.leftBumper().onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
@@ -223,7 +226,7 @@ public class RobotContainer {
         operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
-        operaterController.povDown().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        operaterController.povUp().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         hasCoralRumble.onTrue(new RumbleController(driverController, 0.5));

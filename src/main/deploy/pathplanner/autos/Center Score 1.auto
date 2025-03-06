@@ -39,7 +39,32 @@
         {
           "type": "named",
           "data": {
-            "name": "ScoreCoral"
+            "name": "ReleaseClaw"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OpenClaw"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoIntakeLoading"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Central Score Retreat"
+                }
+              }
+            ]
           }
         }
       ]

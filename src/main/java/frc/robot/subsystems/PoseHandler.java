@@ -45,9 +45,9 @@ public class PoseHandler extends SubsystemBase {
   private final double maxSpeedX = 0.15, maxSpeedY = 0.15, maxSpeedT = 0.5;
   /** Creates a new PoseHandler. */
   public PoseHandler() {
-    xController = new PIDController(1.2, 0, 0);
-    yController = new PIDController(1.2, 0, 0);
-    tController = new PIDController(0.07, 0, 0);
+    xController = new PIDController(3.5, 0, 0);
+    yController = new PIDController(3.5, 0, 0);
+    tController = new PIDController(0.1, 0, 0);
     xDrive = 0;
     yDrive = 0;
     tDrive = 0;

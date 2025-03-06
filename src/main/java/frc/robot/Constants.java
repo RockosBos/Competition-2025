@@ -50,19 +50,19 @@ public class Constants {
     public static final double SCORE_ELEVATOR_INTAKE_POSITION = 6.4;
     public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 40.0;
     public static final double SCORE_ELEVATOR_L2_POS = 7.0;
-    public static final double SCORE_ELEVATOR_L3_POS = 71.2;
+    public static final double SCORE_ELEVATOR_L3_POS = 68.0;
     public static final double SCORE_ELEVATOR_L4_POS = 157.0;
-    public static final double SCORE_HANDOFF_POS = 6.4;
+    public static final double SCORE_HANDOFF_POS = 4.0;
 
     public static final double SCORE_ROTATE_LEFT_POS = 0.197;
     public static final double SCORE_ROTATE_RIGHT_POS = 0.704;
     public static final double SCORE_ROTATE_CENTER_POS = 0.441;
 
-    public static final double SCORE_PIVOT_IN_POS = 0.39;
-    public static final double SCORE_PIVOT_OUT_LEFT_POS = 0.22;
-    public static final double SCORE_PIVOT_OUT_LEFT_SHALLOW_POS = 0.22;
-    public static final double SCORE_PIVOT_OUT_RIGHT_POS = 0.56;
-    public static final double SCORE_PIVOT_OUT_RIGHT_SHALLOW_POS = 0.56;
+    public static final double SCORE_PIVOT_IN_POS = 0.5;
+    public static final double SCORE_PIVOT_OUT_LEFT_POS = 0.38;
+    public static final double SCORE_PIVOT_OUT_LEFT_SHALLOW_POS = 0.35;
+    public static final double SCORE_PIVOT_OUT_RIGHT_POS = 0.62;
+    public static final double SCORE_PIVOT_OUT_RIGHT_SHALLOW_POS = 0.65;
 
     public static final double SCORE_CLAW_CLOSED_POS = 0.44;
     public static final double SCORE_CLAW_OPEN_POS = 0.15;
@@ -74,14 +74,14 @@ public class Constants {
     //Climb Constant Values
 
     public static final double CLIMB_IN_POS = 0.0;
-    public static final double CLIMB_CLIMBING_POS = 98.0;
+    public static final double CLIMB_CLIMBING_POS = 102.0;
     public static final double CLIMB_CAPTURE_POS = 221.0;
 
     //Absolute Encoder offsets
 
     public static final double OFFSET_INTAKE_ROTATE_ABS = 0.430 - 0.25;
     public static final double OFFSET_SCORE_ROTATE_ABS = 0.7756 - 0.20;
-    public static final double OFFSET_SCORE_PIVOT_ABS = 0.870 - 0.75;
+    public static final double OFFSET_SCORE_PIVOT_ABS = 0.23 + 0.5;
     public static final double OFFSET_SCORE_CLAW_ABS = 0.595 - 0.1;
 
     //Motor Configuration Constants
@@ -140,8 +140,8 @@ public class Constants {
     public static final double MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = -0.3;
 
     public static final double P_SCORE_ELEVATOR = 0.1;
-    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.95;
-    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.95;
+    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.9;
+    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.9;
     public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = -0.3;
 
@@ -153,7 +153,7 @@ public class Constants {
     public static final double MAX_OUTPUT_SCORE_ROTATE = 0.35;
     public static final double MIN_OUTPUT_SCORE_ROTATE = -0.35;
 
-    public static final double P_SCORE_PIVOT = 2.0;
+    public static final double P_SCORE_PIVOT = 5.0;
     public static final double MAX_OUTPUT_SCORE_PIVOT = 0.1;
     public static final double MIN_OUTPUT_SCORE_PIVOT = -0.1;
 
@@ -177,19 +177,19 @@ public class Constants {
 
     //LaserCan Thresholds
 
-    public static final double THRESHOLD_LASERCAN_INTAKE_LEFT = 20; //In mm
-    public static final double THRESHOLD_LASERCAN_INTAKE_RIGHT = 20; //In mm
+    public static final double THRESHOLD_LASERCAN_INTAKE_LEFT = 50; //In mm
+    public static final double THRESHOLD_LASERCAN_INTAKE_RIGHT = 50; //In mm
 
     public static class SCORING_POSES{
         public class CENTER_NEAR{
-            public static final double X = 3.31;
-            public static final double Y = 4.05;
+            public static final double X = 3.34;
+            public static final double Y = 4.03;
             public static final double T = 0.0;
         }
 
         public static final class CENTER_FAR{
-            public static final double X = 5.63;
-            public static final double Y = 4.1;
+            public static final double X = 5.64;
+            public static final double Y = 4.03;
             public static final double T = 180.0;
         }
 
@@ -200,8 +200,8 @@ public class Constants {
         }
 
         public static final class LEFT_FAR{
-            public static final double X = 5.02;
-            public static final double Y = 5.03;
+            public static final double X = 5.07;
+            public static final double Y = 5.01;
             public static final double T = -120.0;
         }
 
@@ -212,8 +212,8 @@ public class Constants {
         }
 
         public static final class RIGHT_FAR{
-            public static final double X = 4.9;
-            public static final double Y = 3.00;
+            public static final double X = 5.03;
+            public static final double Y = 3.05;
             public static final double T = 120.0;
         }
     };
