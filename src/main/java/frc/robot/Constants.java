@@ -49,10 +49,10 @@ public class Constants {
 
     public static final double SCORE_ELEVATOR_INTAKE_POSITION = 6.4;
     public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 40.0;
-    public static final double SCORE_ELEVATOR_L2_POS = 7.0;
-    public static final double SCORE_ELEVATOR_L3_POS = 68.0;
-    public static final double SCORE_ELEVATOR_L4_POS = 157.0;
-    public static final double SCORE_HANDOFF_POS = 4.0;
+    public static final double SCORE_ELEVATOR_L2_POS = 8.5;
+    public static final double SCORE_ELEVATOR_L3_POS = 71.2;
+    public static final double SCORE_ELEVATOR_L4_POS = 158.5;
+    public static final double SCORE_HANDOFF_POS = 6.4;
 
     public static final double SCORE_ROTATE_LEFT_POS = 0.197;
     public static final double SCORE_ROTATE_RIGHT_POS = 0.704;
