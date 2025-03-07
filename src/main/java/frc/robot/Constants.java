@@ -41,18 +41,18 @@ public class Constants {
     public static final double INTAKE_ELEVATOR_L1_POS = 100.0;
 
     public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.66;
-    public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.39;
+    public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.36;
     public static final double INTAKE_ROTATE_HANDOFF_POS = 0.33;
     public static final double INTAKE_ROTATE_L1_POS = 0.55;
 
     //Score Arm Constant Values
 
     public static final double SCORE_ELEVATOR_INTAKE_POSITION = 6.4;
-    public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 40.0;
+    public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 45.0;
     public static final double SCORE_ELEVATOR_L2_POS = 8.5;
-    public static final double SCORE_ELEVATOR_L3_POS = 71.2;
+    public static final double SCORE_ELEVATOR_L3_POS = 70.0;
     public static final double SCORE_ELEVATOR_L4_POS = 158.5;
-    public static final double SCORE_HANDOFF_POS = 6.4;
+    public static final double SCORE_HANDOFF_POS = 6.8;
 
     public static final double SCORE_ROTATE_LEFT_POS = 0.197;
     public static final double SCORE_ROTATE_RIGHT_POS = 0.704;
@@ -65,7 +65,7 @@ public class Constants {
     public static final double SCORE_PIVOT_OUT_RIGHT_SHALLOW_POS = 0.65;
 
     public static final double SCORE_CLAW_CLOSED_POS = 0.44;
-    public static final double SCORE_CLAW_OPEN_POS = 0.15;
+    public static final double SCORE_CLAW_OPEN_POS = 0.10;
     public static final double SCORE_CLAW_RELEASE_POS = 0.375;
 
     public static final double SCORE_AGITATOR_INFEED_VOLTAGE = 12.0;
@@ -74,7 +74,7 @@ public class Constants {
     //Climb Constant Values
 
     public static final double CLIMB_IN_POS = 0.0;
-    public static final double CLIMB_CLIMBING_POS = 102.0;
+    public static final double CLIMB_CLIMBING_POS = 100.0;
     public static final double CLIMB_CAPTURE_POS = 221.0;
 
     //Absolute Encoder offsets
