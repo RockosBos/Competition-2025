@@ -35,10 +35,10 @@ public class Constants {
     public static final double INTAKE_ROLLER_HANDOFF_VOLTAGE = -0.8;
     
 
-    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 10.0;
-    public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 105.0;
-    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 79.836;
-    public static final double INTAKE_ELEVATOR_L1_POS = 100.0;
+    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 5.02;
+    public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 54.0;
+    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 41.5;
+    public static final double INTAKE_ELEVATOR_L1_POS = 45.0;
 
     public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.66;
     public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.36;
@@ -74,8 +74,8 @@ public class Constants {
     //Climb Constant Values
 
     public static final double CLIMB_IN_POS = 0.0;
-    public static final double CLIMB_CLIMBING_POS = 100.0;
-    public static final double CLIMB_CAPTURE_POS = 221.0;
+    public static final double CLIMB_CLIMBING_POS = 170.0;
+    public static final double CLIMB_CAPTURE_POS = 383.0;
 
     //Absolute Encoder offsets
 
@@ -134,8 +134,8 @@ public class Constants {
     //Closed Loop controller Config
 
     public static final double P_INTAKE_ELEVATOR = 0.1;
-    public static final double MAX_OUTPUT_INTAKE_ELEVATOR = 0.75;
-    public static final double MIN_OUTPUT_INTAKE_ELEVATOR = -0.75;
+    public static final double MAX_OUTPUT_INTAKE_ELEVATOR = 0.85;
+    public static final double MIN_OUTPUT_INTAKE_ELEVATOR = -0.85;
     public static final double MAX_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = -0.3;
 
