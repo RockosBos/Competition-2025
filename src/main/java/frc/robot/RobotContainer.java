@@ -18,6 +18,7 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,11 +31,12 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.ClimbClimbingPosition;
 import frc.robot.Commands.ClimbInPosition;
-import frc.robot.Commands.ClimbOutPosition;
+import frc.robot.Commands.ClimbCapturePosition;
 import frc.robot.Commands.RumbleController;
 import frc.robot.Commands.RumbleCooldown;
 import frc.robot.Commands.CommandGroups.Sequential.AutoIntakeLoading;
 import frc.robot.Commands.CommandGroups.Sequential.AutonomousAutoAlign;
+import frc.robot.Commands.CommandGroups.Sequential.ClimbCapture;
 import frc.robot.Commands.CommandGroups.Sequential.Handoff;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeFloor;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeLoading;
@@ -42,7 +44,10 @@ import frc.robot.Commands.CommandGroups.Sequential.L1;
 import frc.robot.Commands.CommandGroups.Sequential.L2;
 import frc.robot.Commands.CommandGroups.Sequential.L3;
 import frc.robot.Commands.CommandGroups.Sequential.L4;
+import frc.robot.Commands.CommandGroups.Sequential.ResetElevators;
 import frc.robot.Commands.CommandGroups.Sequential.ScoreCoral;
+import frc.robot.Commands.CommandGroups.Sequential.SetScoreLeftandUpdate;
+import frc.robot.Commands.CommandGroups.Sequential.SetScoreRightandUpdate;
 import frc.robot.Commands.CommandGroups.Sequential.TipProtection;
 import frc.robot.Commands.Drive.DriveToNearestLoading;
 import frc.robot.Commands.Drive.DriveToNearestScore;
@@ -73,6 +78,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.CameraSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.ControllerInputSubsystem;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.PoseHandler;
@@ -107,6 +113,7 @@ public class RobotContainer {
     private final Score scoreSubsystem = new Score();
     private final Climb climbSubsytem = new Climb();
     private final PoseHandler PoseHandlerSubsystem = new PoseHandler();
+    private final ControllerInputSubsystem driveControllerModified = new ControllerInputSubsystem(driverController);
 
     public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.0762, 0.252349, 0.0271018, new Rotation3d(0,0,0)), PoseHandlerSubsystem.getAprilTagFieldLayout());
     public final CameraSubsystem PhotonVisionCamera2 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 2", new Transform3d(0.0762, -0.252349, 0.0271018, new Rotation3d(0,0,0)), PoseHandlerSubsystem.getAprilTagFieldLayout());
@@ -147,6 +154,10 @@ public class RobotContainer {
         NamedCommands.registerCommand("Handoff", new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         NamedCommands.registerCommand("ScoreCoral", new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         NamedCommands.registerCommand("AutoAlign", new AutonomousAutoAlign(drivetrain, PoseHandlerSubsystem));
+        NamedCommands.registerCommand("SetScoreLeft", new ScoreLeftState(scoreSubsystem));
+        NamedCommands.registerCommand("SetScoreRight", new ScoreRightState(scoreSubsystem));
+        NamedCommands.registerCommand("ReleaseClaw", new ClawRelease(scoreSubsystem));
+        NamedCommands.registerCommand("OpenClaw", new ClawOpened(scoreSubsystem));
 
         //Auto Mode Setup
         autoChooser = AutoBuilder.buildAutoChooser("Tests");
@@ -161,11 +172,12 @@ public class RobotContainer {
 
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
+
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
-            drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driverController.getLeftY() * elevatorSubsytem.getDriveSpeedLimit() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driverController.getLeftX() * elevatorSubsytem.getDriveSpeedLimit() * MaxSpeed) // Drive left with negative X (left)
+            drivetrain.applyRequest(() -> 
+                drive.withVelocityX(-driveControllerModified.getAllianceDirectedYDrive() * elevatorSubsytem.getDriveSpeedLimit() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-driveControllerModified.getAllianceDirectedXDrive() * elevatorSubsytem.getDriveSpeedLimit() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
@@ -175,14 +187,14 @@ public class RobotContainer {
         //     point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))
         // ));
 
-        driverController.a().onTrue(new ClimbInPosition(climbSubsytem));
+        //driverController.a().onTrue(new ClimbInPosition(climbSubsytem));
         driverController.b().onTrue(new ClimbClimbingPosition(climbSubsytem));
-        driverController.y().onTrue(new ClimbOutPosition(climbSubsytem));
+        driverController.y().onTrue(new ClimbCapture(elevatorSubsytem, intakeSubsystem, scoreSubsystem, climbSubsytem));
 
-        driverController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        driverController.back().and(driverController.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        driverController.start().and(driverController.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        driverController.start().and(driverController.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        // driverController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+        // driverController.back().and(driverController.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+        // driverController.start().and(driverController.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+        // driverController.start().and(driverController.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         driverController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
         driverController.rightBumper().whileTrue(
@@ -208,6 +220,7 @@ public class RobotContainer {
 
         operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
         operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
+        operaterController.povDown().onTrue(new ResetElevators(elevatorSubsytem));
 
         operaterLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterController.leftBumper().onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
@@ -217,7 +230,7 @@ public class RobotContainer {
         operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
-        operaterController.povDown().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        operaterController.povUp().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         hasCoralRumble.onTrue(new RumbleController(driverController, 0.5));

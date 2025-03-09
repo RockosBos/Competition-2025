@@ -18,6 +18,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.networktables.BooleanPublisher;
 import edu.wpi.first.networktables.DoubleArrayPublisher;
 import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTable;
@@ -46,6 +47,9 @@ public class Elevator extends SubsystemBase {
   private DigitalInput InEleDiInput = new DigitalInput(4);
   private DigitalInput ScoreEleDiInput = new DigitalInput(7);
 
+  private DigitalInput scoreElevatorProximity = new DigitalInput(Constants.SCORE_ELEVATOR_PROXIMITY_SENSOR);
+  private DigitalInput intakeElevatorProximity = new DigitalInput(Constants.INTAKE_ELEVATOR_PROXIMITY_SENSOR);
+
   private ControlState intakeEleControlState = ControlState.CLOSEDLOOP;
   private ControlState scoreEleControlState = ControlState.CLOSEDLOOP;
 
@@ -66,6 +70,9 @@ public class Elevator extends SubsystemBase {
                                 scoreElevatorPosPub = table.getDoubleTopic("scoreElevatorPos").publish(),
                                 scoreElevatorSetpointPub = table.getDoubleTopic("scoreElevatorSetpoint").publish(),
                                 scoreElevatorAmpsPub = table.getDoubleTopic("scoreElevatorAmps").publish();
+  private final BooleanPublisher scoreElevatorSensorPub = table.getBooleanTopic("scoreElevatorSensor").publish(),
+                                 intakeElevatorSensorPub = table.getBooleanTopic("intakeElevatorSensor").publish();
+
 
   /** Creates a new Elevator. */
   public Elevator() {
@@ -203,29 +210,37 @@ public class Elevator extends SubsystemBase {
     return driveSpeedLimit;
   }
 
+  public boolean scoreElevatorSensor(){
+    return !scoreElevatorProximity.get();
+  }
+
+  public boolean intakeElevatorSensor(){
+    return !intakeElevatorProximity.get();
+  }
+
   @Override
   public void periodic() {
     if(intakeEleControlState == ControlState.CLOSEDLOOP){
       IntakeLoopy.setReference(targetPostion, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
     else{
-      //IntakeEle.setVoltage(intakeEleVoltage);
+      IntakeEle.setVoltage(intakeEleVoltage);
     }
 
     if(scoreEleControlState == ControlState.CLOSEDLOOP){
       ScoreEleLoopy.setReference(targetPostionScoreInLa, ControlType.kPosition, ClosedLoopSlot.kSlot0);
     }
     else{
-      //ScoreEle.setVoltage(scoreEleVoltage);
+      ScoreEle.setVoltage(scoreEleVoltage);
     }
 
     //Drive Speed Limiter
     driveSpeedLimit = driveSpeedLimiter.get(ScoreEleEncoder.getPosition());
 
-    SmartDashboard.putNumber("EleTarget", targetPostion);
-    SmartDashboard.putNumber("IntakeEleEnc", ScoreEle.getEncoder().getPosition());
-    SmartDashboard.putNumber("EleScoreTarget", targetPostionScoreInLa);
-    SmartDashboard.putNumber("ScoreEleEnc", ScoreEle.getEncoder().getPosition());
+    // SmartDashboard.putNumber("EleTarget", targetPostion);
+    // SmartDashboard.putNumber("IntakeEleEnc", ScoreEle.getEncoder().getPosition());
+    // SmartDashboard.putNumber("EleScoreTarget", targetPostionScoreInLa);
+    // SmartDashboard.putNumber("ScoreEleEnc", ScoreEle.getEncoder().getPosition());
 
     //logging
     intakeElevatorTargetPositionLog.append(IntakeEleEncoder.getPosition());;
@@ -241,5 +256,8 @@ public class Elevator extends SubsystemBase {
 
     scoreElevatorPosPub.set(ScoreEleEncoder.getPosition());
     scoreElevatorSetpointPub.set(targetPostionScoreInLa);
+
+    scoreElevatorSensorPub.set(scoreElevatorSensor());
+    intakeElevatorSensorPub.set(intakeElevatorSensor());
   }
 }

@@ -24,38 +24,29 @@ public class IntakeEleReset extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer = new Timer();
-    timer.reset();
     e_Elevator.setIntakeEleControlState(ControlState.DIRECT);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    e_Elevator.setIntakeEleVoltage(-2.0);
-    if(e_Elevator.getIntakeEleCurrent() > 15){
-      timer.start();
-    }
-    else{
-      timer.reset();
-    }
+    e_Elevator.setIntakeEleVoltage(-2.5);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    e_Elevator.resetIntakeEle();
+    if(!interrupted){
+      e_Elevator.resetIntakeEle();
+    }
+    e_Elevator.setIntakeEleVoltage(0.0);
     e_Elevator.setIntakeEleControlState(ControlState.CLOSEDLOOP);
     e_Elevator.setIntakeTargetPostion(Constants.INTAKE_ELEVATOR_FLOOR_INTAKE_POS);
-    System.out.println("Intake Elevator Reset Command Completed");
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(timer.get() > 0.5){
-      return true;
-    }
-    return false;
+    return e_Elevator.intakeElevatorSensor();
   }
 }

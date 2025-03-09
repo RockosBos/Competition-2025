@@ -32,6 +32,7 @@ public class Climb extends SubsystemBase {
   private SparkClosedLoopController ToLALoopy = WereClimbingToLA.getClosedLoopController();
   private SparkMaxConfig ToLAconfig = new SparkMaxConfig();
   private double errWereNotInLA = 0.0;
+  private boolean wereReadyToClimbToLA = false;
 
 
   private double CRclimbingTargetPos = 0.0;
@@ -64,6 +65,10 @@ public class Climb extends SubsystemBase {
       return true;
     } 
       return false;
+  }
+
+  public void areWeReadyToClimbToLA(boolean wereReadyToClimbToLA){
+    this.wereReadyToClimbToLA = wereReadyToClimbToLA;
   }
 
    @Override

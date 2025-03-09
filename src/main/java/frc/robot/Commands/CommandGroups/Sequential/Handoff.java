@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Commands.Elevator.IntakeEleHandoffPos;
 import frc.robot.Commands.Elevator.ScoreEleHandoffPos;
+import frc.robot.Commands.Elevator.ScoreEleIdlePosition;
 import frc.robot.Commands.Intake.HandOffIntakePos;
 import frc.robot.Commands.Intake.IntakeRollerOff;
 import frc.robot.Commands.Score.AgitatorOn;
@@ -37,8 +38,8 @@ public class Handoff extends SequentialCommandGroup {
       new ClawOpened(s_Score),
       new ParallelCommandGroup(new HandOffIntakePos(i_Intake), new HandoffScorePosition(s_Score)),
       new IntakeRollerOff(i_Intake),
+      new ScoreEleIdlePosition(e_Elevator),
       new IntakeEleHandoffPos(e_Elevator),
-      new ScoreEleHandoffPos(e_Elevator),
       new AgitatorOn(s_Score)
     );
   }

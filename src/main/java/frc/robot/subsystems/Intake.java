@@ -190,11 +190,11 @@ public class Intake extends SubsystemBase {
     intakeRotateErrLog.append(intakeRotateTargetErr);
     //intakeRotateInPosLog.append(this.inPosition());
 
-    SmartDashboard.putNumber("IntakeRotateAbs", intakeAbsEncoder.getPosition());
-    SmartDashboard.putNumber("Left Laser Distance", leftyLazy.getMeasurement().distance_mm);
-    SmartDashboard.putNumber("Right Laser Distance", rightyLazy.getMeasurement().distance_mm);
-    SmartDashboard.putBoolean("hasCoral", hasCoral());
-    SmartDashboard.putBoolean("inPos", inPosition());
+    // SmartDashboard.putNumber("IntakeRotateAbs", intakeAbsEncoder.getPosition());
+    // SmartDashboard.putNumber("Left Laser Distance", leftyLazy.getMeasurement().distance_mm);
+    // SmartDashboard.putNumber("Right Laser Distance", rightyLazy.getMeasurement().distance_mm);
+    // SmartDashboard.putBoolean("hasCoral", hasCoral());
+    // SmartDashboard.putBoolean("inPos", inPosition());
 
     scoreRotatePosPub.set(intakeAbsEncoder.getPosition());
     scoreRotateSetpointPub.set(targetPosition);

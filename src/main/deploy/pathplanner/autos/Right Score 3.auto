@@ -30,7 +30,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center Base to Center Score"
+                  "pathName": "Right Base to Far Right Score"
                 }
               }
             ]
@@ -53,18 +53,56 @@
           "data": {
             "commands": [
               {
+                "type": "path",
+                "data": {
+                  "pathName": "Far Right Score to Right Loading"
+                }
+              },
+              {
                 "type": "named",
                 "data": {
                   "name": "AutoIntakeLoading"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Handoff"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "L1"
+                      }
+                    }
+                  ]
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Central Score Retreat"
+                  "pathName": "Right Loading to Near Right Score"
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ScoreCoral"
           }
         }
       ]
