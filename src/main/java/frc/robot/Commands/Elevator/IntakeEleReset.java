@@ -30,7 +30,7 @@ public class IntakeEleReset extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    e_Elevator.setIntakeEleVoltage(-2.5);
+    e_Elevator.setIntakeEleVoltage(-4.0);
   }
 
   // Called once the command ends or is interrupted.
