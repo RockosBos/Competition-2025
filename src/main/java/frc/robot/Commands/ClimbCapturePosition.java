@@ -26,6 +26,7 @@ public class ClimbCapturePosition extends Command {
   @Override
   public void execute() {
     c_Climb.setClimbTargetPosition(Constants.CLIMB_CAPTURE_POS);
+    c_Climb.setServoClimbingToLAPos(Constants.SERVO_UNLOCKED);
   }
 
   // Called once the command ends or is interrupted.

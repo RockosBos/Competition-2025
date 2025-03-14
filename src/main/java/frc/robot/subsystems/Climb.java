@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.servohub.config.ServoChannelConfig;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
@@ -22,6 +23,7 @@ import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -33,8 +35,8 @@ public class Climb extends SubsystemBase {
   private SparkMaxConfig ToLAconfig = new SparkMaxConfig();
   private double errWereNotInLA = 0.0;
   private boolean wereReadyToClimbToLA = false;
-
-
+  private Servo climbingToLAservo = new Servo(Constants.SERVO_ID);
+  private double setServoPosClimbing = Constants.SERVO_UNLOCKED;
   private double CRclimbingTargetPos = 0.0;
 
   private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -71,10 +73,15 @@ public class Climb extends SubsystemBase {
     this.wereReadyToClimbToLA = wereReadyToClimbToLA;
   }
 
+  public void setServoClimbingToLAPos(double setServoPosClimbing){
+    this.setServoPosClimbing = setServoPosClimbing;
+  }
+
    @Override
    public void periodic() {
     errWereNotInLA = Math.abs(CRclimbingTargetPos - toLAencoder.getPosition());
     ToLALoopy.setReference(CRclimbingTargetPos, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    climbingToLAservo.setAngle(setServoPosClimbing);
 
     climbPosPub.set(toLAencoder.getPosition());
     climbSetpointPub.set(CRclimbingTargetPos);

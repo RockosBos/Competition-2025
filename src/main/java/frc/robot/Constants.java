@@ -23,6 +23,13 @@ public class Constants {
     public static final int SCORE_ELEVATOR_PROXIMITY_SENSOR = 0;
     public static final int INTAKE_ELEVATOR_PROXIMITY_SENSOR = 1;
 
+    //Servo Stuff
+
+    public static final int SERVO_ID = 0;
+
+    public static final double SERVO_UNLOCKED = 0.0;
+    public static final double SERVO_LOCKED = 100.0;
+
     //Drive constant Values
 
     public static final double TIP_PROTECTION_THRESHOLD_ROLL = 10.0;

@@ -8,11 +8,13 @@ import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkClosedLoopController;
+import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.AbsoluteEncoderConfig;
+import com.revrobotics.spark.config.SparkFlexConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
@@ -33,7 +35,7 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
   //Motor Definitions
-  private SparkMax IntakeIn = new SparkMax(Constants.ID_INTAKE_ROLLER, MotorType.kBrushless);
+  private SparkFlex IntakeIn = new SparkFlex(Constants.ID_INTAKE_ROLLER, MotorType.kBrushless);
   private SparkMax IntakeRotate = new SparkMax(Constants.ID_INTAKE_ROTATE, MotorType.kBrushless);
 
   //PID Controller and Encoder Definitions
@@ -41,7 +43,7 @@ public class Intake extends SubsystemBase {
   private AbsoluteEncoder intakeAbsEncoder = IntakeRotate.getAbsoluteEncoder();
 
   //Configuration Definitions
-  private SparkMaxConfig intakeInConfig = new SparkMaxConfig();
+  private SparkFlexConfig intakeInConfig = new SparkFlexConfig();
   private SparkMaxConfig intakeRotateConfig = new SparkMaxConfig();
   private AbsoluteEncoderConfig IAEC = new AbsoluteEncoderConfig();
 
