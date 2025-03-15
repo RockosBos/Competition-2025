@@ -41,6 +41,7 @@ import frc.robot.Commands.CommandGroups.Sequential.Handoff;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeFloor;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeLoading;
 import frc.robot.Commands.CommandGroups.Sequential.L1;
+import frc.robot.Commands.CommandGroups.Sequential.L1FailOp;
 import frc.robot.Commands.CommandGroups.Sequential.L2;
 import frc.robot.Commands.CommandGroups.Sequential.L3;
 import frc.robot.Commands.CommandGroups.Sequential.L4;
@@ -229,6 +230,8 @@ public class RobotContainer {
         operaterController.x().onTrue(new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+
+        operaterController.rightBumper().onTrue(new L1FailOp(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         operaterController.povUp().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 

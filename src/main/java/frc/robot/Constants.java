@@ -42,24 +42,26 @@ public class Constants {
     public static final double INTAKE_ROLLER_HANDOFF_VOLTAGE = -0.8;
     
 
-    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 5.02;
-    public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 54.0;
-    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 41.5;
-    public static final double INTAKE_ELEVATOR_L1_POS = 45.0;
+    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 5.02 * 0.75;
+    public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 54.0 * 0.75;
+    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 41.5 * 0.75;
+    public static final double INTAKE_ELEVATOR_L1_POS = 45.0 * 0.75;
+    public static final double INTAKE_ELEVATOR_L1_FAILOP_POS = 35.0 * 0.75;
 
     public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.66;
     public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.36;
     public static final double INTAKE_ROTATE_HANDOFF_POS = 0.33;
     public static final double INTAKE_ROTATE_L1_POS = 0.55;
+    public static final double INTAKE_ROTATE_L1_FAILOP_POS = 0.42;
 
     //Score Arm Constant Values
 
-    public static final double SCORE_ELEVATOR_INTAKE_POSITION = 6.4;
-    public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 45.0;
-    public static final double SCORE_ELEVATOR_L2_POS = 8.5;
-    public static final double SCORE_ELEVATOR_L3_POS = 70.0;
-    public static final double SCORE_ELEVATOR_L4_POS = 158.5;
-    public static final double SCORE_HANDOFF_POS = 6.8;
+    public static final double SCORE_ELEVATOR_INTAKE_POSITION = 6.4 * 0.75;
+    public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 45.0 * 0.75;
+    public static final double SCORE_ELEVATOR_L2_POS = 8.5 * 0.75;
+    public static final double SCORE_ELEVATOR_L3_POS = 70.0 * 0.75;
+    public static final double SCORE_ELEVATOR_L4_POS = 158.5 * 0.75;
+    public static final double SCORE_HANDOFF_POS = 6.8 * 0.75;
 
     public static final double SCORE_ROTATE_LEFT_POS = 0.197;
     public static final double SCORE_ROTATE_RIGHT_POS = 0.704;
@@ -105,7 +107,7 @@ public class Constants {
 
     public static final boolean INVERT_INTAKE_ELEVATOR = false;
     public static final boolean INVERT_SCORE_ELEVATOR = false;
-    public static final boolean INVERT_INTAKE_ROTATE = true;
+    public static final boolean INVERT_INTAKE_ROTATE = false;
     public static final boolean INVERT_INTAKE_ROLLER = false;
     public static final boolean INVERT_SCORE_ROTATE = true;
     public static final boolean INVERT_SCORE_PIVOT = false;
@@ -141,14 +143,14 @@ public class Constants {
     //Closed Loop controller Config
 
     public static final double P_INTAKE_ELEVATOR = 0.1;
-    public static final double MAX_OUTPUT_INTAKE_ELEVATOR = 0.85;
-    public static final double MIN_OUTPUT_INTAKE_ELEVATOR = -0.85;
+    public static final double MAX_OUTPUT_INTAKE_ELEVATOR = 0.3;
+    public static final double MIN_OUTPUT_INTAKE_ELEVATOR = -0.3;
     public static final double MAX_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = -0.3;
 
     public static final double P_SCORE_ELEVATOR = 0.1;
-    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.9;
-    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.9;
+    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.3;
+    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.3;
     public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = -0.3;
 
