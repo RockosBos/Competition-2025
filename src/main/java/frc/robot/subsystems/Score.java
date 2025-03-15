@@ -54,6 +54,8 @@ private SparkMaxConfig rotateConfig = new SparkMaxConfig();
 private double rotateTargetPostion = Constants.SCORE_ROTATE_CENTER_POS, pivotTargetPostion = Constants.SCORE_PIVOT_IN_POS, clawTargetPostion = Constants.SCORE_CLAW_OPEN_POS;
 private double agitatorVoltage = 0.0;
 
+private boolean scoreFailOp = false;
+
 private ScoreState scoreState = ScoreState.CENTER;
 
 private final NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -221,6 +223,14 @@ private DoubleLogEntry rotateTargetPositionLog, rotateCurrentPositionLog, rotate
       return true;
     }
     return false;
+  }
+
+  public void setFailOp(boolean opState){
+    scoreFailOp = opState;
+  }
+
+  public boolean inFailOp(){
+    return scoreFailOp;
   }
 
   @Override

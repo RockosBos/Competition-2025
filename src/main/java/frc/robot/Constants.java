@@ -42,11 +42,11 @@ public class Constants {
     public static final double INTAKE_ROLLER_HANDOFF_VOLTAGE = -0.8;
     
 
-    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 5.02 * 0.75;
-    public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 54.0 * 0.75;
-    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 41.5 * 0.75;
-    public static final double INTAKE_ELEVATOR_L1_POS = 45.0 * 0.75;
-    public static final double INTAKE_ELEVATOR_L1_FAILOP_POS = 35.0 * 0.75;
+    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 3.765;
+    public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 40.5;
+    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 31.125;
+    public static final double INTAKE_ELEVATOR_L1_POS = 33.75;
+    public static final double INTAKE_ELEVATOR_L1_FAILOP_POS = 26.25;
 
     public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.66;
     public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.36;
@@ -56,12 +56,12 @@ public class Constants {
 
     //Score Arm Constant Values
 
-    public static final double SCORE_ELEVATOR_INTAKE_POSITION = 6.4 * 0.75;
-    public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 45.0 * 0.75;
-    public static final double SCORE_ELEVATOR_L2_POS = 8.5 * 0.75;
-    public static final double SCORE_ELEVATOR_L3_POS = 70.0 * 0.75;
-    public static final double SCORE_ELEVATOR_L4_POS = 158.5 * 0.75;
-    public static final double SCORE_HANDOFF_POS = 6.8 * 0.75;
+    public static final double SCORE_ELEVATOR_INTAKE_POSITION = 4.8;
+    public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 33.75;
+    public static final double SCORE_ELEVATOR_L2_POS = 6.375;
+    public static final double SCORE_ELEVATOR_L3_POS = 52.5;
+    public static final double SCORE_ELEVATOR_L4_POS = 118.875;
+    public static final double SCORE_HANDOFF_POS = 5.1;
 
     public static final double SCORE_ROTATE_LEFT_POS = 0.197;
     public static final double SCORE_ROTATE_RIGHT_POS = 0.704;

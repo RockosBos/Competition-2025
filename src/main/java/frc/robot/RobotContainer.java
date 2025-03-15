@@ -69,6 +69,8 @@ import frc.robot.Commands.Score.AgitatorOn;
 import frc.robot.Commands.Score.ClawClosed;
 import frc.robot.Commands.Score.ClawOpened;
 import frc.robot.Commands.Score.ClawRelease;
+import frc.robot.Commands.Score.FailOpDisable;
+import frc.robot.Commands.Score.FailOpEnable;
 import frc.robot.Commands.Score.HandoffScorePosition;
 import frc.robot.Commands.Score.ScoreLeftState;
 import frc.robot.Commands.Score.ScoreRightState;
@@ -214,8 +216,8 @@ public class RobotContainer {
         // // );
         driverController.rightBumper().whileTrue(new DriveToNearestScore(drivetrain, PoseHandlerSubsystem));
         driverController.rightBumper().whileTrue(new UpdateCameras(PhotonVisionCamera1, PhotonVisionCamera2));
-        // driverController.leftBumper().whileTrue(new DriveToNearestLoading(drivetrain, PoseHandlerSubsystem));
-        // driverController.leftBumper().whileTrue(new UpdateCameras(PhotonVisionCamera1, PhotonVisionCamera2));
+        driverController.povUp().onTrue(new FailOpDisable(scoreSubsystem));
+        driverController.povDown().onTrue(new FailOpEnable(scoreSubsystem));
 
         //Operator Controller
 
