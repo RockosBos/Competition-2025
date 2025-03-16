@@ -37,9 +37,9 @@ public class Handoff extends SequentialCommandGroup {
     addCommands(
       new ClawOpened(s_Score),
       new ParallelCommandGroup(new HandOffIntakePos(i_Intake), new HandoffScorePosition(s_Score)),
-      new IntakeRollerOff(i_Intake),
       new ScoreEleIdlePosition(e_Elevator),
       new IntakeEleHandoffPos(e_Elevator),
+      new IntakeRollerOff(i_Intake),
       new AgitatorOn(s_Score)
     );
   }
