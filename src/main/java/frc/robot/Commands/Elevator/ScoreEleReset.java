@@ -30,7 +30,7 @@ public class ScoreEleReset extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    e_Elevator.setScoreEleVoltage(-3.0);
+    e_Elevator.setScoreEleVoltage(-1.5);
   }
 
   // Called once the command ends or is interrupted.
