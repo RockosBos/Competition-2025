@@ -44,7 +44,8 @@ public class Climb extends SubsystemBase {
   private final NetworkTable table = inst.getTable("Climb");
   private final DoublePublisher climbPosPub = table.getDoubleTopic("climbPos").publish(),
                                 climbSetpointPub = table.getDoubleTopic("climbSetpointPub").publish(),
-                                climbAmpsPub = table.getDoubleTopic("ClimbAps").publish();
+                                climbAmpsPub = table.getDoubleTopic("ClimbAps").publish(),
+                                climbServoPub = table.getDoubleTopic("ClimbServo").publish();
   /** Creates a new Climb. */
    public Climb() {
     ToLAconfig.inverted(Constants.INVERT_CLIMB_ROTATE);
@@ -87,5 +88,6 @@ public class Climb extends SubsystemBase {
     climbPosPub.set(toLAencoder.getPosition());
     climbSetpointPub.set(CRclimbingTargetPos);
     climbAmpsPub.set(WereClimbingToLA.getOutputCurrent());
+    climbServoPub.set(setServoPosClimbing);
    }
   }

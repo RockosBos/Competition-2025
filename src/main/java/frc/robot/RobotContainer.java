@@ -31,12 +31,14 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Commands.ClimbClimbingPosition;
 import frc.robot.Commands.ClimbInPosition;
+import frc.robot.Commands.ClimbLockServo;
 import frc.robot.Commands.ClimbCapturePosition;
 import frc.robot.Commands.RumbleController;
 import frc.robot.Commands.RumbleCooldown;
 import frc.robot.Commands.CommandGroups.Sequential.AutoIntakeLoading;
 import frc.robot.Commands.CommandGroups.Sequential.AutonomousAutoAlign;
 import frc.robot.Commands.CommandGroups.Sequential.ClimbCapture;
+import frc.robot.Commands.CommandGroups.Sequential.ClimbingPosition;
 import frc.robot.Commands.CommandGroups.Sequential.Handoff;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeFloor;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeLoading;
@@ -118,10 +120,10 @@ public class RobotContainer {
     private final PoseHandler PoseHandlerSubsystem = new PoseHandler();
     private final ControllerInputSubsystem driveControllerModified = new ControllerInputSubsystem(driverController);
 
-    public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.3048, 0.29845, 0.2159, new Rotation3d(0,0, Math.toRadians(-30.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
-    public final CameraSubsystem PhotonVisionCamera2 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 2", new Transform3d(0.3048, -0.29845, 0.2159, new Rotation3d(0,0,Math.toRadians(30.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
-    //public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0, 0, -0, new Rotation3d(0,0,0)), PoseHandlerSubsystem.getAprilTagFieldLayout());
-    //public final CameraSubsystem PhotonVisionCamera2 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 2", new Transform3d(0, 0, 0, new Rotation3d(0,0,0)), PoseHandlerSubsystem.getAprilTagFieldLayout());
+    //public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.3048, 0.29845, 0.2159, new Rotation3d(0,0, Math.toRadians(-26.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
+    public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.2794 - 0.1, 0.2794 - 0.1, 0.1793875, new Rotation3d(0,0, Math.toRadians(-26.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
+    public final CameraSubsystem PhotonVisionCamera2 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 2", new Transform3d(0.2794, -0.2794, 0.1793875, new Rotation3d(0,0,Math.toRadians(30.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
+
     
     // public final CameraSubsystem LimelightCamera = new CameraSubsystem(CameraType.LIMELIGHT, "limelight");
 
@@ -192,6 +194,7 @@ public class RobotContainer {
 
         //driverController.a().onTrue(new ClimbInPosition(climbSubsytem));
         driverController.b().onTrue(new ClimbClimbingPosition(climbSubsytem));
+        driverController.a().onTrue(new ClimbLockServo(climbSubsytem));
         driverController.y().onTrue(new ClimbCapture(elevatorSubsytem, intakeSubsystem, scoreSubsystem, climbSubsytem));
 
         // driverController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));

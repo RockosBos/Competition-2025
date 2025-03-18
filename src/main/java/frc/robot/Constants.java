@@ -27,8 +27,8 @@ public class Constants {
 
     public static final int SERVO_ID = 0;
 
-    public static final double SERVO_UNLOCKED = 130.0;
-    public static final double SERVO_LOCKED = 10.0;
+    public static final double SERVO_UNLOCKED = 145.0;
+    public static final double SERVO_LOCKED = 75.0;
 
     //Drive constant Values
 
@@ -74,7 +74,7 @@ public class Constants {
     public static final double SCORE_PIVOT_OUT_RIGHT_SHALLOW_POS = 0.65;
 
     public static final double SCORE_CLAW_CLOSED_POS = 0.44;
-    public static final double SCORE_CLAW_OPEN_POS = 0.10;
+    public static final double SCORE_CLAW_OPEN_POS = 0.12;
     public static final double SCORE_CLAW_RELEASE_POS = 0.375;
 
     public static final double SCORE_AGITATOR_INFEED_VOLTAGE = 12.0;
@@ -83,7 +83,7 @@ public class Constants {
     //Climb Constant Values
 
     public static final double CLIMB_IN_POS = 0.0;
-    public static final double CLIMB_CLIMBING_POS = 170.0 * 0.555;
+    public static final double CLIMB_CLIMBING_POS = 160.0 * 0.555;
     public static final double CLIMB_CAPTURE_POS = 383.0 * 0.555;
 
     //Absolute Encoder offsets
@@ -170,7 +170,7 @@ public class Constants {
     public static final double MAX_OUTPUT_SCORE_CLAW = 0.25;
     public static final double MIN_OUTPUT_SCORE_CLAW = -0.25;
 
-    public static final double P_CLIMB = 0.1;
+    public static final double P_CLIMB = 1.0;
     public static final double MAX_OUTPUT_CLIMB = 1.0;
     public static final double MIN_OUTPUT_CLIMB = -1.0;
     
