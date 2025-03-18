@@ -84,7 +84,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "L1"
+                        "name": "L4"
                       }
                     }
                   ]
@@ -102,7 +102,32 @@
         {
           "type": "named",
           "data": {
-            "name": "ScoreCoral"
+            "name": "ReleaseClaw"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OpenClaw"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Near Right Score to Right Loading"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoIntakeLoading"
+                }
+              }
+            ]
           }
         }
       ]
