@@ -189,6 +189,11 @@ public class Constants {
     public static final double THRESHOLD_LASERCAN_INTAKE_LEFT = 50; //In mm
     public static final double THRESHOLD_LASERCAN_INTAKE_RIGHT = 50; //In mm
 
+    //LED Constants
+
+    public static final int LED_ID = 1;
+    public static final int LED_SIZE = 30;
+
     public static class SCORING_POSES{
         public class CENTER_NEAR{
             public static final double X = 3.34;

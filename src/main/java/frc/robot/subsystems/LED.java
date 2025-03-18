@@ -6,6 +6,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class LED extends SubsystemBase {
@@ -13,6 +14,12 @@ public class LED extends SubsystemBase {
 
   AddressableLED ledStrip;
   AddressableLEDBuffer ledBuffer;
+  Timer timer = new Timer();
+  double frequency = 0;
+
+  int r = 0, g = 0, b = 0;
+  //int i = 0;
+  String pattern;
 
   int ledStripID, size;
   public LED(int ledStripID, int size) {
@@ -21,10 +28,64 @@ public class LED extends SubsystemBase {
 
     ledStrip = new AddressableLED(this.ledStripID);
     ledBuffer = new AddressableLEDBuffer(this.size);
+
+    for(int i = 0; i < this.size; i++){
+      ledBuffer.setRGB(i, 255, 255, 255);
+    }
+
+    ledStrip.setData(ledBuffer);
+    ledStrip.start();
+  }
+
+  public void setSolidColor(int r, int g, int b){
+    pattern = "solid";
+    this.r = r;
+    this.g = g;
+    this.b = b;
+  }
+
+  public void setBlinkColor(int r, int g, int b, double frequency){
+    pattern = "blink";
+    this.r = r;
+    this.g = g;
+    this.b = b;
+    this.frequency = frequency;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    switch (pattern) {
+      case "solid":
+        for(int i = 0; i < this.size; i++){
+          ledBuffer.setRGB(i, r, g, b);
+        }
+        break;
+    
+      case "blink":
+        if(timer.get() < frequency / 2){
+          for(int i = 0; i < this.size; i++){
+            ledBuffer.setRGB(i, r, g, b);
+          }
+        }
+        else if(timer.get() < frequency){
+          for(int i = 0; i < this.size; i++){
+            ledBuffer.setRGB(i, 0, 0, 0);
+          }
+        }
+        else{
+          timer.reset();
+        }
+        break;
+
+      default:
+        for(int i = 0; i < this.size; i++){
+          ledBuffer.setRGB(i, 255, 255, 255);
+        }
+        break;
+    }
+  
+    ledStrip.setData(ledBuffer);
+  
   }
 }

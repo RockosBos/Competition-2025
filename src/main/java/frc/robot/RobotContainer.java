@@ -29,12 +29,12 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.Commands.ClimbClimbingPosition;
-import frc.robot.Commands.ClimbInPosition;
-import frc.robot.Commands.ClimbLockServo;
-import frc.robot.Commands.ClimbCapturePosition;
 import frc.robot.Commands.RumbleController;
 import frc.robot.Commands.RumbleCooldown;
+import frc.robot.Commands.Climb.ClimbCapturePosition;
+import frc.robot.Commands.Climb.ClimbClimbingPosition;
+import frc.robot.Commands.Climb.ClimbInPosition;
+import frc.robot.Commands.Climb.ClimbLockServo;
 import frc.robot.Commands.CommandGroups.Sequential.AutoIntakeLoading;
 import frc.robot.Commands.CommandGroups.Sequential.AutonomousAutoAlign;
 import frc.robot.Commands.CommandGroups.Sequential.ClimbCapture;
@@ -67,6 +67,8 @@ import frc.robot.Commands.Intake.IntakeRollerOff;
 import frc.robot.Commands.Intake.L1IntakePos;
 import frc.robot.Commands.Intake.LoadingIntakePosition;
 import frc.robot.Commands.Intake.OutfeedRoller;
+import frc.robot.Commands.LED.SetBlinkColor;
+import frc.robot.Commands.LED.SetSolidColor;
 import frc.robot.Commands.Score.AgitatorOn;
 import frc.robot.Commands.Score.ClawClosed;
 import frc.robot.Commands.Score.ClawOpened;
@@ -86,6 +88,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ControllerInputSubsystem;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.PoseHandler;
 import frc.robot.subsystems.Score;
 
@@ -119,6 +122,7 @@ public class RobotContainer {
     private final Climb climbSubsytem = new Climb();
     private final PoseHandler PoseHandlerSubsystem = new PoseHandler();
     private final ControllerInputSubsystem driveControllerModified = new ControllerInputSubsystem(driverController);
+    private final LED ledSubsystem = new LED(Constants.LED_ID, Constants.LED_SIZE);
 
     //public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.3048, 0.29845, 0.2159, new Rotation3d(0,0, Math.toRadians(-26.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
     public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.2794 - 0.1, 0.2794 - 0.1, 0.1793875, new Rotation3d(0,0, Math.toRadians(-26.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
@@ -141,6 +145,8 @@ public class RobotContainer {
                                             Math.abs(drivetrain.getPigeon2().getRoll().getValueAsDouble()) > Constants.TIP_PROTECTION_THRESHOLD_ROLL ||
                                             Math.abs(drivetrain.getPigeon2().getPitch().getValueAsDouble()) > Constants.TIP_PROTECTION_THRESHOLD_ROLL);
 
+    private final Trigger disabledBluealliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Blue);
+    private final Trigger disabledRedalliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Red);
     //Chooser for Autonomous Modes
     private final SendableChooser<Command> autoChooser;
 
@@ -241,9 +247,14 @@ public class RobotContainer {
         operaterController.povUp().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        hasCoral.onTrue(new SetBlinkColor(ledSubsystem, 0, 255, 0, 0.25));
         hasCoralRumble.onTrue(new RumbleController(driverController, 0.5));
         hasCoral.onFalse(new RumbleCooldown(rumbleCooldown));
+        hasCoral.onTrue(new SetSolidColor(ledSubsystem, 0, 0, 255));
         tipProtection.onTrue(new TipProtection(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+
+        disabledBluealliance.whileTrue(new SetBlinkColor(ledSubsystem, 0, 0, 255, 0.25));
+        disabledRedalliance.whileTrue(new SetBlinkColor(ledSubsystem, 255, 0, 0, 0.25));
         
 
         //Telemetry

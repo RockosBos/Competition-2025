@@ -5,8 +5,8 @@
 package frc.robot.Commands.CommandGroups.Sequential;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Commands.ClimbClimbingPosition;
-import frc.robot.Commands.ClimbLockServo;
+import frc.robot.Commands.Climb.ClimbClimbingPosition;
+import frc.robot.Commands.Climb.ClimbLockServo;
 import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;

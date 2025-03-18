@@ -6,7 +6,7 @@ package frc.robot.Commands.CommandGroups.Sequential;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Commands.ClimbCapturePosition;
+import frc.robot.Commands.Climb.ClimbCapturePosition;
 import frc.robot.Commands.Elevator.BothEleLow;
 import frc.robot.Commands.Intake.HandOffIntakePos;
 import frc.robot.Commands.Score.AgitatorOff;

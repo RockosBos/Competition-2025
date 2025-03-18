@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.76608606557377,
+        "x": 6.521311475409835,
         "y": 4.05
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.077766393442623,
-        "y": 4.04298155737705
+        "x": 6.596935211305087,
+        "y": 5.865112704918032
       },
       "isLocked": false,
-      "linkedName": "Far Center Score"
+      "linkedName": "Center Score Retreat"
     },
     {
       "anchor": {
-        "x": 6.521311475409835,
-        "y": 4.05
+        "x": 1.1388319672131146,
+        "y": 7.435502049180327
       },
       "prevControl": {
-        "x": 6.245594262295082,
-        "y": 4.030993852459016
+        "x": 4.207684426229509,
+        "y": 7.903022540983606
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Center Score Retreat"
+      "linkedName": "Loading Left"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 179.65072764139305
+    "rotation": 131.34777721969368
   },
   "reversed": false,
   "folder": "Center Start",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -179.55585556688806
+    "rotation": 179.65072764139305
   },
   "useDefaultConstraints": true
 }

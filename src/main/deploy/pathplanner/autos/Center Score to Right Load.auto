@@ -1,0 +1,68 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "Handoff"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center Base to Center Score"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ReleaseClaw"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OpenClaw"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AutoIntakeLoading"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Central Score Retreat"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center to Right Loading"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
