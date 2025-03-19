@@ -29,6 +29,7 @@ public class SetSolidColor extends Command {
   @Override
   public void execute() {
     LEDSubsystem.setSolidColor(r, g, b);
+    System.out.println("Test");
   }
 
   // Called once the command ends or is interrupted.

@@ -250,7 +250,7 @@ public class RobotContainer {
         hasCoral.onTrue(new SetBlinkColor(ledSubsystem, 0, 255, 0, 0.25));
         hasCoralRumble.onTrue(new RumbleController(driverController, 0.5));
         hasCoral.onFalse(new RumbleCooldown(rumbleCooldown));
-        hasCoral.onTrue(new SetSolidColor(ledSubsystem, 0, 0, 255));
+        hasCoral.onFalse(new SetSolidColor(ledSubsystem, 0, 0, 255));
         tipProtection.onTrue(new TipProtection(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         disabledBluealliance.whileTrue(new SetBlinkColor(ledSubsystem, 0, 0, 255, 0.25));

@@ -14,8 +14,8 @@ public class ControllerInputSubsystem extends SubsystemBase {
   /** Creates a new ControllerInputSubsystem. */
 
   CommandXboxController controller;
-  SlewRateLimiter xLimiter = new SlewRateLimiter(10.0);
-  SlewRateLimiter yLimiter = new SlewRateLimiter(10.0);
+  SlewRateLimiter xLimiter = new SlewRateLimiter(5.0);
+  SlewRateLimiter yLimiter = new SlewRateLimiter(5.0);
 
   public ControllerInputSubsystem(CommandXboxController controller) {
     this.controller = controller;

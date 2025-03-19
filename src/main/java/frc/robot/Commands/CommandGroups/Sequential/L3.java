@@ -43,6 +43,7 @@ public class L3 extends SequentialCommandGroup {
     this.s_Score = s_Score;
 
     addCommands(
+      new ClawClosed(s_Score),
       new ParallelCommandGroup(new ScoreEleL3Position(e_Elevator), new AgitatorOn(s_Score), new OutfeedRollerHandoff(i_Intake)),
       new ParallelCommandGroup(new ScoreSetScoreShallow(s_Score)),
       new IntakeRollerOff(i_Intake),

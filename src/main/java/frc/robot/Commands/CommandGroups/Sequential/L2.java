@@ -42,6 +42,7 @@ public class L2 extends SequentialCommandGroup {
     this.s_Score = s_Score;
 
     addCommands(
+      new ClawClosed(s_Score),
       new IntakeEleFloorPos(e_Elevator),
       new ParallelCommandGroup(new ScoreEleL2Position(e_Elevator), new AgitatorOn(s_Score), new OutfeedRollerHandoff(i_Intake)),
       new ParallelCommandGroup(new ScoreSetScoreShallow(s_Score)),

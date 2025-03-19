@@ -9,19 +9,19 @@
       "prevControl": null,
       "nextControl": {
         "x": 2.0618852458989005,
-        "y": 1.8732069672164176
+        "y": 1.8732069672164173
       },
       "isLocked": false,
       "linkedName": "Right Loading"
     },
     {
       "anchor": {
-        "x": 3.7761270491803276,
-        "y": 2.820235655737705
+        "x": 4.05,
+        "y": 3.22
       },
       "prevControl": {
-        "x": 3.056864754098361,
-        "y": 2.02904713114754
+        "x": 3.3307377049180333,
+        "y": 2.4288114754098356
       },
       "nextControl": null,
       "isLocked": false,

@@ -41,6 +41,7 @@ public class L4 extends SequentialCommandGroup {
     this.s_Score = s_Score;
 
     addCommands(
+      new ClawClosed(s_Score),
       new ParallelCommandGroup(new ScoreEleL4Position(e_Elevator), new AgitatorOn(s_Score), new OutfeedRollerHandoff(i_Intake)),
       new ParallelCommandGroup(new ScoreSetScore(s_Score)),
       new IntakeRollerOff(i_Intake),

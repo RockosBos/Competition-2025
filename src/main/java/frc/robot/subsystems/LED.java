@@ -17,9 +17,9 @@ public class LED extends SubsystemBase {
   Timer timer = new Timer();
   double frequency = 0;
 
-  int r = 0, g = 0, b = 0;
+  int r = 255, g = 255, b = 255;
   //int i = 0;
-  String pattern;
+  String pattern = "solid";
 
   int ledStripID, size;
   public LED(int ledStripID, int size) {
@@ -29,10 +29,7 @@ public class LED extends SubsystemBase {
     ledStrip = new AddressableLED(this.ledStripID);
     ledBuffer = new AddressableLEDBuffer(this.size);
 
-    for(int i = 0; i < this.size; i++){
-      ledBuffer.setRGB(i, 255, 255, 255);
-    }
-
+    ledStrip.setLength(size);
     ledStrip.setData(ledBuffer);
     ledStrip.start();
   }

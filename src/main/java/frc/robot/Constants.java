@@ -42,14 +42,14 @@ public class Constants {
     public static final double INTAKE_ROLLER_HANDOFF_VOLTAGE = -0.8;
     
 
-    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 3.765;
+    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 3.88;
     public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 40.5;
-    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 29.0;
+    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 29.5;
     public static final double INTAKE_ELEVATOR_L1_POS = 33.75;
     public static final double INTAKE_ELEVATOR_L1_FAILOP_POS = 26.25;
 
-    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.66 - 0.06;
-    public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.36 - 0.06;
+    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.68 - 0.06;
+    public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.38 - 0.06;
     public static final double INTAKE_ROTATE_HANDOFF_POS = 0.335 - 0.06;
     public static final double INTAKE_ROTATE_L1_POS = 0.55 - 0.06;
     public static final double INTAKE_ROTATE_L1_FAILOP_POS = 0.42 - 0.06;
@@ -88,7 +88,7 @@ public class Constants {
 
     //Absolute Encoder offsets
 
-    public static final double OFFSET_INTAKE_ROTATE_ABS = 0.3297 - 0.25;
+    public static final double OFFSET_INTAKE_ROTATE_ABS = 0.8731449 - 0.25;
     public static final double OFFSET_SCORE_ROTATE_ABS = 0.7756 - 0.20;
     public static final double OFFSET_SCORE_PIVOT_ABS = 0.23 + 0.5;
     public static final double OFFSET_SCORE_CLAW_ABS = 0.595 - 0.1;
@@ -120,7 +120,7 @@ public class Constants {
     public static final boolean INVERT_SCORE_CLAW_ABS = false;
     public static final boolean INVERT_INTAKE_ROTATE_ABS = false;
 
-    public static final double RAMPRATE_INTAKE_ELEVATOR = 0.15;
+    public static final double RAMPRATE_INTAKE_ELEVATOR = 0.2;
     public static final double RAMPRATE_SCORE_ELEVATOR = 0.275;
     public static final double RAMPRATE_INTAKE_ROTATE = 0.05;
     public static final double RAMPRATE_INTAKE_ROLLER = 0.1;
@@ -148,7 +148,7 @@ public class Constants {
     public static final double MAX_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = -0.3;
 
-    public static final double P_SCORE_ELEVATOR = 0.04;
+    public static final double P_SCORE_ELEVATOR = 0.075;
     public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.9;
     public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.9;
     public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;
@@ -191,43 +191,43 @@ public class Constants {
 
     //LED Constants
 
-    public static final int LED_ID = 1;
-    public static final int LED_SIZE = 30;
+    public static final int LED_ID = 2;
+    public static final int LED_SIZE = 20;
 
     public static class SCORING_POSES{
         public class CENTER_NEAR{
-            public static final double X = 3.34;
-            public static final double Y = 4.03;
+            public static final double X = 3.57;
+            public static final double Y = 3.94;
             public static final double T = 0.0;
         }
 
         public static final class CENTER_FAR{
-            public static final double X = 5.64;
-            public static final double Y = 4.03;
+            public static final double X = 5.39;
+            public static final double Y = 4.05;
             public static final double T = 180.0;
         }
 
         public static final class LEFT_NEAR{
-            public static final double X = 3.91;
-            public static final double Y = 5.02;
+            public static final double X = 3.95;
+            public static final double Y = 4.80;
             public static final double T = -60.0;
         }
 
         public static final class LEFT_FAR{
-            public static final double X = 5.07;
-            public static final double Y = 5.01;
+            public static final double X = 4.82;
+            public static final double Y = 4.89;
             public static final double T = -120.0;
         }
 
         public static final class RIGHT_NEAR{
-            public static final double X = 3.92;
-            public static final double Y = 3.02;
+            public static final double X = 4.05;
+            public static final double Y = 3.22;
             public static final double T = 60.0;
         }
 
         public static final class RIGHT_FAR{
-            public static final double X = 5.03;
-            public static final double Y = 3.05;
+            public static final double X = 5.04;
+            public static final double Y = 3.22;
             public static final double T = 120.0;
         }
     };

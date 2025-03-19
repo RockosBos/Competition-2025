@@ -31,6 +31,7 @@ public class SetBlinkColor extends Command {
   @Override
   public void execute() {
     LEDSubsystem.setBlinkColor(r, g, b, frequency);
+    System.out.println("Blink");
   }
 
   // Called once the command ends or is interrupted.
