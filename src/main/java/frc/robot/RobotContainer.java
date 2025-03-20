@@ -18,9 +18,12 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.LEDPattern.GradientType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -47,6 +50,7 @@ import frc.robot.Commands.CommandGroups.Sequential.L1FailOp;
 import frc.robot.Commands.CommandGroups.Sequential.L2;
 import frc.robot.Commands.CommandGroups.Sequential.L3;
 import frc.robot.Commands.CommandGroups.Sequential.L4;
+import frc.robot.Commands.CommandGroups.Sequential.RemoveHighAlgae;
 import frc.robot.Commands.CommandGroups.Sequential.ResetElevators;
 import frc.robot.Commands.CommandGroups.Sequential.ScoreCoral;
 import frc.robot.Commands.CommandGroups.Sequential.SetScoreLeftandUpdate;
@@ -67,8 +71,7 @@ import frc.robot.Commands.Intake.IntakeRollerOff;
 import frc.robot.Commands.Intake.L1IntakePos;
 import frc.robot.Commands.Intake.LoadingIntakePosition;
 import frc.robot.Commands.Intake.OutfeedRoller;
-import frc.robot.Commands.LED.SetBlinkColor;
-import frc.robot.Commands.LED.SetSolidColor;
+import frc.robot.Commands.LED.SetLED;
 import frc.robot.Commands.Score.AgitatorOn;
 import frc.robot.Commands.Score.ClawClosed;
 import frc.robot.Commands.Score.ClawOpened;
@@ -242,19 +245,19 @@ public class RobotContainer {
         operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
-        operaterController.rightBumper().onTrue(new L1FailOp(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        operaterController.rightBumper().onTrue(new RemoveHighAlgae(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         operaterController.povUp().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        hasCoral.onTrue(new SetBlinkColor(ledSubsystem, 0, 255, 0, 0.25));
+        hasCoral.onTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kGreen), Color.kGreen));
         hasCoralRumble.onTrue(new RumbleController(driverController, 0.5));
         hasCoral.onFalse(new RumbleCooldown(rumbleCooldown));
-        hasCoral.onFalse(new SetSolidColor(ledSubsystem, 0, 0, 255));
+        hasCoral.onFalse(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kGreen));
         tipProtection.onTrue(new TipProtection(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
-        disabledBluealliance.whileTrue(new SetBlinkColor(ledSubsystem, 0, 0, 255, 0.25));
-        disabledRedalliance.whileTrue(new SetBlinkColor(ledSubsystem, 255, 0, 0, 0.25));
+        disabledBluealliance.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kBlue));
+        disabledRedalliance.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kRed), Color.kRed));
         
 
         //Telemetry

@@ -48,20 +48,22 @@ public class Constants {
     public static final double INTAKE_ELEVATOR_L1_POS = 33.75;
     public static final double INTAKE_ELEVATOR_L1_FAILOP_POS = 26.25;
 
-    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.68 - 0.06;
-    public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.38 - 0.06;
-    public static final double INTAKE_ROTATE_HANDOFF_POS = 0.335 - 0.06;
-    public static final double INTAKE_ROTATE_L1_POS = 0.55 - 0.06;
-    public static final double INTAKE_ROTATE_L1_FAILOP_POS = 0.42 - 0.06;
+    public static final double INTAKE_ROTATE_FLOOR_INTAKE_POS = 0.62;
+    public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.32;
+    public static final double INTAKE_ROTATE_HANDOFF_POS = 0.275;
+    public static final double INTAKE_ROTATE_L1_POS = 0.49;
+    public static final double INTAKE_ROTATE_L1_FAILOP_POS = 0.36;
 
     //Score Arm Constant Values
 
-    public static final double SCORE_ELEVATOR_INTAKE_POSITION = 4.8 * 0.6;
-    public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 33.75 * 0.6;
-    public static final double SCORE_ELEVATOR_L2_POS = 6.375 * 0.6;
-    public static final double SCORE_ELEVATOR_L3_POS = 52.5 * 0.6;
-    public static final double SCORE_ELEVATOR_L4_POS = 118.875 * 0.6;
-    public static final double SCORE_HANDOFF_POS = 3.25 * 0.6;
+    public static final double SCORE_ELEVATOR_INTAKE_POSITION = 2.88;
+    public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 20.25;
+    public static final double SCORE_ELEVATOR_L2_POS = 3.825;
+    public static final double SCORE_ELEVATOR_L3_POS = 31.5;
+    public static final double SCORE_ELEVATOR_L4_POS = 71.325;
+    public static final double SCORE_HANDOFF_POS = 1.95;
+    public static final double SCORE_ELEVATOR_REMOVE_ALGAE_HIGH = 40.0;
+
 
     public static final double SCORE_ROTATE_LEFT_POS = 0.197;
     public static final double SCORE_ROTATE_RIGHT_POS = 0.704;
@@ -83,8 +85,8 @@ public class Constants {
     //Climb Constant Values
 
     public static final double CLIMB_IN_POS = 0.0;
-    public static final double CLIMB_CLIMBING_POS = 175.0 * 0.555;
-    public static final double CLIMB_CAPTURE_POS = 383.0 * 0.555;
+    public static final double CLIMB_CLIMBING_POS = 97.125;
+    public static final double CLIMB_CAPTURE_POS = 212.565;
 
     //Absolute Encoder offsets
 

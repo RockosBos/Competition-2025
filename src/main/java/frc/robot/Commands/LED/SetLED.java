@@ -4,22 +4,22 @@
 
 package frc.robot.Commands.LED;
 
+import edu.wpi.first.wpilibj.LEDPattern;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.LED;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class SetBlinkColor extends Command {
+public class SetLED extends Command {
 
   LED LEDSubsystem;
-  int r,g,b;
-  double frequency;
+  LEDPattern pattern;
+  Color color;
   /** Creates a new SetSolidColor. */
-  public SetBlinkColor(LED LEDSubsystem, int r, int g, int b, double frequency) {
+  public SetLED(LED LEDSubsystem, LEDPattern pattern, Color color) {
     this.LEDSubsystem = LEDSubsystem;
-    this.r = r;
-    this.g = g;
-    this.b = b;
-    this.frequency = frequency;
+    this.pattern = pattern;
+    this.color = color;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -30,8 +30,8 @@ public class SetBlinkColor extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    LEDSubsystem.setBlinkColor(r, g, b, frequency);
-    System.out.println("Blink");
+    LEDSubsystem.setColor(color);
+    LEDSubsystem.setPattern(pattern);
   }
 
   // Called once the command ends or is interrupted.
