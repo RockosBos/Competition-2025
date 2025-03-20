@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.422140129337874,
-        "y": -0.10476434426229542
+        "x": 5.034836065578431,
+        "y": -0.27259221311421733
       },
       "isLocked": false,
       "linkedName": "Center Score Retreat"
@@ -20,8 +20,8 @@
         "y": 1.0340676229508199
       },
       "prevControl": {
-        "x": 4.351536885245901,
-        "y": 0.5665471311475402
+        "x": 4.243647540983606,
+        "y": 1.9091700819672122
       },
       "nextControl": null,
       "isLocked": false,

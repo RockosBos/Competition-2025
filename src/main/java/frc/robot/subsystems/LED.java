@@ -32,6 +32,8 @@ public class LED extends SubsystemBase {
     ledStrip.setLength(size);
     ledStrip.setData(ledBuffer);
     ledStrip.start();
+
+    timer.start();
   }
 
   public void setSolidColor(int r, int g, int b){

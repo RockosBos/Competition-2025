@@ -42,7 +42,7 @@ public class Constants {
     public static final double INTAKE_ROLLER_HANDOFF_VOLTAGE = -0.8;
     
 
-    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 3.88;
+    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 3.9;
     public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 40.5;
     public static final double INTAKE_ELEVATOR_HANDOFF_POS = 29.5;
     public static final double INTAKE_ELEVATOR_L1_POS = 33.75;
@@ -83,7 +83,7 @@ public class Constants {
     //Climb Constant Values
 
     public static final double CLIMB_IN_POS = 0.0;
-    public static final double CLIMB_CLIMBING_POS = 160.0 * 0.555;
+    public static final double CLIMB_CLIMBING_POS = 175.0 * 0.555;
     public static final double CLIMB_CAPTURE_POS = 383.0 * 0.555;
 
     //Absolute Encoder offsets
