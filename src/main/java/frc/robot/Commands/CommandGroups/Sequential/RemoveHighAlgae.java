@@ -21,6 +21,7 @@ import frc.robot.Commands.Score.AgitatorOn;
 import frc.robot.Commands.Score.ClawClosed;
 import frc.robot.Commands.Score.ClawOpened;
 import frc.robot.Commands.Score.ClawRelease;
+import frc.robot.Commands.Score.ScoreSetCenter;
 import frc.robot.Commands.Score.ScoreSetScore;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -43,8 +44,8 @@ public class RemoveHighAlgae extends SequentialCommandGroup {
 
     addCommands(
       new ClawClosed(s_Score),
+      new ScoreSetCenter(s_Score),
       new ParallelCommandGroup(new ScoreEleAlgaeHigh(e_Elevator), new AgitatorOn(s_Score), new OutfeedRollerHandoff(i_Intake)),
-      new ParallelCommandGroup(new ScoreSetScore(s_Score)),
       new IntakeRollerOff(i_Intake),
       new AgitatorOff(s_Score)
     );
