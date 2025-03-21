@@ -18,9 +18,12 @@ import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.LEDPattern.GradientType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -29,21 +32,25 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.Commands.ClimbClimbingPosition;
-import frc.robot.Commands.ClimbInPosition;
-import frc.robot.Commands.ClimbCapturePosition;
 import frc.robot.Commands.RumbleController;
 import frc.robot.Commands.RumbleCooldown;
+import frc.robot.Commands.Climb.ClimbCapturePosition;
+import frc.robot.Commands.Climb.ClimbClimbingPosition;
+import frc.robot.Commands.Climb.ClimbInPosition;
+import frc.robot.Commands.Climb.ClimbLockServo;
 import frc.robot.Commands.CommandGroups.Sequential.AutoIntakeLoading;
 import frc.robot.Commands.CommandGroups.Sequential.AutonomousAutoAlign;
 import frc.robot.Commands.CommandGroups.Sequential.ClimbCapture;
+import frc.robot.Commands.CommandGroups.Sequential.ClimbingPosition;
 import frc.robot.Commands.CommandGroups.Sequential.Handoff;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeFloor;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeLoading;
 import frc.robot.Commands.CommandGroups.Sequential.L1;
+import frc.robot.Commands.CommandGroups.Sequential.L1FailOp;
 import frc.robot.Commands.CommandGroups.Sequential.L2;
 import frc.robot.Commands.CommandGroups.Sequential.L3;
 import frc.robot.Commands.CommandGroups.Sequential.L4;
+import frc.robot.Commands.CommandGroups.Sequential.RemoveHighAlgae;
 import frc.robot.Commands.CommandGroups.Sequential.ResetElevators;
 import frc.robot.Commands.CommandGroups.Sequential.ScoreCoral;
 import frc.robot.Commands.CommandGroups.Sequential.SetScoreLeftandUpdate;
@@ -64,10 +71,13 @@ import frc.robot.Commands.Intake.IntakeRollerOff;
 import frc.robot.Commands.Intake.L1IntakePos;
 import frc.robot.Commands.Intake.LoadingIntakePosition;
 import frc.robot.Commands.Intake.OutfeedRoller;
+import frc.robot.Commands.LED.SetLED;
 import frc.robot.Commands.Score.AgitatorOn;
 import frc.robot.Commands.Score.ClawClosed;
 import frc.robot.Commands.Score.ClawOpened;
 import frc.robot.Commands.Score.ClawRelease;
+import frc.robot.Commands.Score.FailOpDisable;
+import frc.robot.Commands.Score.FailOpEnable;
 import frc.robot.Commands.Score.HandoffScorePosition;
 import frc.robot.Commands.Score.ScoreLeftState;
 import frc.robot.Commands.Score.ScoreRightState;
@@ -81,6 +91,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ControllerInputSubsystem;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.LED;
 import frc.robot.subsystems.PoseHandler;
 import frc.robot.subsystems.Score;
 
@@ -114,11 +125,12 @@ public class RobotContainer {
     private final Climb climbSubsytem = new Climb();
     private final PoseHandler PoseHandlerSubsystem = new PoseHandler();
     private final ControllerInputSubsystem driveControllerModified = new ControllerInputSubsystem(driverController);
+    private final LED ledSubsystem = new LED(Constants.LED_ID, Constants.LED_SIZE);
 
-    public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.0762, 0.252349, 0.0271018, new Rotation3d(0,0,0)), PoseHandlerSubsystem.getAprilTagFieldLayout());
-    public final CameraSubsystem PhotonVisionCamera2 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 2", new Transform3d(0.0762, -0.252349, 0.0271018, new Rotation3d(0,0,0)), PoseHandlerSubsystem.getAprilTagFieldLayout());
-    //public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0, 0, -0, new Rotation3d(0,0,0)), PoseHandlerSubsystem.getAprilTagFieldLayout());
-    //public final CameraSubsystem PhotonVisionCamera2 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 2", new Transform3d(0, 0, 0, new Rotation3d(0,0,0)), PoseHandlerSubsystem.getAprilTagFieldLayout());
+    //public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.3048, 0.29845, 0.2159, new Rotation3d(0,0, Math.toRadians(-26.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
+    public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.2794 - 0.1, 0.2794 - 0.1, 0.1793875, new Rotation3d(0,Math.toRadians(15.0), Math.toRadians(-26.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
+    public final CameraSubsystem PhotonVisionCamera2 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 2", new Transform3d(0.2794, -0.2794, 0.1793875, new Rotation3d(0,Math.toRadians(15.0), Math.toRadians(30.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
+
     
     // public final CameraSubsystem LimelightCamera = new CameraSubsystem(CameraType.LIMELIGHT, "limelight");
 
@@ -136,6 +148,8 @@ public class RobotContainer {
                                             Math.abs(drivetrain.getPigeon2().getRoll().getValueAsDouble()) > Constants.TIP_PROTECTION_THRESHOLD_ROLL ||
                                             Math.abs(drivetrain.getPigeon2().getPitch().getValueAsDouble()) > Constants.TIP_PROTECTION_THRESHOLD_ROLL);
 
+    //private final Trigger disabledBluealliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Blue);
+    //private final Trigger disabledRedalliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Red);
     //Chooser for Autonomous Modes
     private final SendableChooser<Command> autoChooser;
 
@@ -189,6 +203,7 @@ public class RobotContainer {
 
         //driverController.a().onTrue(new ClimbInPosition(climbSubsytem));
         driverController.b().onTrue(new ClimbClimbingPosition(climbSubsytem));
+        driverController.a().onTrue(new ClimbLockServo(climbSubsytem));
         driverController.y().onTrue(new ClimbCapture(elevatorSubsytem, intakeSubsystem, scoreSubsystem, climbSubsytem));
 
         // driverController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
@@ -213,8 +228,8 @@ public class RobotContainer {
         // // );
         driverController.rightBumper().whileTrue(new DriveToNearestScore(drivetrain, PoseHandlerSubsystem));
         driverController.rightBumper().whileTrue(new UpdateCameras(PhotonVisionCamera1, PhotonVisionCamera2));
-        // driverController.leftBumper().whileTrue(new DriveToNearestLoading(drivetrain, PoseHandlerSubsystem));
-        // driverController.leftBumper().whileTrue(new UpdateCameras(PhotonVisionCamera1, PhotonVisionCamera2));
+        driverController.povUp().onTrue(new FailOpDisable(scoreSubsystem));
+        driverController.povDown().onTrue(new FailOpEnable(scoreSubsystem));
 
         //Operator Controller
 
@@ -230,12 +245,19 @@ public class RobotContainer {
         operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
+        operaterController.rightBumper().onTrue(new RemoveHighAlgae(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+
         operaterController.povUp().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        hasCoral.onTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kGreen), Color.kGreen));
         hasCoralRumble.onTrue(new RumbleController(driverController, 0.5));
         hasCoral.onFalse(new RumbleCooldown(rumbleCooldown));
+        hasCoral.onFalse(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kGreen));
         tipProtection.onTrue(new TipProtection(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+
+        //disabledBluealliance.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kBlue));
+        //disabledRedalliance.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kRed), Color.kRed));
         
 
         //Telemetry

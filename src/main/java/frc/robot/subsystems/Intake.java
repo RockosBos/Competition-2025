@@ -35,7 +35,7 @@ import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
   //Motor Definitions
-  private SparkFlex IntakeIn = new SparkFlex(Constants.ID_INTAKE_ROLLER, MotorType.kBrushless);
+  private SparkMax IntakeIn = new SparkMax(Constants.ID_INTAKE_ROLLER, MotorType.kBrushless);
   private SparkMax IntakeRotate = new SparkMax(Constants.ID_INTAKE_ROTATE, MotorType.kBrushless);
 
   //PID Controller and Encoder Definitions
@@ -43,7 +43,7 @@ public class Intake extends SubsystemBase {
   private AbsoluteEncoder intakeAbsEncoder = IntakeRotate.getAbsoluteEncoder();
 
   //Configuration Definitions
-  private SparkFlexConfig intakeInConfig = new SparkFlexConfig();
+  private SparkMaxConfig intakeInConfig = new SparkMaxConfig();
   private SparkMaxConfig intakeRotateConfig = new SparkMaxConfig();
   private AbsoluteEncoderConfig IAEC = new AbsoluteEncoderConfig();
 

@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.Commands;
+package frc.robot.Commands.Climb;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
@@ -26,14 +26,13 @@ public class ClimbClimbingPosition extends Command {
   @Override
   public void execute() {
     c_Climb.setClimbTargetPosition(Constants.CLIMB_CLIMBING_POS);
+    c_Climb.setServoClimbingToLAPos(Constants.SERVO_UNLOCKED);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if (!interrupted) {
-      c_Climb.setServoClimbingToLAPos(Constants.SERVO_LOCKED);
-    }
+    
   }
 
   // Returns true when the command should end.

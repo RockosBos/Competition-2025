@@ -99,7 +99,7 @@ public class Elevator extends SubsystemBase {
    .p(Constants.P_SCORE_ELEVATOR)
    .i(0)
    .d(0)
-   .velocityFF(0)
+   .velocityFF(0.0005)
    .outputRange(Constants.MIN_OUTPUT_SCORE_ELEVATOR, Constants.MAX_OUTPUT_SCORE_ELEVATOR);
 
     ScoreEle.configure(ConfigScore, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);

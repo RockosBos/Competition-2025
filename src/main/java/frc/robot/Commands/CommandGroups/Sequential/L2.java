@@ -10,6 +10,7 @@ import frc.robot.Commands.Elevator.IntakeEleFloorPos;
 import frc.robot.Commands.Elevator.IntakeEleHandoffPos;
 import frc.robot.Commands.Elevator.ScoreEleHandoffPos;
 import frc.robot.Commands.Elevator.ScoreEleL2Position;
+import frc.robot.Commands.Elevator.ScoreEleL4Position;
 import frc.robot.Commands.Intake.IntakeIdle;
 import frc.robot.Commands.Intake.IntakeRollerOff;
 import frc.robot.Commands.Intake.L1IntakePos;
@@ -41,12 +42,9 @@ public class L2 extends SequentialCommandGroup {
     this.s_Score = s_Score;
 
     addCommands(
-      new IntakeEleHandoffPos(e_Elevator),
-      new ScoreEleHandoffPos(e_Elevator),
       new ClawClosed(s_Score),
-      new ParallelCommandGroup(new IntakeIdle(i_Intake), new IntakeEleFloorPos(e_Elevator)),
-      new ParallelCommandGroup(new ScoreEleL2Position(e_Elevator), new OutfeedRollerHandoff(i_Intake)),
-      new AgitatorOff(s_Score),
+      new IntakeEleFloorPos(e_Elevator),
+      new ParallelCommandGroup(new ScoreEleL2Position(e_Elevator), new AgitatorOn(s_Score), new OutfeedRollerHandoff(i_Intake)),
       new ParallelCommandGroup(new ScoreSetScoreShallow(s_Score)),
       new IntakeRollerOff(i_Intake),
       new AgitatorOff(s_Score)

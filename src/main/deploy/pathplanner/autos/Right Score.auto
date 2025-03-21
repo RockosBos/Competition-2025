@@ -84,7 +84,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "L1"
+                        "name": "L4"
                       }
                     }
                   ]
@@ -102,7 +102,13 @@
         {
           "type": "named",
           "data": {
-            "name": "ScoreCoral"
+            "name": "ReleaseClaw"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OpenClaw"
           }
         }
       ]

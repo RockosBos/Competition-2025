@@ -27,7 +27,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "L1"
+                        "name": "L4"
                       }
                     }
                   ]
@@ -39,7 +39,13 @@
         {
           "type": "named",
           "data": {
-            "name": "ScoreCoral"
+            "name": "ReleaseClaw"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "OpenClaw"
           }
         },
         {
@@ -84,7 +90,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "L1"
+                        "name": "L4"
                       }
                     }
                   ]
@@ -96,89 +102,13 @@
         {
           "type": "named",
           "data": {
-            "name": "ScoreCoral"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoIntakeLoading"
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Near Left Score to Left Loading"
-                }
-              }
-            ]
+            "name": "ReleaseClaw"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "SetScoreRight"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Left Loading to Near Left Score"
-                }
-              },
-              {
-                "type": "sequential",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "Handoff"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "L1"
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ScoreCoral"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Near Left Score to Left Loading"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoIntakeLoading"
-                }
-              }
-            ]
+            "name": "OpenClaw"
           }
         }
       ]
