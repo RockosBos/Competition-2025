@@ -3,54 +3,59 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.82,
-        "y": 4.89
+        "x": 4.84,
+        "y": 4.86
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.451229508196722,
-        "y": 6.0487807377049165
+        "x": 5.226639344262295,
+        "y": 6.080891393442624
       },
       "isLocked": false,
       "linkedName": "Far Left Score"
     },
     {
       "anchor": {
-        "x": 2.1817622950819673,
-        "y": 6.584375
+        "x": 2.8290983606557374,
+        "y": 6.152817622950819
       },
       "prevControl": {
-        "x": 2.5677189917897763,
-        "y": 6.275609642633751
+        "x": 3.296618852459016,
+        "y": 5.996977459016393
       },
       "nextControl": {
-        "x": 1.8221311475409836,
-        "y": 6.872079918032788
+        "x": 2.3921798168426958,
+        "y": 6.2984571375551655
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.9470286885245902,
-        "y": 7.111834016393442
+        "x": 1.0189549180327868,
+        "y": 6.955993852459016
       },
       "prevControl": {
-        "x": 1.2826844262295085,
-        "y": 6.788165983606557
+        "x": 1.3546106557377051,
+        "y": 6.632325819672131
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Loading Left"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.1257995735607602,
+      "rotationDegrees": 131.6721225546972
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 4.0,
-    "maxAcceleration": 1.5,
+    "maxAcceleration": 1.75,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,

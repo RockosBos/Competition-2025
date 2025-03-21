@@ -46,8 +46,7 @@ public class RemoveHighAlgae extends SequentialCommandGroup {
       new ClawClosed(s_Score),
       new ScoreSetCenter(s_Score),
       new ParallelCommandGroup(new ScoreEleAlgaeHigh(e_Elevator), new AgitatorOn(s_Score), new OutfeedRollerHandoff(i_Intake)),
-      new IntakeRollerOff(i_Intake),
-      new AgitatorOff(s_Score)
+      new IntakeRollerOff(i_Intake)
     );
   }
 }

@@ -110,25 +110,6 @@
           "data": {
             "name": "OpenClaw"
           }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Near Right Score to Right Loading"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "AutoIntakeLoading"
-                }
-              }
-            ]
-          }
         }
       ]
     }

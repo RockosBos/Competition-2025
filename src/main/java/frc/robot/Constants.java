@@ -44,7 +44,7 @@ public class Constants {
 
     public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 3.9;
     public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 40.5;
-    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 29.5;
+    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 30.5;
     public static final double INTAKE_ELEVATOR_L1_POS = 33.75;
     public static final double INTAKE_ELEVATOR_L1_FAILOP_POS = 26.25;
 
@@ -61,8 +61,8 @@ public class Constants {
     public static final double SCORE_ELEVATOR_L2_POS = 3.825;
     public static final double SCORE_ELEVATOR_L3_POS = 31.5;
     public static final double SCORE_ELEVATOR_L4_POS = 71.325;
-    public static final double SCORE_HANDOFF_POS = 1.95;
-    public static final double SCORE_ELEVATOR_REMOVE_ALGAE_HIGH = 40.0;
+    public static final double SCORE_HANDOFF_POS = 2.05;
+    public static final double SCORE_ELEVATOR_REMOVE_ALGAE_HIGH = 32.5;
 
 
     public static final double SCORE_ROTATE_LEFT_POS = 0.197;
@@ -204,26 +204,26 @@ public class Constants {
         }
 
         public static final class CENTER_FAR{
-            public static final double X = 5.39;
-            public static final double Y = 4.05;
+            public static final double X = 5.42;
+            public static final double Y = 4.13;
             public static final double T = 180.0;
         }
 
         public static final class LEFT_NEAR{
-            public static final double X = 3.95;
-            public static final double Y = 4.80;
+            public static final double X = 3.97;
+            public static final double Y = 4.78;
             public static final double T = -60.0;
         }
 
         public static final class LEFT_FAR{
-            public static final double X = 4.82;
-            public static final double Y = 4.89;
+            public static final double X = 4.84;
+            public static final double Y = 4.86;
             public static final double T = -120.0;
         }
 
         public static final class RIGHT_NEAR{
-            public static final double X = 4.05;
-            public static final double Y = 3.22;
+            public static final double X = 4.09;
+            public static final double Y = 3.18;
             public static final double T = 60.0;
         }
 

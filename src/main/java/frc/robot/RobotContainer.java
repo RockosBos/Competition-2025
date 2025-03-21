@@ -128,8 +128,8 @@ public class RobotContainer {
     private final LED ledSubsystem = new LED(Constants.LED_ID, Constants.LED_SIZE);
 
     //public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.3048, 0.29845, 0.2159, new Rotation3d(0,0, Math.toRadians(-26.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
-    public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.2794 - 0.1, 0.2794 - 0.1, 0.1793875, new Rotation3d(0,0, Math.toRadians(-26.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
-    public final CameraSubsystem PhotonVisionCamera2 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 2", new Transform3d(0.2794, -0.2794, 0.1793875, new Rotation3d(0,0,Math.toRadians(30.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
+    public final CameraSubsystem PhotonVisionCamera1 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 1", new Transform3d(0.2794 - 0.1, 0.2794 - 0.1, 0.1793875, new Rotation3d(0,Math.toRadians(15.0), Math.toRadians(-26.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
+    public final CameraSubsystem PhotonVisionCamera2 = new CameraSubsystem(CameraType.PHOTONVISION, "PhotonVision Camera 2", new Transform3d(0.2794, -0.2794, 0.1793875, new Rotation3d(0,Math.toRadians(15.0), Math.toRadians(30.0))), PoseHandlerSubsystem.getAprilTagFieldLayout());
 
     
     // public final CameraSubsystem LimelightCamera = new CameraSubsystem(CameraType.LIMELIGHT, "limelight");
@@ -148,8 +148,8 @@ public class RobotContainer {
                                             Math.abs(drivetrain.getPigeon2().getRoll().getValueAsDouble()) > Constants.TIP_PROTECTION_THRESHOLD_ROLL ||
                                             Math.abs(drivetrain.getPigeon2().getPitch().getValueAsDouble()) > Constants.TIP_PROTECTION_THRESHOLD_ROLL);
 
-    private final Trigger disabledBluealliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Blue);
-    private final Trigger disabledRedalliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Red);
+    //private final Trigger disabledBluealliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Blue);
+    //private final Trigger disabledRedalliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Red);
     //Chooser for Autonomous Modes
     private final SendableChooser<Command> autoChooser;
 
@@ -256,8 +256,8 @@ public class RobotContainer {
         hasCoral.onFalse(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kGreen));
         tipProtection.onTrue(new TipProtection(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
-        disabledBluealliance.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kBlue));
-        disabledRedalliance.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kRed), Color.kRed));
+        //disabledBluealliance.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kBlue));
+        //disabledRedalliance.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kRed), Color.kRed));
         
 
         //Telemetry
