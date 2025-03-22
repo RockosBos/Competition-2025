@@ -58,8 +58,8 @@ public class Constants {
 
     public static final double SCORE_ELEVATOR_INTAKE_POSITION = 2.88;
     public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 20.25;
-    public static final double SCORE_ELEVATOR_L2_POS = 3.825;
-    public static final double SCORE_ELEVATOR_L3_POS = 31.5;
+    public static final double SCORE_ELEVATOR_L2_POS = 5.85;
+    public static final double SCORE_ELEVATOR_L3_POS = 33.5;
     public static final double SCORE_ELEVATOR_L4_POS = 71.325;
     public static final double SCORE_HANDOFF_POS = 2.05;
     public static final double SCORE_ELEVATOR_REMOVE_ALGAE_HIGH = 32.5;
@@ -73,7 +73,7 @@ public class Constants {
     public static final double SCORE_PIVOT_OUT_LEFT_POS = 0.38;
     public static final double SCORE_PIVOT_OUT_LEFT_SHALLOW_POS = 0.35;
     public static final double SCORE_PIVOT_OUT_RIGHT_POS = 0.62;
-    public static final double SCORE_PIVOT_OUT_RIGHT_SHALLOW_POS = 0.65;
+    public static final double SCORE_PIVOT_OUT_RIGHT_SHALLOW_POS = 0.665;
 
     public static final double SCORE_CLAW_CLOSED_POS = 0.44;
     public static final double SCORE_CLAW_OPEN_POS = 0.12;
@@ -85,7 +85,7 @@ public class Constants {
     //Climb Constant Values
 
     public static final double CLIMB_IN_POS = 0.0;
-    public static final double CLIMB_CLIMBING_POS = 97.125;
+    public static final double CLIMB_CLIMBING_POS = 105.0;
     public static final double CLIMB_CAPTURE_POS = 212.565;
 
     //Absolute Encoder offsets
@@ -205,7 +205,7 @@ public class Constants {
 
         public static final class CENTER_FAR{
             public static final double X = 5.42;
-            public static final double Y = 4.13;
+            public static final double Y = 4.11;
             public static final double T = 180.0;
         }
 
@@ -216,7 +216,7 @@ public class Constants {
         }
 
         public static final class LEFT_FAR{
-            public static final double X = 4.84;
+            public static final double X = 4.91;
             public static final double Y = 4.86;
             public static final double T = -120.0;
         }
@@ -229,7 +229,7 @@ public class Constants {
 
         public static final class RIGHT_FAR{
             public static final double X = 5.04;
-            public static final double Y = 3.22;
+            public static final double Y = 3.27;
             public static final double T = 120.0;
         }
     };
