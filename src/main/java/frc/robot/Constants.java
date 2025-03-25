@@ -42,7 +42,7 @@ public class Constants {
     public static final double INTAKE_ROLLER_HANDOFF_VOLTAGE = -0.8;
     
 
-    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 3.9;
+    public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 5.5;
     public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 40.5;
     public static final double INTAKE_ELEVATOR_HANDOFF_POS = 30.5;
     public static final double INTAKE_ELEVATOR_L1_POS = 33.75;
@@ -85,8 +85,8 @@ public class Constants {
     //Climb Constant Values
 
     public static final double CLIMB_IN_POS = 0.0;
-    public static final double CLIMB_CLIMBING_POS = 105.0;
-    public static final double CLIMB_CAPTURE_POS = 212.565;
+    public static final double CLIMB_CLIMBING_POS = 102.5;
+    public static final double CLIMB_CAPTURE_POS = 215.0;
 
     //Absolute Encoder offsets
 
@@ -151,8 +151,8 @@ public class Constants {
     public static final double MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = -0.3;
 
     public static final double P_SCORE_ELEVATOR = 0.075;
-    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.9;
-    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.9;
+    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.8;
+    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.8;
     public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = -0.3;
 
@@ -216,8 +216,8 @@ public class Constants {
         }
 
         public static final class LEFT_FAR{
-            public static final double X = 4.91;
-            public static final double Y = 4.86;
+            public static final double X = 4.88;
+            public static final double Y = 4.87;
             public static final double T = -120.0;
         }
 
@@ -228,8 +228,8 @@ public class Constants {
         }
 
         public static final class RIGHT_FAR{
-            public static final double X = 5.04;
-            public static final double Y = 3.27;
+            public static final double X = 5.02;
+            public static final double Y = 3.23;
             public static final double T = 120.0;
         }
     };
