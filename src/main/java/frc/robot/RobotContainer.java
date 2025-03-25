@@ -235,7 +235,7 @@ public class RobotContainer {
 
         operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
         operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
-        operaterController.povDown().onTrue(new ResetElevators(elevatorSubsytem));
+        operaterController.povDown().onTrue(new ResetElevators(elevatorSubsytem, intakeSubsystem));
 
         operaterLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         operaterController.leftBumper().onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
