@@ -152,7 +152,25 @@ public class RobotContainer {
     //private final Trigger disabledRedalliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Red);
     //Chooser for Autonomous Modes
 
-    //private final Trigger normalPOVLeft = new Trigger(() -> driverController.povLeft() && )
+    private final Trigger normalPOVLeft = new Trigger(() -> operaterController.povLeft().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalPOVLUp = new Trigger(() -> operaterController.povUp().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalPOVRight = new Trigger(() -> operaterController.povRight().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalPOVDown = new Trigger(() -> operaterController.povDown().getAsBoolean() && !scoreSubsystem.inFailOp());
+
+    private final Trigger normalA = new Trigger(() -> operaterController.a().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalB = new Trigger(() -> operaterController.b().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalY = new Trigger(() -> operaterController.y().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalX = new Trigger(() -> operaterController.x().getAsBoolean() && !scoreSubsystem.inFailOp());
+
+    private final Trigger normalLB = new Trigger(() -> operaterController.leftBumper().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalRB = new Trigger(() -> operaterController.rightBumper().getAsBoolean() && !scoreSubsystem.inFailOp());
+
+    private final Trigger normalLT = new Trigger(() -> operaterController.getLeftTriggerAxis() > 0.3 && !scoreSubsystem.inFailOp());
+    private final Trigger normalRT = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3 && !scoreSubsystem.inFailOp());
+
+    private final Trigger failopLB = new Trigger(() -> operaterController.leftBumper().getAsBoolean() && scoreSubsystem.inFailOp());
+    private final Trigger failopA = new Trigger(() -> operaterController.leftBumper().getAsBoolean() && scoreSubsystem.inFailOp());
+
     private final SendableChooser<Command> autoChooser;
 
 
@@ -235,21 +253,40 @@ public class RobotContainer {
 
         //Operator Controller
 
-        operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
-        operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
-        operaterController.povDown().onTrue(new ResetElevators(elevatorSubsytem, intakeSubsystem));
+        normalPOVLeft.onTrue(new ScoreLeftState(scoreSubsystem));
+        normalPOVRight.onTrue(new ScoreRightState(scoreSubsystem));
+        normalPOVDown.onTrue(new ResetElevators(elevatorSubsytem, intakeSubsystem));
 
-        operaterLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.leftBumper().onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.a().onTrue(new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.b().onTrue(new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.x().onTrue(new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalLT.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalLB.onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalA.onTrue(new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalB.onTrue(new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalX.onTrue(new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalY.onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalRT.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
-        operaterController.rightBumper().onTrue(new RemoveHighAlgae(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalRB.onTrue(new RemoveHighAlgae(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
-        operaterController.povUp().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalPOVLUp.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+
+        // failopA.onTrue();
+        // failopLB.onTrue();
+
+        // operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
+        // operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
+        // operaterController.povDown().onTrue(new ResetElevators(elevatorSubsytem, intakeSubsystem));
+
+        // operaterLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.leftBumper().onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.a().onTrue(new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.b().onTrue(new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.x().onTrue(new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+
+        // operaterController.rightBumper().onTrue(new RemoveHighAlgae(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+
+        // operaterController.povUp().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         hasCoral.onTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kGreen), Color.kGreen));
