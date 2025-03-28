@@ -151,6 +151,8 @@ public class RobotContainer {
     //private final Trigger disabledBluealliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Blue);
     //private final Trigger disabledRedalliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Red);
     //Chooser for Autonomous Modes
+
+    //private final Trigger normalPOVLeft = new Trigger(() -> driverController.povLeft() && )
     private final SendableChooser<Command> autoChooser;
 
 
@@ -255,10 +257,6 @@ public class RobotContainer {
         hasCoral.onFalse(new RumbleCooldown(rumbleCooldown));
         hasCoral.onFalse(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kGreen));
         tipProtection.onTrue(new TipProtection(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-
-        //disabledBluealliance.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kBlue));
-        //disabledRedalliance.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kRed), Color.kRed));
-        
 
         //Telemetry
 
