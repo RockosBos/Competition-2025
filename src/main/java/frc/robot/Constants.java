@@ -44,7 +44,7 @@ public class Constants {
 
     public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 5.5;
     public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 40.5;
-    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 30.5;
+    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 32.0;
     public static final double INTAKE_ELEVATOR_L1_POS = 33.75;
     public static final double INTAKE_ELEVATOR_L1_FAILOP_POS = 26.25;
 
@@ -61,8 +61,10 @@ public class Constants {
     public static final double SCORE_ELEVATOR_L2_POS = 5.85;
     public static final double SCORE_ELEVATOR_L3_POS = 33.5;
     public static final double SCORE_ELEVATOR_L4_POS = 71.325;
-    public static final double SCORE_HANDOFF_POS = 2.05;
+    public static final double SCORE_HANDOFF_POS = 3.5;
     public static final double SCORE_ELEVATOR_REMOVE_ALGAE_HIGH = 32.5;
+    public static final double SCORE_ELEVATOR_ZERO = 0.0;
+
 
 
     public static final double SCORE_ROTATE_LEFT_POS = 0.197;
