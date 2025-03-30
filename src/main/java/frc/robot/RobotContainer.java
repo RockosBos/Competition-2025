@@ -197,6 +197,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("ReleaseClaw", new ClawRelease(scoreSubsystem));
         NamedCommands.registerCommand("OpenClaw", new ClawOpened(scoreSubsystem));
         NamedCommands.registerCommand("RemoveHighAlgae", new RemoveHighAlgae(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("EnableFailOp", new FailOpEnable(scoreSubsystem));
         NamedCommands.registerCommand("FailOpL1", new FailOpL1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         //Auto Mode Setup

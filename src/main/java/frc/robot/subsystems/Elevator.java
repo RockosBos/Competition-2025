@@ -250,8 +250,8 @@ public class Elevator extends SubsystemBase {
     intakeElevatorPosPub.set(IntakeEleEncoder.getPosition());
     intakeElevatorSetpointPub.set(targetPostion);
 
-    scoreElevatorTargetPositionLog.append(ScoreEleEncoder.getPosition());;
-    scoreElevatorCurrentPositionLog.append(targetPostionScoreInLa);
+    scoreElevatorTargetPositionLog.append(targetPostionScoreInLa);
+    scoreElevatorCurrentPositionLog.append(ScoreEleEncoder.getPosition());
     scoreElevatorAmpLog.append(ScoreEle.getOutputCurrent());
 
     scoreElevatorPosPub.set(ScoreEleEncoder.getPosition());
