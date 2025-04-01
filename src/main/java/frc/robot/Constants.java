@@ -52,7 +52,7 @@ public class Constants {
     public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.32;
     public static final double INTAKE_ROTATE_HANDOFF_POS = 0.275;
     public static final double INTAKE_ROTATE_L1_POS = 0.49;
-    public static final double INTAKE_ROTATE_L1_FAILOP_POS = 0.36;
+    public static final double INTAKE_ROTATE_L1_FAILOP_POS = 0.39;
 
     //Score Arm Constant Values
 
@@ -152,9 +152,9 @@ public class Constants {
     public static final double MAX_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = -0.3;
 
-    public static final double P_SCORE_ELEVATOR = 0.075;
-    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.8;
-    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.8;
+    public static final double P_SCORE_ELEVATOR = 0.09;
+    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.9;
+    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.9;
     public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = -0.3;
 

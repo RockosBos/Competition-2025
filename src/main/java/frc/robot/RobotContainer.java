@@ -303,7 +303,9 @@ public class RobotContainer {
         hasCoral.onFalse(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kGreen));
         tipProtection.onTrue(new TipProtection(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         failOpEnabled.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kRed), Color.kRed));
+        failOpEnabled.onTrue(new FailOpFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         failOpEnabled.onFalse(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kBlue));
+        failOpEnabled.onFalse(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         //Telemetry
 
