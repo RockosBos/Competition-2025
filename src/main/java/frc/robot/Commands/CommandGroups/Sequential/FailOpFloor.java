@@ -47,11 +47,12 @@ public class FailOpFloor extends SequentialCommandGroup {
 
     addCommands(
       new AgitatorOff(s_Score),
+      new IntakeRollerOff(i_Intake),
+      new ParallelCommandGroup(new IntakeEleFloorPos(e_Elevator), new FloorIntakePosition(i_Intake)),
       new ScoreRightState(s_Score),
       new ScoreSetScore(s_Score),
-      new ScoreEleZero(e_Elevator),
-      new ParallelCommandGroup(new IntakeEleFloorPos(e_Elevator), new FloorIntakePosition(i_Intake)),
-      new IntakeRollerIn(i_Intake)
+      new IntakeRollerIn(i_Intake),
+      new ScoreEleHandoffPos(e_Elevator)
     );
   }
 }

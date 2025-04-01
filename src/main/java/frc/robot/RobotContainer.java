@@ -48,7 +48,6 @@ import frc.robot.Commands.CommandGroups.Sequential.Handoff;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeFloor;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeLoading;
 import frc.robot.Commands.CommandGroups.Sequential.L1;
-import frc.robot.Commands.CommandGroups.Sequential.L1FailOp;
 import frc.robot.Commands.CommandGroups.Sequential.L2;
 import frc.robot.Commands.CommandGroups.Sequential.L3;
 import frc.robot.Commands.CommandGroups.Sequential.L4;
@@ -170,8 +169,9 @@ public class RobotContainer {
     private final Trigger normalLT = new Trigger(() -> operaterController.getLeftTriggerAxis() > 0.3 && !scoreSubsystem.inFailOp());
     private final Trigger normalRT = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3 && !scoreSubsystem.inFailOp());
 
-    private final Trigger failopLB = new Trigger(() -> operaterController.leftBumper().getAsBoolean() && scoreSubsystem.inFailOp());
-    private final Trigger failopA = new Trigger(() -> operaterController.leftBumper().getAsBoolean() && scoreSubsystem.inFailOp());
+    private final Trigger failopLT = new Trigger(() -> operaterController.getLeftTriggerAxis() > 0.3 && scoreSubsystem.inFailOp());
+    private final Trigger failopA = new Trigger(() -> operaterController.a().getAsBoolean() && scoreSubsystem.inFailOp());
+    private final Trigger failopRT = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3 && scoreSubsystem.inFailOp());
 
     private final Trigger failOpEnabled = new Trigger(() -> scoreSubsystem.inFailOp());
 
@@ -277,7 +277,8 @@ public class RobotContainer {
         normalPOVUp.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         failopA.onTrue(new FailOpL1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        failopLB.onTrue(new FailOpFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        failopLT.onTrue(new FailOpFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        failopRT.onTrue(new OutfeedRoller(intakeSubsystem));
 
         // operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
         // operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
@@ -301,8 +302,8 @@ public class RobotContainer {
         hasCoral.onFalse(new RumbleCooldown(rumbleCooldown));
         hasCoral.onFalse(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kGreen));
         tipProtection.onTrue(new TipProtection(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        failOpEnabled.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kBlue));
-
+        failOpEnabled.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kRed), Color.kRed));
+        failOpEnabled.onFalse(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kBlue));
 
         //Telemetry
 

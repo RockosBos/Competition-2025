@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Commands.Elevator.IntakeEleFloorPos;
 import frc.robot.Commands.Elevator.IntakeEleHandoffPos;
+import frc.robot.Commands.Elevator.IntakeEleL1Failop;
 import frc.robot.Commands.Elevator.ScoreEleHandoffPos;
 import frc.robot.Commands.Elevator.ScoreEleIdlePosition;
 import frc.robot.Commands.Elevator.ScoreEleL2Position;
@@ -17,6 +18,7 @@ import frc.robot.Commands.Intake.FloorIntakePosition;
 import frc.robot.Commands.Intake.IntakeIdle;
 import frc.robot.Commands.Intake.IntakeRollerIn;
 import frc.robot.Commands.Intake.IntakeRollerOff;
+import frc.robot.Commands.Intake.L1IntakeFailOpPos;
 import frc.robot.Commands.Intake.L1IntakePos;
 import frc.robot.Commands.Intake.OutfeedRollerHandoff;
 import frc.robot.Commands.Score.AgitatorOff;
@@ -47,11 +49,10 @@ public class FailOpL1 extends SequentialCommandGroup {
 
     addCommands(
       new AgitatorOff(s_Score),
+      new ParallelCommandGroup(new IntakeEleL1Failop(e_Elevator), new L1IntakeFailOpPos(i_Intake)),
       new ScoreRightState(s_Score),
       new ScoreSetScore(s_Score),
-      new ScoreEleZero(e_Elevator),
-      new ParallelCommandGroup(new IntakeEleFloorPos(e_Elevator), new FloorIntakePosition(i_Intake)),
-      new IntakeRollerIn(i_Intake)
+      new ScoreEleHandoffPos(e_Elevator)
     );
   }
 }
