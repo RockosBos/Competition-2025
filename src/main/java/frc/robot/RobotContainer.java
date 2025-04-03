@@ -42,11 +42,12 @@ import frc.robot.Commands.CommandGroups.Sequential.AutoIntakeLoading;
 import frc.robot.Commands.CommandGroups.Sequential.AutonomousAutoAlign;
 import frc.robot.Commands.CommandGroups.Sequential.ClimbCapture;
 import frc.robot.Commands.CommandGroups.Sequential.ClimbingPosition;
+import frc.robot.Commands.CommandGroups.Sequential.FailOpFloor;
+import frc.robot.Commands.CommandGroups.Sequential.FailOpL1;
 import frc.robot.Commands.CommandGroups.Sequential.Handoff;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeFloor;
 import frc.robot.Commands.CommandGroups.Sequential.IntakeLoading;
 import frc.robot.Commands.CommandGroups.Sequential.L1;
-import frc.robot.Commands.CommandGroups.Sequential.L1FailOp;
 import frc.robot.Commands.CommandGroups.Sequential.L2;
 import frc.robot.Commands.CommandGroups.Sequential.L3;
 import frc.robot.Commands.CommandGroups.Sequential.L4;
@@ -142,7 +143,7 @@ public class RobotContainer {
     private final Trigger operaterLeftTrigger = new Trigger(() -> operaterController.getLeftTriggerAxis() > 0.3);
     private final Trigger operaterRightTrigger = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3);
 
-    private final Trigger hasCoral = new Trigger(() -> intakeSubsystem.hasCoral() && !DriverStation.isAutonomous());
+    private final Trigger hasCoral = new Trigger(() -> intakeSubsystem.hasCoral() && !DriverStation.isAutonomous() && !scoreSubsystem.inFailOp());
     private final Trigger hasCoralRumble = new Trigger(() -> intakeSubsystem.hasCoral() && !DriverStation.isAutonomous() && !rumbleCooldown);
     private final Trigger tipProtection = new Trigger(() -> 
                                             Math.abs(drivetrain.getPigeon2().getRoll().getValueAsDouble()) > Constants.TIP_PROTECTION_THRESHOLD_ROLL ||
@@ -151,6 +152,29 @@ public class RobotContainer {
     //private final Trigger disabledBluealliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Blue);
     //private final Trigger disabledRedalliance = new Trigger(() -> DriverStation.isDisabled() && DriverStation.getAlliance().get() == Alliance.Red);
     //Chooser for Autonomous Modes
+
+    private final Trigger normalPOVLeft = new Trigger(() -> operaterController.povLeft().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalPOVUp = new Trigger(() -> operaterController.povUp().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalPOVRight = new Trigger(() -> operaterController.povRight().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalPOVDown = new Trigger(() -> operaterController.povDown().getAsBoolean() && !scoreSubsystem.inFailOp());
+
+    private final Trigger normalA = new Trigger(() -> operaterController.a().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalB = new Trigger(() -> operaterController.b().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalY = new Trigger(() -> operaterController.y().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalX = new Trigger(() -> operaterController.x().getAsBoolean() && !scoreSubsystem.inFailOp());
+
+    private final Trigger normalLB = new Trigger(() -> operaterController.leftBumper().getAsBoolean() && !scoreSubsystem.inFailOp());
+    private final Trigger normalRB = new Trigger(() -> operaterController.rightBumper().getAsBoolean() && !scoreSubsystem.inFailOp());
+
+    private final Trigger normalLT = new Trigger(() -> operaterController.getLeftTriggerAxis() > 0.3 && !scoreSubsystem.inFailOp());
+    private final Trigger normalRT = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3 && !scoreSubsystem.inFailOp());
+
+    private final Trigger failopLT = new Trigger(() -> operaterController.getLeftTriggerAxis() > 0.3 && scoreSubsystem.inFailOp());
+    private final Trigger failopA = new Trigger(() -> operaterController.a().getAsBoolean() && scoreSubsystem.inFailOp());
+    private final Trigger failopRT = new Trigger(() -> operaterController.getRightTriggerAxis() > 0.3 && scoreSubsystem.inFailOp());
+
+    private final Trigger failOpEnabled = new Trigger(() -> scoreSubsystem.inFailOp());
+
     private final SendableChooser<Command> autoChooser;
 
 
@@ -172,6 +196,10 @@ public class RobotContainer {
         NamedCommands.registerCommand("SetScoreRight", new ScoreRightState(scoreSubsystem));
         NamedCommands.registerCommand("ReleaseClaw", new ClawRelease(scoreSubsystem));
         NamedCommands.registerCommand("OpenClaw", new ClawOpened(scoreSubsystem));
+        NamedCommands.registerCommand("RemoveHighAlgae", new RemoveHighAlgae(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("EnableFailOp", new FailOpEnable(scoreSubsystem));
+        NamedCommands.registerCommand("FailOpL1", new FailOpL1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("FailOpOutfeed", new OutfeedRoller(intakeSubsystem));
 
         //Auto Mode Setup
         autoChooser = AutoBuilder.buildAutoChooser("Tests");
@@ -233,21 +261,41 @@ public class RobotContainer {
 
         //Operator Controller
 
-        operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
-        operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
-        operaterController.povDown().onTrue(new ResetElevators(elevatorSubsytem, intakeSubsystem));
+        normalPOVLeft.onTrue(new ScoreLeftState(scoreSubsystem));
+        normalPOVRight.onTrue(new ScoreRightState(scoreSubsystem));
+        normalPOVDown.onTrue(new ResetElevators(elevatorSubsytem, intakeSubsystem));
 
-        operaterLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.leftBumper().onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.a().onTrue(new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.b().onTrue(new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.x().onTrue(new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-        operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalLT.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalLB.onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalA.onTrue(new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalB.onTrue(new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalX.onTrue(new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalY.onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalRT.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
-        operaterController.rightBumper().onTrue(new RemoveHighAlgae(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalRB.onTrue(new RemoveHighAlgae(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
-        operaterController.povUp().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        normalPOVUp.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+
+        failopA.onTrue(new FailOpL1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        failopLT.onTrue(new FailOpFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        failopRT.onTrue(new OutfeedRoller(intakeSubsystem));
+
+        // operaterController.povLeft().onTrue(new ScoreLeftState(scoreSubsystem));
+        // operaterController.povRight().onTrue(new ScoreRightState(scoreSubsystem));
+        // operaterController.povDown().onTrue(new ResetElevators(elevatorSubsytem, intakeSubsystem));
+
+        // operaterLeftTrigger.onTrue(new IntakeFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.leftBumper().onTrue(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.a().onTrue(new L1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.b().onTrue(new L2(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.x().onTrue(new L3(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterController.y().onTrue(new L4(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        // operaterRightTrigger.onTrue(new ScoreCoral(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+
+        // operaterController.rightBumper().onTrue(new RemoveHighAlgae(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+
+        // operaterController.povUp().onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         hasCoral.onTrue(new Handoff(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         hasCoral.onTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kGreen), Color.kGreen));
@@ -255,10 +303,10 @@ public class RobotContainer {
         hasCoral.onFalse(new RumbleCooldown(rumbleCooldown));
         hasCoral.onFalse(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kGreen));
         tipProtection.onTrue(new TipProtection(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
-
-        //disabledBluealliance.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kBlue));
-        //disabledRedalliance.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kRed), Color.kRed));
-        
+        failOpEnabled.whileTrue(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kRed), Color.kRed));
+        failOpEnabled.onTrue(new FailOpFloor(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        failOpEnabled.onFalse(new SetLED(ledSubsystem, LEDPattern.gradient(GradientType.kDiscontinuous, Color.kBlue), Color.kBlue));
+        failOpEnabled.onFalse(new IntakeLoading(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
 
         //Telemetry
 

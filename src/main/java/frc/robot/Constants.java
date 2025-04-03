@@ -44,7 +44,7 @@ public class Constants {
 
     public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 5.5;
     public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 40.5;
-    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 30.5;
+    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 29.0;
     public static final double INTAKE_ELEVATOR_L1_POS = 33.75;
     public static final double INTAKE_ELEVATOR_L1_FAILOP_POS = 26.25;
 
@@ -52,7 +52,7 @@ public class Constants {
     public static final double INTAKE_ROTATE_LOADING_INTAKE_POS = 0.32;
     public static final double INTAKE_ROTATE_HANDOFF_POS = 0.275;
     public static final double INTAKE_ROTATE_L1_POS = 0.49;
-    public static final double INTAKE_ROTATE_L1_FAILOP_POS = 0.36;
+    public static final double INTAKE_ROTATE_L1_FAILOP_POS = 0.39;
 
     //Score Arm Constant Values
 
@@ -61,8 +61,10 @@ public class Constants {
     public static final double SCORE_ELEVATOR_L2_POS = 5.85;
     public static final double SCORE_ELEVATOR_L3_POS = 33.5;
     public static final double SCORE_ELEVATOR_L4_POS = 71.325;
-    public static final double SCORE_HANDOFF_POS = 2.05;
+    public static final double SCORE_HANDOFF_POS = 2.5;
     public static final double SCORE_ELEVATOR_REMOVE_ALGAE_HIGH = 32.5;
+    public static final double SCORE_ELEVATOR_ZERO = 0.0;
+
 
 
     public static final double SCORE_ROTATE_LEFT_POS = 0.197;
@@ -125,7 +127,7 @@ public class Constants {
     public static final double RAMPRATE_INTAKE_ELEVATOR = 0.2;
     public static final double RAMPRATE_SCORE_ELEVATOR = 0.275;
     public static final double RAMPRATE_INTAKE_ROTATE = 0.05;
-    public static final double RAMPRATE_INTAKE_ROLLER = 0.1;
+    public static final double RAMPRATE_INTAKE_ROLLER = 0.2;
     public static final double RAMPRATE_SCORE_ROTATE = 0.0;
     public static final double RAMPRATE_SCORE_PIVOT = 0.0;
     public static final double RAMPRATE_SCORE_CLAW = 0.0;
@@ -150,7 +152,7 @@ public class Constants {
     public static final double MAX_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = -0.3;
 
-    public static final double P_SCORE_ELEVATOR = 0.075;
+    public static final double P_SCORE_ELEVATOR = 0.09;
     public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.8;
     public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.8;
     public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;

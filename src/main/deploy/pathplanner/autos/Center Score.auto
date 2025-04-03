@@ -11,15 +11,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "L4"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Center Base to Center Score"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "L4"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center Base to Center Score"
+                }
+              }
+            ]
           }
         },
         {
@@ -39,15 +46,53 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "sequential",
                 "data": {
-                  "name": "AutoIntakeLoading"
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "Handoff"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "RemoveHighAlgae"
+                      }
+                    }
+                  ]
                 }
               },
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Central Score Retreat"
+                  "pathName": "Center to Left Clear Algae"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Left to Right Clear Algae"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right to Center Clear Algae"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Handoff"
                 }
               }
             ]
