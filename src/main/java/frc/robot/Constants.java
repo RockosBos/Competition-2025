@@ -61,7 +61,7 @@ public class Constants {
     public static final double SCORE_ELEVATOR_L2_POS = 5.85;
     public static final double SCORE_ELEVATOR_L3_POS = 33.5;
     public static final double SCORE_ELEVATOR_L4_POS = 71.325;
-    public static final double SCORE_HANDOFF_POS = 3.0;
+    public static final double SCORE_HANDOFF_POS = 2.5;
     public static final double SCORE_ELEVATOR_REMOVE_ALGAE_HIGH = 32.5;
     public static final double SCORE_ELEVATOR_ZERO = 0.0;
 
@@ -153,8 +153,8 @@ public class Constants {
     public static final double MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = -0.3;
 
     public static final double P_SCORE_ELEVATOR = 0.09;
-    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.9;
-    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.9;
+    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.8;
+    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.8;
     public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = -0.3;
 

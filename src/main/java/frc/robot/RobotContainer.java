@@ -199,6 +199,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("RemoveHighAlgae", new RemoveHighAlgae(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
         NamedCommands.registerCommand("EnableFailOp", new FailOpEnable(scoreSubsystem));
         NamedCommands.registerCommand("FailOpL1", new FailOpL1(elevatorSubsytem, intakeSubsystem, scoreSubsystem));
+        NamedCommands.registerCommand("FailOpOutfeed", new OutfeedRoller(intakeSubsystem));
 
         //Auto Mode Setup
         autoChooser = AutoBuilder.buildAutoChooser("Tests");

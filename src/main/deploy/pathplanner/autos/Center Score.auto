@@ -63,6 +63,12 @@
                     }
                   ]
                 }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Center to Left Clear Algae"
+                }
               }
             ]
           }
@@ -70,13 +76,26 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center to Left Clear Algae"
+            "pathName": "Left to Right Clear Algae"
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "Left to Right Clear Algae"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right to Center Clear Algae"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "Handoff"
+                }
+              }
+            ]
           }
         }
       ]
