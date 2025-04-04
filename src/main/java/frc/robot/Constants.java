@@ -44,7 +44,7 @@ public class Constants {
 
     public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 5.5;
     public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 40.5;
-    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 29.0;
+    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 28.75;
     public static final double INTAKE_ELEVATOR_L1_POS = 33.75;
     public static final double INTAKE_ELEVATOR_L1_FAILOP_POS = 26.25;
 
@@ -152,7 +152,7 @@ public class Constants {
     public static final double MAX_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = -0.3;
 
-    public static final double P_SCORE_ELEVATOR = 0.09;
+    public static final double P_SCORE_ELEVATOR = 0.11;
     public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.8;
     public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.8;
     public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;
