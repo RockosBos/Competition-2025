@@ -59,9 +59,9 @@ public class Constants {
     public static final double SCORE_ELEVATOR_INTAKE_POSITION = 2.88;
     public static final double SCORE_ELEVATOR_GO_AWAY_POSITION = 20.25;
     public static final double SCORE_ELEVATOR_L2_POS = 5.85;
-    public static final double SCORE_ELEVATOR_L3_POS = 33.5;
+    public static final double SCORE_ELEVATOR_L3_POS = 31.5;
     public static final double SCORE_ELEVATOR_L4_POS = 71.325;
-    public static final double SCORE_HANDOFF_POS = 2.5;
+    public static final double SCORE_HANDOFF_POS = 2.75;
     public static final double SCORE_ELEVATOR_REMOVE_ALGAE_HIGH = 32.5;
     public static final double SCORE_ELEVATOR_ZERO = 0.0;
 
@@ -163,8 +163,8 @@ public class Constants {
     public static final double MIN_OUTPUT_INTAKE_ROTATE = -0.25;
 
     public static final double P_SCORE_ROTATE = 4.0;
-    public static final double MAX_OUTPUT_SCORE_ROTATE = 0.35;
-    public static final double MIN_OUTPUT_SCORE_ROTATE = -0.35;
+    public static final double MAX_OUTPUT_SCORE_ROTATE = 0.20;
+    public static final double MIN_OUTPUT_SCORE_ROTATE = -0.20;
 
     public static final double P_SCORE_PIVOT = 5.0;
     public static final double MAX_OUTPUT_SCORE_PIVOT = 0.1;
@@ -231,7 +231,7 @@ public class Constants {
 
         public static final class RIGHT_FAR{
             public static final double X = 5.02;
-            public static final double Y = 3.23;
+            public static final double Y = 3.26;
             public static final double T = 120.0;
         }
     };

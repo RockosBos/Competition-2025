@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.817706333973127,
-        "y": 6.922072936660268
+        "x": 1.3306352459016395,
+        "y": 7.195747950819672
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.728771907743619,
-        "y": 6.022995067807808
+        "x": 2.2417008196721318,
+        "y": 6.296670081967212
       },
       "isLocked": false,
       "linkedName": "Loading Left"
@@ -34,7 +34,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 0.6,
+    "maxAcceleration": 0.7,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
