@@ -50,6 +50,9 @@ public class Intake extends SubsystemBase {
   private LaserCan leftyLazy = new LaserCan(Constants.LASERCAN_INTAKE_LEFT);
   private LaserCan rightyLazy = new LaserCan(Constants.LASERCAN_INTAKE_RIGHT); 
 
+  LaserCan.Measurement leftLaserMeasurement = leftyLazy.getMeasurement();
+  LaserCan.Measurement rightLaserMeasurement = rightyLazy.getMeasurement();
+
   //Other Variables
   private double voltage = 0.0, targetPosition = Constants.INTAKE_ROTATE_HANDOFF_POS, intakeRotateTargetErr = 0.0;
   private boolean errFlag = false;
@@ -147,7 +150,7 @@ public class Intake extends SubsystemBase {
      * Returns true if the Left LaserCan Sensor detects a game piece
      */
   public boolean leftLaserObstructed(){
-    if(leftyLazy.getMeasurement() != null){
+    if(leftLaserMeasurement != null && leftLaserMeasurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT){
       if(leftyLazy.getMeasurement().distance_mm < Constants.THRESHOLD_LASERCAN_INTAKE_LEFT){
         return true;
       }
@@ -156,7 +159,7 @@ public class Intake extends SubsystemBase {
   }
 
   public boolean rightLaserObstructed(){
-    if(rightyLazy.getMeasurement() != null){
+    if(rightLaserMeasurement != null && rightLaserMeasurement.status == LaserCan.LASERCAN_STATUS_VALID_MEASUREMENT){
       if(rightyLazy.getMeasurement().distance_mm < Constants.THRESHOLD_LASERCAN_INTAKE_RIGHT){
         return true;
       }
@@ -179,6 +182,9 @@ public class Intake extends SubsystemBase {
 
     //Set Closed Loop Controller for Intake Rotate Arm
     BetterLoppyDoopy.setReference(targetPosition, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+
+    leftLaserMeasurement = leftyLazy.getMeasurement();
+    rightLaserMeasurement = rightyLazy.getMeasurement();
 
     //Logging
 
