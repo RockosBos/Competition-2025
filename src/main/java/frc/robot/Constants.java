@@ -44,7 +44,7 @@ public class Constants {
 
     public static final double INTAKE_ELEVATOR_FLOOR_INTAKE_POS = 5.5;
     public static final double INTAKE_ELEVATOR_LOADING_INTAKE_POS = 40.5;
-    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 28.75;
+    public static final double INTAKE_ELEVATOR_HANDOFF_POS = 29.00;
     public static final double INTAKE_ELEVATOR_L1_POS = 33.75;
     public static final double INTAKE_ELEVATOR_L1_FAILOP_POS = 26.25;
 
@@ -61,7 +61,7 @@ public class Constants {
     public static final double SCORE_ELEVATOR_L2_POS = 5.85;
     public static final double SCORE_ELEVATOR_L3_POS = 31.5;
     public static final double SCORE_ELEVATOR_L4_POS = 71.325;
-    public static final double SCORE_HANDOFF_POS = 2.75;
+    public static final double SCORE_HANDOFF_POS = 2.65;
     public static final double SCORE_ELEVATOR_REMOVE_ALGAE_HIGH = 32.5;
     public static final double SCORE_ELEVATOR_ZERO = 0.0;
 
@@ -147,14 +147,14 @@ public class Constants {
     //Closed Loop controller Config
 
     public static final double P_INTAKE_ELEVATOR = 0.1;
-    public static final double MAX_OUTPUT_INTAKE_ELEVATOR = 0.9;
-    public static final double MIN_OUTPUT_INTAKE_ELEVATOR = -0.9;
+    public static final double MAX_OUTPUT_INTAKE_ELEVATOR = 0.6;
+    public static final double MIN_OUTPUT_INTAKE_ELEVATOR = -0.6;
     public static final double MAX_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_INTAKE_ELEVATOR = -0.3;
 
     public static final double P_SCORE_ELEVATOR = 0.11;
-    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.8;
-    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.8;
+    public static final double MAX_OUTPUT_SCORE_ELEVATOR = 0.6;
+    public static final double MIN_OUTPUT_SCORE_ELEVATOR = -0.6;
     public static final double MAX_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = 0.3;
     public static final double MIN_OUTPUT_STAGE_HANDOFF_SCORE_ELEVATOR = -0.3;
 
@@ -212,7 +212,7 @@ public class Constants {
         }
 
         public static final class LEFT_NEAR{
-            public static final double X = 3.97;
+            public static final double X = 3.92;
             public static final double Y = 4.78;
             public static final double T = -60.0;
         }
@@ -231,7 +231,7 @@ public class Constants {
 
         public static final class RIGHT_FAR{
             public static final double X = 5.02;
-            public static final double Y = 3.26;
+            public static final double Y = 3.28;
             public static final double T = 120.0;
         }
     };
